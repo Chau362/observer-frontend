@@ -1,0 +1,20 @@
+{
+    "Chau": {
+        "http://192.168.4.94:8080/register": {
+            "scab-oberserver-hive": {
+                "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git": "GIT_COMMIT"
+            }
+        }
+    },
+
+    "Masud": {
+        "http://192.168.4.48:8080/register": {
+            "testProject1": {
+                "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git": "GIT_COMMIT"
+            },
+            "testProject2": {
+                "https://github.com/Afsharov/Observerhive.git": "GIT_COMMIT"
+            }
+        }
+    }
+}
