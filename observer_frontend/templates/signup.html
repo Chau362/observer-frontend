@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Observerhive: Registration</title>
+{% endblock %}
+{% block content %}
+<style>
+input[aria-invalid="true"], textarea[aria-invalid="true"] {
+  border: 1px solid #f00;
+  box-shadow: 0 0 4px 0 #f00;
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+</style>
+<form method="POST" autocomplete="off" id="1">
+<div class="form-group">
+<h3>Sign Up</h3>
+<p>Please fill in this form to create an account.</p>
+<hr>
+<div class="form-group">
+<label for="username">Username</label>
+{{ form.username(**{'type':'text','aria-required':'required' ,'required':'required','class':'form-control','id':'username','aria-described':'usernameHelp','placeholder':'Enter preferred Username'}) }}
+<small id="usernameHelp" class="form-text text-muted">Choose a name under which you like to be remembered.</small>
+</div>
+<div class="form-group">
+<label for="password1">Password</label>
+<input type="password" aria-required="true" required="required" name="password1" class="form-control" id="password1" placeholder="Choose Password">
+</div>
+<div class="form-group">
+<label for="password2">Repeat Password</label>
+<input type="password" aria-required="true" required="required" name="password2" class="form-control" id="password2" placeholder="Repeat chosen Password">
+</div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" id="exampleCheck1">
+<label class="form-check-label" for="exampleCheck1">Remember me</label>
+</div>
+<br>
+<hr>
+
+<h3>Please specify the projects and corresponding events you would like to follow. </h3>
+<br>
+<div id="00">
+<div class="form-group">
+<label>Service Address</label><br>
+<input type="url" name="service" aria-required="true" required="required" pattern="^(http[s]?:\/\/)?([-\w\d]+)(\.[-\w\d]+)*(\.([a-zA-Z]{2,5}|[\d]{1,3})){1,2}(\/([-~%\.\(\)\w\d]*\/*)*(#[-\w\d]+)?)?$" class="form-control" placeholder="Enter the address of the Conductor Service">
+</div>
+<div class="well registration">
+<div class="row" style="{width: 100%; margin-left: 0px; margin-right: 0px;}">
+<div class="form col-md-8">
+<label>Projectname</label><br>
+<input type="text" name="projectName" class="form-control" placeholder="Projectname">
+</div>
+<div class="form-group col-md-4">
+<label >Eventtype</label><br>
+<input type="text" name="eventType" class="form-control" placeholder="Eventtype">
+</div>
+</div>
+<div class="form-group autocomplete">
+<label>URL</label><br>
+<input type="url" name="repository" id="repository" pattern="^(http[s]?:\/\/)?([-\w\d]+)(\.[-\w\d]+)*(\.([a-zA-Z]{2,5}|[\d]{1,3})){1,2}(\/([-~%\.\(\)\w\d]*\/*)*(#[-\w\d]+)?)?$" class="form-control" placeholder="e.g. https://github.com/">
+</div>
+<button type="button" id="removebtn" onclick="removeRegistration(this)" class="btn btn-warning btn-sm" style="float:right">Remove</button>
+<br>
+</div>
+</div>
+<br><br>
+<div class="clearfix">
+<button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary">Add another project</button><br>
+<br>
+<button type="submit" form="1" class="btn btn-success btn-lg">Sign up</button>
+<button type="button" onclick="window.location.replace('http://localhost:5000')" class="btn btn-danger btn-lg">Cancel</button>
+</div>
+</div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="/static/js/reg_form_functions.js"></script>
+<script src="/static/js/validation.js"></script>
+<script src="/static/js/autocomplete.js"></script>
+<script>
+autocomplete($('[name=repository]'), countries);
+</script>
+{% endblock %}

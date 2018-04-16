@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Observerhive: Login</title>
+{% endblock %}
+{% import 'macros.html' as macros %}
+{% block content %}
+<style>
+input[aria-invalid="true"], textarea[aria-invalid="true"] {
+  border: 1px solid #f00;
+  box-shadow: 0 0 4px 0 #f00;
+}
+</style>
+<h3>Login to your account.</h3>
+<br>
+<form method="POST" id="login">{{ form.csrf_token }}
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+{{ form.username(class_ ='form-control input-lg', size=50, placeholder='Username', **{'aria-required':'required' ,'required':'required'}) }}
+</div>
+{% if form.username.errors %}
+<ul class=list-group">
+    {% for error in form.username.errors %}
+        <li class="list-group-item list-group-item-danger">{{ error|e }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<br>
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+{{ form.password(class_ = 'form-control input-lg', size=50, placeholder='Password', **{'aria-required':'required' ,'required':'required'}) }}
+</div>
+{% if form.password.errors %}
+<ul class=list-group">
+    {% for error in form.password.errors %}
+        <li class="list-group-item list-group-item-danger">{{ error|e }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<br>
+<button type="submit" class="btn btn-primary">Log in</button>
+</form>
+<script src="/static/js/validation.js"></script>
+{% endblock %}

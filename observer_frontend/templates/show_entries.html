@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Observerhive: Registrations</title>
+{% endblock %}
+{% block content %}
+{% for service, registrations in projects.items()  %}
+<label>Registrations at {{ service }}</label><br><br>
+<table class="table table-hover">
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Projectname</th>
+<th scope="col">URL</th>
+<th scope="col">Eventtype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    {% for projectname, values in registrations.items() %}
+        {% for url, entries in values.items() %}
+            {% for event, id in entries.items() %}
+                <tr>
+                    <td>{{ id }}</td>
+                    <td>{{ projectname }}</td>
+                    <td>{{ url }}</td>
+                    <td>{{ event }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+</tr>
+</tbody>
+</table>
+<br>
+{% endfor %}
+<button type="button" id="reg-btn" class="btn btn-warning">Register all projects</button>
+<button type="button" id="active-btn" class="btn btn-success">Change to active</button>
+<button type="button" id="inactive-btn" class="btn btn-danger" style="{visibility:hidden;}">Change to inactive</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="/static/js/hello_bye.js"></script>
+<script>$('#inactive-btn').hide()</script>
+{% endblock %}

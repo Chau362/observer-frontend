@@ -1,0 +1,14 @@
+{
+    "https://www.zdf.de/nachrichten/": {
+        "project1": {
+            "https://www.zdf.de/nachrichten/": {
+                "GIT_COMMIT": "None"
+            }
+        },
+        "project2": {
+            "https://www.zdf.de/nachrichten/": {
+                "GIT_UPDATE": "None"
+            }
+        }
+    }
+}
