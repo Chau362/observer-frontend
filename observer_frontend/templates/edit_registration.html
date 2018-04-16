@@ -3,6 +3,13 @@
 <title>Observerhive: Registrations</title>
 {% endblock %}
 {% block content %}
+<style>
+tr.strikeout td.strikable {
+    position: relative;
+    text-decoration:line-through;
+}
+</style>
+<div id="00">
 {% for service, registrations in projects.items()  %}
 <label>Registrations at {{ service }}</label><br><br>
 <table class="table table-hover">
@@ -20,10 +27,11 @@
     {% for url, entries in values.items() %}
         {% for event, id in entries.items() %}
             <tr>
-                <td>{{ id }}</td>
-                <td class="editable">{{ projectname }}</td>
-                <td class="editable">{{ url }}</td>
-                <td class="editable">{{ event }}</td>
+                <td class="strikable">{{ id }}</td>
+                <td class="strikable">{{ projectname }}</td>
+                <td class="strikable">{{ url }}</td>
+                <td class="strikable">{{ event }}</td>
+                <td><button type="button" name="strikeoutbtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
             </tr>
         {% endfor %}
     {% endfor %}
@@ -33,11 +41,12 @@
 </table>
 <br>
 {% endfor %}
-<button type="button" id="active-btn" class="btn btn-success">Save changes</button>
+</div>
+<button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
+<button type="button" id="save-btn" class="btn btn-success">Save changes</button>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="/static/js/mindmup_editabletable.js"></script>
-<script>
-$('table').editableTableWidget();
-</script>
+<script src="/static/js/autocomplete.js"></script>
+<script src="/static/js/reg_form_functions.js"></script>
+<script src="/static/js/hello_bye.js"></script>
 {% endblock %}

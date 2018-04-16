@@ -33,9 +33,13 @@
 </table>
 <br>
 {% endfor %}
-<button type="button" id="reg-btn" class="btn btn-warning">Register all projects</button>
-<button type="button" id="active-btn" class="btn btn-success">Change to active</button>
-<button type="button" id="inactive-btn" class="btn btn-danger" style="{visibility:hidden;}">Change to inactive</button>
+<hr>
+<button type="button" id="reg-btn" class="btn btn-warning pull-right">Register all projects</button>
+<button type="button" id="active-btn" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+<button type="button" id="inactive-btn" class="btn btn-primary" style="display:none"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
+<br>
+<span class="label label-danger" id="stoplabel">Stopped</span>
+<span class="label label-success" id="runlabel" aria-hidden="true" style="display:none">Running</span>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/static/js/hello_bye.js"></script>
 <script>$('#inactive-btn').hide()</script>

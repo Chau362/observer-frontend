@@ -3,7 +3,7 @@
 
 """ This module runs the frontend of iteratec's Observerhive.
 
-    Blabblabla
+    Blabblabla.
 """
 
 from flask import Flask, redirect, render_template, request, url_for, Response
@@ -108,10 +108,12 @@ def login():
                 return redirect(request.args.get("next") or url_for("home"))
             else:
                 logger.info('Denied access to ' + usrname + ' due to wrong password.')
-                return redirect('/login/')
+                form.password.errors.append('Wrong password for user.')
+                return redirect(url_for('login'))
         else:
             logger.info(usrname + ' unknown.')
-            return redirect('/login/')
+            form.username.errors.append(usrname + ' unknown.')
+            return render_template('login.html', form=form)
     else:
         return render_template('login.html', form=form)
 
@@ -129,7 +131,7 @@ def logout():
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
-    if request.method == 'POST':
+    if form.validate_on_submit():
         data = {}
         projects = {}
         for project_name, repository, event in zip(request.form.getlist('projectName'),
