@@ -1,56 +1,27 @@
-from flask_login.mixins import UserMixin, AnonymousUserMixin
-import itertools
+"""This module defines the user models which are used in the app.
+"""
+
+from flask_login import UserMixin, AnonymousUserMixin
 
 
-users = {}
+class User(UserMixin):
+    """Generic class for authenticated users.
 
-
-def find_user_by_id(user_id):
-    for _user in users:
-        if _user['id'] == user_id:
-            return _user
-    return None
-
-
-class User(UserMixin, object):
-    new_id = itertools.count(0)
+       Besides the inherited methods and attributes it defines an active
+       flag to indicate if a user is currently interested in receiving
+       information about new events.
+    """
 
     def __init__(self):
-        super().__init__()
-        self.id = next(self.new_id)
+        self.active = False
 
 
-class LoginUser(UserMixin):
+class Anonymous(AnonymousUserMixin):
+    """Generic class for anonymous user.
 
-    def __init__(self, id):
-        self.id = id
-
-    @property
-    def username(self):
-        user = self.get_user()
-        return user['username']
-
-    @property
-    def is_admin(self):
-        user = self.get_user()
-        return user['is_admin']
-
-    def get_user(self):
-        return find_user_by_id(self.id)
-
-
-class AnonymousUser(AnonymousUserMixin):
+       Besides the inherited methods and attributes it defines an id
+       attribute which is set to Guest.
+    """
 
     def __init__(self):
-        self.username = "Guest"
-
-    @property
-    def username(self):
-        return "Guest"
-
-    @property
-    def is_admin(self):
-        return None
-
-    def get_user(self):
-        return None
+        self.id = 'Guest'

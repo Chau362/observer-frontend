@@ -1,9 +1,18 @@
+"""This module contains all forms used by the Observer-Hive frontend.
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
+    """This class defines the login form.
+
+       The form provides two entry fields for the user's
+       credentials: username and password.
+    """
+
     username = StringField('Username', 
                            validators=[InputRequired(
                                message="Please enter a Username.")])
@@ -13,6 +22,12 @@ class LoginForm(FlaskForm):
 
 
 class ChangePasswordForm(FlaskForm):
+    """This class defines the form to change an existing users password.
+
+       The form provides one entry fields for the current password and two
+       entry fields for new password, the second one being used for verification.
+    """
+
     currentPassword = PasswordField('currentPassword',
                                     validators=[
                                     InputRequired(
@@ -33,6 +48,12 @@ class ChangePasswordForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    """This class defines part the registration form.
+
+       The form provides entry fields for the chosen username and
+       two entry fields for a password, the second one being used for verification.
+    """
+
     username = StringField('Username',
                            validators=[InputRequired(
                                message="Please enter a Username.")])

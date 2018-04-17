@@ -28,6 +28,12 @@ setup(name='observer_frontend',
           'bcrypt',
           'requests',
       ],
+      setup_requires=[
+        'pytest-runner',
+      ],
+      tests_require=[
+        'pytest',
+      ],
       include_package_data=True,
       scripts=['bin/observer-frontend'],
       zip_safe=False)

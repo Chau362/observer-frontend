@@ -9,6 +9,8 @@ import json
 import socket
 import logging
 
+__author__ = "Masud Afschar"
+__status__ = "Development"
 
 # logging setup
 logger = logging.getLogger(__name__)
@@ -37,6 +39,7 @@ class MyHTTPRequester:
     def get_my_ip(self):
         """Function to find out internal IPv4-Address.
         """
+
         # get the current IP address of this machine
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
@@ -47,8 +50,9 @@ class MyHTTPRequester:
         return my_full_address
 
     def register(self, event_type, project, projectUrl, service_address):
-        """Function to register a specific event for one project.
+        """Register a specific event for one project.
         """
+
         my_full_address = self.get_my_ip()
         registration_parameters = {"eventType": event_type,
                                    "project": project,
@@ -73,8 +77,9 @@ class MyHTTPRequester:
 
 
     def unregister(self, service_address, id):
-        """Function to unregister a specific event for one project.
+        """Unregister a specific event for one project.
         """
+
         unregistration_parameters = {"id": id}
         response = requests.post(service_address,
                                  json=unregistration_parameters)
@@ -83,9 +88,15 @@ class MyHTTPRequester:
 
 
     def check_registrations(self, id_list, service_address):
+        """Check if registrations are still active.
+        """
+
         response = requests.get(service_address)
         if response.status_code == 200:
-            registered_projects = json.loads(response.text)
+            try:
+                registered_projects = json.loads(response.text)
+            except:
+                return None
             check = True
             for id in id_list:
                 if id not in registered_projects:

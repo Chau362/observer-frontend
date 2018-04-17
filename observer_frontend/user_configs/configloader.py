@@ -1,3 +1,5 @@
+"""This module loads configurations for a specific user.
+"""
 
 import os
 import json
@@ -21,6 +23,9 @@ logger.addHandler(console_log)
 
 
 def load_config(username):
+    """Load config file and return it.
+    """
+
     path = os.path.dirname(os.path.abspath(__file__))
     file = username + ".json"
     try:
@@ -34,6 +39,9 @@ def load_config(username):
 
 
 def save_config(username, data):
+    """Write and safe new config file.
+    """
+
     path = os.path.dirname(os.path.abspath(__file__))
     file = username + ".json"
     try:

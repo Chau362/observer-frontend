@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-""" This module runs the frontend of iteratec's Observerhive.
+""" This module runs the frontend app of iteratec's Observerhive.
 
-    Blabblabla.
+    The app implements a simple webservice where the user can either register
+    projects at a Conductor Service, check his or her registrations or turn
+    on and off receiving event messages for the registered projects.
 """
 
-from flask import Flask, redirect, render_template, request, url_for, Response
+from flask import Flask, redirect, render_template, request, url_for, Response, g
 import flask_login
-from . import request_maker as registrator
+from observer_frontend import request_maker as registrator
+from observer_frontend.observer_user import User, Anonymous
 from observer_frontend.forms import LoginForm, ChangePasswordForm, RegisterForm
 from bcrypt import hashpw, gensalt, checkpw
 import logging
@@ -18,11 +21,17 @@ from observer_frontend.user_configs.configloader import load_config, save_config
 from threading import Thread
 # from lights.led_blinker import Blink
 
-app = Flask(__name__)
 
+__author__ = "Masud Afschar"
+__status__ = "Development"
+
+
+# create the application instance
+app = Flask(__name__)
+# set configurations of this app
 app.config.update(dict(
-    SECRET_KEY="powerful secretkey",
-    WTF_CSRF_SECRET_KEY="a csrf secret key"
+    SECRET_KEY=os.urandom(12),
+    WTF_CSRF_SECRET_KEY=os.urandom(12)
 ))
 
 # logging setup
@@ -45,20 +54,44 @@ logger.addHandler(console_log)
 # configure login manager
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
+# redirect to login page if user is not authenticated
 login_manager.login_view = "login"
+# produce an anonymous user to use when no one is logged in
+login_manager.anonymous_user = Anonymous
 
-with open("observer_frontend/users.json") as user_data:
-    users = json.load(user_data)
 
-class User(flask_login.UserMixin):
+def get_users():
+    """Opens the users file containing all usernames and passwords.
 
-    def __init__(self):
-        self.active = False
+       Provides the dictionary with usernames and corresponding passwords
+       of all users for the current application context.
+    """
 
+    if not hasattr(g, 'users'):
+        with open("observer_frontend/users.json") as registered_users:
+            users = json.load(registered_users)
+        g.users = users
+    return g.users
+
+
+@app.teardown_appcontext
+def close_userfile(error):
+    """Closes the users file at the end of a request.
+    """
+
+    if hasattr(g, 'users'):
+        g.pop('users', None)
 
 
 @login_manager.user_loader
 def user_loader(username):
+    """Callback function for reloading a user from the session.
+
+        The function takes the username and returns a user object
+        or None if the user does not exist.
+    """
+
+    users = get_users()
     if username not in users:
         return
 
@@ -69,32 +102,43 @@ def user_loader(username):
 
 @login_manager.request_loader
 def request_loader(request):
+    """Callback function for reloading a user from the session.
+
+        The function takes the Flask request and returns a user object
+        or None if the user does not exist.
+    """
+
+    users = get_users()
     username = request.form.get('username')
     if username not in users:
         return
 
     user = User()
     user.id = username
-
-    # DO NOT ever store passwords in plaintext and always compare password
-    # hashes using constant-time comparison!
-    user.is_authenticated = request.form['password'] == users[username]
-
     return user
 
 @app.route('/')
 def home():
+    """Renders the homepage template.
+    """
+
     if not flask_login.current_user.is_authenticated:
         return render_template('home.html')
     else:
-        return render_template('logged_in.html', username= flask_login.current_user.id)
+        return render_template('logged_in.html',
+                               username= flask_login.current_user.id)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    """Render the login page and check login credentials.
+
+       The function renders the login form and checks if username
+       does exist and the provided password is correct when the user
+       submits his or her data.
+    """
     form = LoginForm(request.form)
-    with open("observer_frontend/users.json") as registered_users:
-        users = json.load(registered_users)
+    users = get_users()
     if form.validate_on_submit():
         usrname = request.form['username']
         password = request.form['password']
@@ -107,7 +151,9 @@ def login():
                 logger.info(usrname + ' successfully logged in.')
                 return redirect(request.args.get("next") or url_for("home"))
             else:
-                logger.info('Denied access to ' + usrname + ' due to wrong password.')
+                logger.info('Denied access to '
+                            + usrname
+                            + ' due to wrong password.')
                 form.password.errors.append('Wrong password for user.')
                 return redirect(url_for('login'))
         else:
@@ -121,6 +167,12 @@ def login():
 @app.route('/logout/', methods=['GET', 'POST'])
 @flask_login.login_required
 def logout():
+    """Log the current user out.
+
+       Calls the logout_user() function of flask_login and
+       redirects to the homepage of this app.
+    """
+
     # remove the username from the session if it is there
     out_user = flask_login.current_user.id
     flask_login.logout_user()
@@ -130,6 +182,12 @@ def logout():
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
+    """Render the form to register a new user.
+
+       The function renders the registration form and stores its values
+       if the current user submitted the form.
+    """
+
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         data = {}
@@ -138,7 +196,6 @@ def register():
                                                request.form.getlist('repository'),
                                                request.form.getlist('eventType')):
             projects[project_name] = {repository: {event: "None"}}
-            print(request.form.getlist('projectName'), request.form.getlist('repository'), request.form.getlist('eventType'))
         data[request.form['service']] = projects
         try:
             save_config(request.form.get('username'), data)
@@ -153,12 +210,24 @@ def register():
 @app.route('/profile/', methods=['GET', 'POST'])
 @flask_login.login_required
 def show_registrations():
+    """Retrieve all registered projects of the current user and show them.
+
+       The function retrieves the current users stored configurations and
+       passes them to the corresponding template.
+    """
+
     projects = load_config(flask_login.current_user.id)
     return render_template("show_entries.html", projects=projects)
 
 
 @app.route('/profile/register/', methods=['POST'])
 def register_remaining():
+    """Register all projects at Conductor service if not done already.
+
+       The function checks all projects in the users config file and if
+       a project does not have an id already it will try register it
+       at the specified Conductor Service.
+    """
     projects = load_config(flask_login.current_user.id)
     change_count = 0
     for service_address in projects:
@@ -179,29 +248,52 @@ def register_remaining():
                         pass
     if change_count > 0:
         save_config(flask_login.current_user.id, projects)
-        logger.info('Made ' + str(change_count) + 'changes for user ' + flask_login.current_user.id + '.')
+        logger.info('Made ' + str(change_count) + 'changes for user '
+                    + flask_login.current_user.id + '.')
     else:
-        logger.info('Made no changes for user ' + flask_login.current_user.id + '.')
+        logger.info('Made no changes for user '
+                    + flask_login.current_user.id + '.')
     return Response('200')
 
 
 @app.route('/profile/activate/', methods=['POST'])
 def activate_user_setup():
+    """Set the active flag to True.
+
+       The active flag indicates if a user is currently interested in
+       receiving events for the project he has registered for.
+    """
+
     flask_login.current_user.active = True
-    logger.info('Activated messages for user ' + flask_login.current_user.id + '.')
+    logger.info('Activated messages for user '
+                + flask_login.current_user.id + '.')
     return Response('200')
 
 
 @app.route('/profile/deactivate/', methods=['POST'])
 def deactivate_user_setup():
+    """Set the active flag to False.
+
+       The active flag indicates if a user is currently interested in
+       receiving events for the project he has registered for.
+    """
+
     flask_login.current_user.active = False
-    logger.info('Deactivated messages for user ' + flask_login.current_user.id + '.')
+    logger.info('Deactivated messages for user '
+                + flask_login.current_user.id + '.')
     return Response('200')
 
 
 @app.route('/profile/edit/', methods=['GET', 'POST'])
 @flask_login.login_required
 def edit_registrations():
+    """Retrieve all registered projects of the current user and show them.
+
+       The function retrieves the current users stored configurations and
+       passes them to the corresponding template so that the user can
+       manipulate them if wished.
+    """
+
     projects = load_config(flask_login.current_user.id)
     return render_template("edit_registration.html", projects=projects)
 
@@ -209,6 +301,13 @@ def edit_registrations():
 @app.route('/change-password/', methods=['GET', 'POST'])
 @flask_login.login_required
 def change_password():
+    """Render the form to change password of current user.
+
+       The function retrieves the form to change one's password and
+       renders it. If the current user submitted the form, the function
+       hashes the password and stores it in the users file of the app.
+    """
+
     with open("observer_frontend/users.json") as registered_users:
         users = json.load(registered_users)
     current_password = users[flask_login.current_user.id]
@@ -217,12 +316,16 @@ def change_password():
         if checkpw(request.form['currentPassword'].encode('utf-8'),
                   current_password.encode('utf-8')):
             if request.form['newPassword1'] == request.form['newPassword2']:
-                users[flask_login.current_user.id] = hashpw(request.form['newPassword1'].encode('utf-8'), gensalt()).decode('utf-8')
+                users[flask_login.current_user.id] \
+                    = hashpw(request.form['newPassword1'].encode('utf-8'),
+                             gensalt()).decode('utf-8')
                 with open("users.json", "w") as outfile:
                     json.dump(users, outfile)
-                logger.info("Successfully changed password of " + flask_login.current_user.id + '.')
+                logger.info("Successfully changed password of "
+                            + flask_login.current_user.id + '.')
                 return redirect(url_for('home'))
-        logger.info("Unable to change password of " + flask_login.current_user.id + '.')
+        logger.info("Unable to change password of "
+                    + flask_login.current_user.id + '.')
         return redirect(url_for('change_password'))
     else:
         return render_template('change_password.html', form=form)
@@ -230,7 +333,14 @@ def change_password():
 
 @app.route('/event/', methods=['POST'])
 def render_event():
-    logger.info('Received the following: ' + str(request.data.decode('utf-8')))
+    """Catch POSTed data and process it.
+
+       The function checks what kind of information was sent and
+       forwards it to the lights class to process it.
+    """
+
+    logger.info('Received the following: '
+                + str(request.data.decode('utf-8')))
     if flask_login.current_user.active == True:
     # blink_thread = Thread(target=Blink, kwargs={'numTimes': 10,'speed': 0.5})
     # blink_thread.start()
@@ -238,6 +348,6 @@ def render_event():
     return Response('Received POSTed event.')
 
 
-if __name__ == "__main__":
-    app.secret_key = os.urandom(12)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# if __name__ == "__main__":
+#     app.secret_key = os.urandom(12)
+#     app.run(debug=True, host='0.0.0.0', port=9000)

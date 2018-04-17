@@ -1,7 +1,4 @@
 include README.rst
-include observer_frontend/static/css/*
-include observer_frontend/static/fonts/*
-include observer_frontend/static/img/*
-include observer_frontend/static/js/*
-include observer_frontend/templates/*.html
-prune observer_frontend/user_configs/*.json
+graft observer_frontend/static
+graft observer_frontend/templates
+graft observer_frontend/user_configs
