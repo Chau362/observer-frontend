@@ -1,4 +1,5 @@
 from observer_frontend.observer_frontend import app
+from flask import url_for
 import unittest
 import tempfile
 
@@ -30,37 +31,62 @@ class ObserverFrontendTestCase(unittest.TestCase):
     def test_homepage(self):
         """Access homepage.
 
-            Sends a HTTP GET request to homepage an checks for keyword
-            in retrieved template.
+            Sends a HTTP GET request to homepage an checks if
+            request status code is 200.
         """
         rv = self.app.get('/')
-        assert b'Welcome' in rv.data
+        self.assertTrue(rv.status_code, 200)
 
-    def test_valid_login(self):
-        """Checks login process.
+    def test_user_can_login(self):
+        """Checks if user can log in.
+
+           Calls the helper function to log in and then checks the
+           ID (which is the username) of the current user and that
+           the current user is not anonymous.
         """
-        rv = self.login('testUser', 'xxx')
-        assert b'testUser' in rv.data
+        from flask_login import current_user
+        with self.app:
+            self.login('testUser', 'xxx')
+            self.assertTrue(current_user.id == 'testUser')
+            self.assertFalse(current_user.is_anonymous)
+
+    def test_login_logout(self):
+        with self.app:
+            from flask_login import current_user
+            self.login('testUser', 'xxx')
+            self.assertTrue(current_user.id == 'testUser')
+            self.logout()
+            self.assertTrue(current_user.is_anonymous)
+            self.login('testUser', 'yyy')
+            self.assertTrue(current_user.is_anonymous)
 
     def test_access_denied(self):
         rv = self.app.get('/change-password/')
-        self.assertEquals(rv.status_code, 302)
+        self.assertEqual(rv.status_code, 302)
 
     def test_invalid_login(self):
         self.login('testUser', 'xxx')
         rv = self.app.get('/profile/')
 
-    @unittest.skip("can't login")
-    def test_unauthorized_activation(self):
-        rv = self.app.post('/profile/register/', data={})
+    def test_unauthorized_access(self):
+        rv = self.app.post('/profile/', data={})
         self.assertEqual(rv.status_code, 302)
 
-    @unittest.skip("can't login")
     def test_register_projects(self):
-        with self.app as c:
+        from flask_login import current_user
+        with self.app:
             self.login('testUser', 'xxx')
-            rv = c.post('/profile/register/', data={})
-            self.assertEquals(rv.status_code, 200)
+            self.assertTrue(current_user.id == 'testUser')
+            rv = self.app.post('/profile/register/', data=current_user.id)
+            self.assertEqual(rv.status_code, 302)
+
+    def test_unauthenticated_profile_view(self):
+        from flask_login import current_user
+        with self.app:
+            self.login('testUser', 'xxx')
+            self.assertTrue(current_user.id == 'testUser')
+            rv = self.app.post('/profile/')
+            self.assertEqual(rv.status_code, 302)
 
 
 if __name__ == '__main__':

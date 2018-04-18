@@ -1,8 +1,31 @@
-$("#reg-btn").click(function(){
-    $.post("http://localhost:5000/profile/register/", function(){
-        location.reload();
+
+function regfunc(username){
+
+    $.ajax({
+    type: "POST",
+    url: "http://localhost:5000/profile/register/",
+    // The key needs to match your method's input parameter (case-sensitive).
+    data: username,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function(username){alert(username);},
+    failure: function(errMsg) {
+        alert(errMsg);
+    }
     });
-});
+//    console.log(username);
+//    $.post("http://localhost:5000/profile/register/", {id:username}, function(){
+//        location.reload();
+//    });
+};
+
+
+
+//$("#reg-btn").click(function(){
+//    $.post("http://localhost:5000/profile/register/", function(){
+//        location.reload();
+//    });
+//});
 
 $("#active-btn").click(function(){
     $.post("http://localhost:5000/profile/activate/", function(){

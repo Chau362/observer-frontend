@@ -1,3 +1,4 @@
-from .tests import test_observer_frontend
+from . import observer_user
+from .user_configs import configloader
 from .observer_frontend import app
 

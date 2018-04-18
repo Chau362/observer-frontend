@@ -50,3 +50,14 @@ def save_config(username, data):
     except FileNotFoundError:
         logger.error('Could not save configurations for user '
                     + username + '.')
+
+
+def delete_configs(username):
+    """Delete a config file for specified user.
+    """
+
+    path = os.path.dirname(os.path.abspath(__file__))
+    file = username + ".json"
+
+    os.remove(path + "/" + file)
+    logger.info('Deleted configurations for ' + username + '.')

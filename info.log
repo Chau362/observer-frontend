@@ -112322,3 +112322,242 @@ data-track='{
 2018-04-17 18:19:45 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
 2018-04-17 18:19:54 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
 2018-04-17 18:19:56 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 08:58:34 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 09:11:35 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:11:37 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:13:11 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:13:13 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:17:28 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:17:30 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:17:48 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:17:50 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:18:23 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:18:25 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:19:32 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:19:34 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:32:08 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:32:10 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:32:43 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:32:45 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:33:59 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 09:34:01 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:34:04 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:37:21 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:37:23 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:40:35 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:40:37 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:48:59 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:49:01 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:50:07 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:50:09 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:50:47 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 09:50:49 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 09:51:05 - [INFO] - observer_frontend.observer_frontend: Denied access to testUser due to wrong password.
+2018-04-18 10:19:30 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 10:19:34 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 10:20:03 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:09 - [INFO] - observer_frontend.observer_frontend: Denied access to testUser due to wrong password.
+2018-04-18 10:20:09 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:20:49 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 10:20:51 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 10:21:57 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:57 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:57 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:21:58 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:22:01 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 10:22:03 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 10:24:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:45 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:46 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:47 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:47 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 10:24:47 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:47 - [INFO] - observer_frontend.observer_frontend: Called request_loader.
+2018-04-18 10:24:49 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 10:24:51 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 10:58:42 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 10:58:44 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 10:58:53 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 10:58:56 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 10:58:58 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 11:07:18 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 11:07:21 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 11:07:23 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 11:16:03 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 11:16:05 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 11:17:04 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 11:17:07 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 11:17:09 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 11:18:59 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 11:19:01 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 11:19:03 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 11:48:04 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 11:49:58 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 11:49:59 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 11:50:00 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 11:50:00 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 11:53:46 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user Guest.
+2018-04-18 12:03:03 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 12:03:04 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 12:03:05 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 12:03:05 - [INFO] - observer_frontend.observer_frontend: Made no changes for user Guest.
+2018-04-18 12:03:07 - [INFO] - observer_frontend.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-04-18 12:03:09 - [INFO] - observer_frontend.request_maker: Unregistered event with ID 0
+2018-04-18 12:03:38 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:13:10 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:16:21 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:17:29 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:20:03 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:21:01 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:22:34 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 12:23:50 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 12:27:01 - [INFO] - observer_frontend.observer_frontend: Denied access to testUser due to wrong password.
+2018-04-18 12:27:10 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:31:50 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:39:54 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:39:57 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 12:41:05 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 12:41:07 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 12:45:51 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 14:52:47 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 14:55:19 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 14:59:59 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:00:09 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-18 15:00:10 - [INFO] - observer_frontend.observer_frontend: Deactivated messages for user testUser.
+2018-04-18 15:01:19 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:09:21 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:11:57 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 15:16:49 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:17:42 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:18:42 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:19:28 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:20:11 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:20:15 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:20:16 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:20:17 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:20:17 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:21:07 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:21:08 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 15:22:17 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:22:46 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:22:47 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:22:48 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:22:48 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:23:21 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:23:22 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:23:23 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:23:23 - [INFO] - observer_frontend.observer_frontend: Made no changes for user Guest.
+2018-04-18 15:30:46 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:33:00 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:44:00 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:44:52 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 15:45:35 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 15:45:39 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:45:40 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:45:41 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:45:41 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:46:23 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:46:24 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:46:25 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:46:25 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:47:33 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:47:34 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:47:35 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:47:35 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:48:02 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:48:03 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:48:04 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:48:04 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 15:56:09 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:56:10 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 15:56:11 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 15:56:11 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 16:15:55 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:15:56 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 16:15:57 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:15:57 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 16:23:38 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:23:39 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 16:23:40 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:23:40 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 16:25:24 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:25:25 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 16:25:26 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:25:26 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 16:27:27 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:27:28 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 16:27:29 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:27:29 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 16:40:08 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:40:09 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 16:40:10 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 16:40:10 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 17:02:15 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:02:16 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 17:02:17 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:02:17 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 17:05:54 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 17:06:06 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 17:06:16 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 17:07:50 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 17:07:54 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 17:08:05 - [INFO] - observer_frontend.observer_frontend: Denied access to testUser due to wrong password.
+2018-04-18 17:08:25 - [INFO] - observer_frontend.observer_frontend: Denied access to testUser due to wrong password.
+2018-04-18 17:16:20 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 17:16:25 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:16:26 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 17:16:27 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:16:27 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 17:23:52 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 17:23:56 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:24:08 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:26:40 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:26:43 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:26:48 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:26:54 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:28:36 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:31:31 - [INFO] - observer_frontend.user_configs.configloader: Could not retrieve configurations of user .
+2018-04-18 17:32:34 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:32:35 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 17:32:36 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:32:36 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 17:32:43 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:32:44 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 17:32:45 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:32:45 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 17:32:54 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 17:53:19 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 17:56:08 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:56:09 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 17:56:10 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 17:56:10 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.
+2018-04-18 18:19:44 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 18:21:38 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 18:21:49 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-18 18:22:03 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-18 18:22:17 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 18:22:18 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver-hive.
+2018-04-18 18:22:19 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for Observerhive.
+2018-04-18 18:22:19 - [INFO] - observer_frontend.observer_frontend: Made no changes for user testUser.

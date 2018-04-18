@@ -8,16 +8,16 @@
     on and off receiving event messages for the registered projects.
 """
 
+import os
 from flask import Flask, redirect, render_template, request, url_for, Response, g
 import flask_login
-from observer_frontend import request_maker as registrator
-from observer_frontend.observer_user import User, Anonymous
-from observer_frontend.forms import LoginForm, ChangePasswordForm, RegisterForm
 from bcrypt import hashpw, gensalt, checkpw
+import observer_frontend.request_maker as registrator
+from .observer_user import User, Anonymous
+from observer_frontend.user_configs.configloader import load_config, save_config
+from .forms import LoginForm, ChangePasswordForm, RegisterForm
 import logging
 import json
-import os
-from observer_frontend.user_configs.configloader import load_config, save_config
 from threading import Thread
 # from lights.led_blinker import Blink
 
@@ -30,8 +30,8 @@ __status__ = "Development"
 app = Flask(__name__)
 # set configurations of this app
 app.config.update(dict(
-    SECRET_KEY=os.urandom(12),
-    WTF_CSRF_SECRET_KEY=os.urandom(12)
+    SECRET_KEY="SECRET_KEY",
+    WTF_CSRF_SECRET_KEY="SUPER_SECRET_KEY"
 ))
 
 # logging setup
@@ -68,7 +68,8 @@ def get_users():
     """
 
     if not hasattr(g, 'users'):
-        with open("observer_frontend/users.json") as registered_users:
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        with open(cwd + '/users.json') as registered_users:
             users = json.load(registered_users)
         g.users = users
     return g.users
@@ -110,12 +111,16 @@ def request_loader(request):
 
     users = get_users()
     username = request.form.get('username')
+    password = request.form.get('password')
     if username not in users:
         return
+    if checkpw(password.encode('utf-8'),
+                      users[username].encode('utf-8')):
+        user = User()
+        user.id = username
+        return user
+    return
 
-    user = User()
-    user.id = username
-    return user
 
 @app.route('/')
 def home():
@@ -123,10 +128,12 @@ def home():
     """
 
     if not flask_login.current_user.is_authenticated:
+        print(flask_login.current_user.id)
         return render_template('home.html')
     else:
+        print(flask_login.current_user.id)
         return render_template('logged_in.html',
-                               username= flask_login.current_user.id)
+                               username=flask_login.current_user.id)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -217,10 +224,11 @@ def show_registrations():
     """
 
     projects = load_config(flask_login.current_user.id)
-    return render_template("show_entries.html", projects=projects)
+    return render_template("show_entries.html", projects=projects, username=flask_login.current_user.id)
 
 
 @app.route('/profile/register/', methods=['POST'])
+@flask_login.login_required
 def register_remaining():
     """Register all projects at Conductor service if not done already.
 
@@ -228,7 +236,8 @@ def register_remaining():
        a project does not have an id already it will try register it
        at the specified Conductor Service.
     """
-    projects = load_config(flask_login.current_user.id)
+
+    projects = load_config(request.data.decode('utf-8'))
     change_count = 0
     for service_address in projects:
         requester = registrator.MyHTTPRequester(port='5000')
@@ -244,12 +253,10 @@ def register_remaining():
                             projects[service_address][project_name][url][event] = new_id
                             logger.info('Added new id for registration.')
                             change_count += 1
-                    else:
-                        pass
     if change_count > 0:
         save_config(flask_login.current_user.id, projects)
         logger.info('Made ' + str(change_count) + 'changes for user '
-                    + flask_login.current_user.id + '.')
+                    + flask_login.current_user.id + '..')
     else:
         logger.info('Made no changes for user '
                     + flask_login.current_user.id + '.')
@@ -346,8 +353,3 @@ def render_event():
     # blink_thread.start()
         pass
     return Response('Received POSTed event.')
-
-
-# if __name__ == "__main__":
-#     app.secret_key = os.urandom(12)
-#     app.run(debug=True, host='0.0.0.0', port=9000)
