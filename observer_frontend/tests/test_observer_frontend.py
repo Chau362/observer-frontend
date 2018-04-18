@@ -13,6 +13,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
         self.users = tempfile.mkstemp()
         # disable error catching during request handling
         app.testing = True
+        app.config['WTF_CSRF_ENABLED'] = False
         #  test client provides a simple interface to the application
         self.app = app.test_client()
 
