@@ -1,5 +1,6 @@
+var newId = 0;
 
-var $new_registration = $(
+var new_registration =
 "<div class='well registration'> \
 <div class='row'> \
 <div class='form col-md-8'> \
@@ -13,15 +14,21 @@ var $new_registration = $(
 </div> \
 <div class='form-group autocomplete'> \
 <label>URL</label><br> \
-<input type='url' name='repository' id='repository' class='form-control' placeholder='e.g. https://github.com/'> \
+<input type='url' name='repository' id=% class='form-control' placeholder='e.g. https://github.com/'> \
 </div> \
 <button type='button' id='removebtn' onclick='removeRegistration(this)' class='btn btn-warning btn-sm' style='float:right'>Remove</button> \
 <br> \
-</div>"
-)
+</div> \
+<script src='/static/js/autocomplete.js'></script> \
+<script> \
+projectAutocomplete(document.getElementById(%)); \
+</script>"
+
 
 function duplicate() {
-    $("#00").append($new_registration.clone());
+    newId++;
+    var $new = new_registration.replace(/%/g, newId);
+    $("#00").append($new);
 };
 
 function removeRegistration(caller) {

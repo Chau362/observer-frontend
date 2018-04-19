@@ -39,7 +39,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
   color: #ffffff;
 }
 </style>
-<form method="POST" autocomplete="off" id="1">
+<form method="POST" autocomplete="off" id="1">{{ form.csrf_token }}
 <div class="form-group">
 <h3>Sign Up</h3>
 <p>Please fill in this form to create an account.</p>
@@ -88,13 +88,14 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
 <br>
 <hr>
 
-<h3>Please specify the projects and corresponding events you would like to follow. </h3>
+<h4>Please specify the address of the Conductor Service you would like to register at. </h4>
 <br>
-<div id="00">
+<!-- div id="00" -->
 <div class="form-group">
 <label>Service Address</label><br>
 <input type="url" name="service" aria-required="true" required="required" pattern="^(http[s]?:\/\/)?([-\w\d]+)(\.[-\w\d]+)*(\.([a-zA-Z]{2,5}|[\d]{1,3})){1,2}(\/([-~%\.\(\)\w\d]*\/*)*(#[-\w\d]+)?)?$" class="form-control" placeholder="Enter the address of the Conductor Service">
 </div>
+<!--
 <div class="well registration">
 <div class="row" style="{width: 100%; margin-left: 0px; margin-right: 0px;}">
 <div class="form col-md-8">
@@ -114,10 +115,11 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
 <br>
 </div>
 </div>
+-->
 <br><br>
 <div class="clearfix">
-<button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary">Add another project</button><br>
-<br>
+<!-- button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary">Add another project</button><br>
+<br -->
 <button type="submit" form="1" class="btn btn-success btn-lg">Sign up</button>
 <button type="button" onclick="window.location.replace('http://localhost:5000')" class="btn btn-danger btn-lg">Cancel</button>
 </div>
@@ -127,8 +129,10 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="/static/js/reg_form_functions.js"></script>
 <script src="/static/js/validation.js"></script>
+<!--
 <script src="/static/js/autocomplete.js"></script>
 <script>
-autocomplete(document.getElementById("repository"), countries);
+projectAutocomplete(document.getElementById("repository"));
 </script>
+-->
 {% endblock %}

@@ -1,5 +1,4 @@
 from observer_frontend.observer_frontend import app
-from flask import url_for
 import unittest
 import tempfile
 
@@ -8,9 +7,17 @@ class ObserverFrontendTestCase(unittest.TestCase):
     """This class implements all tests for the flask app which runs the frontend.
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         # make temporary users file
-        self.users = tempfile.mkstemp()
+        # cls.users = tempfile.mkstemp()
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def setUp(self):
         # disable error catching during request handling
         app.testing = True
         app.config['WTF_CSRF_ENABLED'] = False
@@ -79,7 +86,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
             self.login('testUser', 'xxx')
             self.assertTrue(current_user.id == 'testUser')
             rv = self.app.post('/profile/register/', data=current_user.id)
-            self.assertEqual(rv.status_code, 302)
+            self.assertEqual(rv.status_code, 200)
 
     def test_unauthenticated_profile_view(self):
         from flask_login import current_user
@@ -87,7 +94,54 @@ class ObserverFrontendTestCase(unittest.TestCase):
             self.login('testUser', 'xxx')
             self.assertTrue(current_user.id == 'testUser')
             rv = self.app.post('/profile/')
-            self.assertEqual(rv.status_code, 302)
+            self.assertEqual(rv.status_code, 200)
+
+    def test_successful_password_change(self):
+        with self.app:
+            self.login('foobar', 'yyyy')
+            rv = self.app.get('/change-password/')
+            self.assertEqual(rv.status_code, 200)
+            response = self.app.post('/change-password/', data=dict(
+                currentPassword='yyyy', newPassword1='yyyy',
+                newPassword2='yyyy'))
+            self.assertEqual(response.status_code, 302)
+
+    def test_register_new_user(self):
+        with self.app:
+            response = self.app.post('/register/', data=dict(
+                username='MensMan', password1='shitty',
+                password2='shitty', service='https://docs.pytest.org/en/latest/tmpdir.html'))
+            self.assertEqual(response.status_code, 302)
+
+    def test_activation_deactivation_of_events(self):
+        with self.app:
+            from flask_login import current_user
+            self.login('foobar', 'yyyy')
+            self.assertTrue(current_user.id == 'foobar')
+            response = self.app.get('/profile/')
+            self.assertEqual(response.status_code, 200)
+            rv = self.app.post('/profile/activate/')
+            self.assertEqual(rv.status_code, 200)
+            rf = self.app.post('/profile/deactivate/')
+            self.assertEqual(rf.status_code, 200)
+
+    def test_edit_registrations(self):
+        with self.app:
+            from flask_login import current_user
+            self.login('foobar', 'yyyy')
+            self.assertTrue(current_user.id == 'foobar')
+            response = self.app.get('/profile/')
+            self.assertEqual(response.status_code, 200)
+            response = self.app.get('/profile/edit/')
+            self.assertEqual(response.status_code, 200)
+
+    def test_receive_event(self):
+        with self.app:
+            from flask_login import current_user
+            self.login('foobar', 'yyyy')
+            self.assertTrue(current_user.id == 'foobar')
+            response = self.app.post('/event/')
+            self.assertEqual(response.status_code, 200)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 <title>Observerhive: Registrations</title>
 {% endblock %}
 {% block content %}
-{% for service, registrations in projects.items()  %}
+{% for service, projects in registrations.items()  %}
 <label>Registrations at {{ service }}</label><br><br>
 <table class="table table-hover">
 <thead>
@@ -16,18 +16,19 @@
 </thead>
 <tbody>
 <tr>
-    {% for projectname, values in registrations.items() %}
-        {% for url, entries in values.items() %}
-            {% for event, id in entries.items() %}
-                <tr>
-                    <td>{{ id }}</td>
-                    <td>{{ projectname }}</td>
-                    <td>{{ url }}</td>
-                    <td>{{ event }}</td>
-                </tr>
-            {% endfor %}
-        {% endfor %}
+{% for projectname, values in projects.items() %}
+    {% set outerloop = loop %}
+    {% set url = values['projectUrl'] %}
+    {% set events = values['events'] %}
+    {% for event in events %}
+        <tr>
+            <td>{{ outerloop.index }}</td>
+            <td>{{ projectname }}</td>
+            <td>{{ url }}</td>
+            <td>{{ event }}</td>
+        </tr>
     {% endfor %}
+{% endfor %}
 </tr>
 </tbody>
 </table>

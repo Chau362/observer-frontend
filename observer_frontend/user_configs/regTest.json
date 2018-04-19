@@ -1,14 +1,12 @@
 {
-    "https://www.zdf.de/nachrichten/": {
-        "project1": {
-            "https://www.zdf.de/nachrichten/": {
-                "GIT_COMMIT": "None"
-            }
+    "http://192.168.4.44:8080/register": {
+        "scab-oberserver-hive": {
+            "projectUrl": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+            "events": ["GIT_COMMIT"]
         },
-        "project2": {
-            "https://www.zdf.de/nachrichten/": {
-                "GIT_UPDATE": "None"
-            }
+        "Observerhive": {
+            "projectUrl": "https://github.com/Afsharov/Observerhive.git",
+            "events": ["GIT_COMMIT"]
         }
     }
 }

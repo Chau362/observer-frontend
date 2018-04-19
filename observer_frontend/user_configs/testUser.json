@@ -1,26 +1,31 @@
 {
-    "http://192.168.4.102:8080/register": {
-        "Observerhive": {
-            "https://github.com/Afsharov/Observerhive.git": {
-                "GIT_COMMIT": "None"
-            }
-        },
+    "http://192.168.4.44:8080/register": {
         "scab-oberserver-hive": {
-            "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git": {
-                "GIT_COMMIT": "None"
-            }
+            "projectUrl": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+            "events": [
+                "GIT_COMMIT"
+            ]
+        },
+        "Observerhive": {
+            "projectUrl": "https://github.com/Afsharov/Observerhive.git",
+            "events": [
+                "GIT_COMMIT"
+            ]
         }
-    },
-    "http://192.168.4.46:8080/register": {
-        "Observerhive": {
-            "https://github.com/Afsharov/Observerhive.git": {
-                "GIT_COMMIT": "None"
-            }
-        },
+    }
+    ,
+    "http://192.168.4.44:8080/register": {
         "scab-oberserver-hive": {
-            "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git": {
-                "GIT_COMMIT": "2"
-            }
+            "projectUrl": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+            "events": [
+                "GIT_COMMIT"
+            ]
+        },
+        "Observerhive": {
+            "projectUrl": "https://github.com/Afsharov/Observerhive.git",
+            "events": [
+                "GIT_COMMIT"
+            ]
         }
     }
 }

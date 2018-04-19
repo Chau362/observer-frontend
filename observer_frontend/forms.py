@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
        credentials: username and password.
     """
 
-    username = StringField('Username', 
+    username = StringField('Username',
                            validators=[InputRequired(
                                message="Please enter a Username.")])
     password = PasswordField('Password',
@@ -30,13 +30,13 @@ class ChangePasswordForm(FlaskForm):
 
     currentPassword = PasswordField('currentPassword',
                                     validators=[
-                                    InputRequired(
-                                    message="Please enter your current Password.")])
+                                        InputRequired(
+                                            message="Please enter your current Password.")])
     newPassword1 = PasswordField('newPassword1',
                                  validators=[
                                      InputRequired(
-                                     message="Please enter your new Password."),
-                                     Length(min=8,
+                                         message="Please enter your new Password."),
+                                     Length(min=4,
                                             message="Your password must contain at least 8 characters.")])
     newPassword2 = PasswordField('newPassword2',
                                  validators=[
@@ -59,16 +59,16 @@ class RegisterForm(FlaskForm):
                                message="Please enter a Username.")])
 
     password1 = PasswordField('password1',
-                                 validators=[
-                                     InputRequired(
-                                         message="Please enter your new Password."),
-                                     Length(min=8,
-                                            message="Your password must contain at least 8 characters.")])
+                              validators=[
+                                  InputRequired(
+                                      message="Please enter your new Password."),
+                                  Length(min=4,
+                                         message="Your password must contain at least 4 characters.")])
 
     password2 = PasswordField('password2',
-                                 validators=[
-                                     InputRequired(message=
-                                                   "Please enter your new Password again."),
-                                     EqualTo('password1',
-                                             message=
-                                             'Passwords must match')])
+                              validators=[
+                                  InputRequired(message=
+                                                "Please enter your new Password again."),
+                                  EqualTo('password1',
+                                          message=
+                                          'Passwords must match')])
