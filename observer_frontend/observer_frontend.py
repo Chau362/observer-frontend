@@ -202,20 +202,12 @@ def register():
        The function renders the registration form and stores its values
        if the current user submitted the form.
     """
+
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         username = request.form['username']
         password = request.form['password1']
-        # data = {}
-        # projects = {}
-        # for project_name, repository, event in zip(request.form.getlist('projectName'),
-        #                                        request.form.getlist('repository'),
-        #                                        request.form.getlist('eventType')):
-        #     projects[project_name] = {repository: {event: "None"}}
-        # data[request.form['service']] = projects
-
         add_user_and_password(username, password)
-        # save_config(request.form.get('username'), data)
 
         return redirect(url_for('home'))
     else:
@@ -233,7 +225,8 @@ def show_registrations():
 
     username = flask_login.current_user.id
     registrations = load_config(username)
-    return render_template("show_entries.html", registrations=registrations, username=username)
+    return render_template("show_entries.html", registrations=registrations,
+                           username=username)
 
 
 @app.route('/profile/register/', methods=['POST'])
