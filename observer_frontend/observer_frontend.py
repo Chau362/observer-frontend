@@ -319,8 +319,25 @@ def edit_registrations():
     """
 
     username = flask_login.current_user.id
-    registrations = load_config(username)
-    return render_template("edit_registration.html", registrations=registrations)
+    if request.method == 'GET':
+        registrations = load_config(username)
+        return render_template("edit_registration.html", registrations=registrations)
+    else:
+        data = {}
+        for i, entries in enumerate(zip(request.form.getlist('service'),
+                                               request.form.getlist('projectName'),
+                                               request.form.getlist('repository'),
+                                               request.form.getlist('eventType'))):
+
+            if entries[0] not in data:
+                data[entries[0]] = {entries[1]: {"projectUrl": entries[2], "events": [entries[3]]}}
+            elif entries[1] not in data[entries[0]]:
+                data[entries[0]][entries[1]] = {"projectUrl": entries[2], "events": [entries[3]]}
+            else:
+                data[entries[0]][entries[1]]["events"].append(entries[3])
+
+        save_config(username, data)
+        return redirect('/profile/')
 
 
 @app.route('/change-password/', methods=['GET', 'POST'])
@@ -367,3 +384,4 @@ def render_event():
     # blink_thread.start()
         pass
     return Response('Received POSTed event.')
+

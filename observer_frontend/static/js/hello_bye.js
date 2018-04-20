@@ -34,12 +34,14 @@ $("#inactive-btn").click(function(){
 $( '[name="strikeoutbtn"]' ).click(function() {
     if ($(this).attr("name") == "strikeoutbtn"){
         $(this).parent().parent().attr("class", "strikeout");
+        $(this).parent().parent().children("input").attr("disabled", "true");
         $(this).attr("class", "btn btn-warning");
         $(this).attr("name", "cancelbtn");
         $(this).children().attr("class", "glyphicon glyphicon-remove");
     }
     else {
         $(this).parent().parent().attr("class", null);
+        $(this).parent().parent().children("input").removeAttr("disabled");
         $(this).attr("class", "btn btn-danger");
         $(this).attr("name", "strikeoutbtn");
         $(this).children().attr("class", "glyphicon glyphicon-trash");

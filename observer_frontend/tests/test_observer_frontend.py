@@ -59,6 +59,12 @@ class ObserverFrontendTestCase(unittest.TestCase):
             self.assertFalse(current_user.is_anonymous)
 
     def test_login_logout(self):
+        """Check behaviour of log ins.
+
+            The test will login with correct credentials,
+            log the user out and then try to log in with
+            incorrect password.
+        """
         with self.app:
             from flask_login import current_user
             self.login('testUser', 'xxx')

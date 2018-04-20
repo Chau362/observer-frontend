@@ -2,6 +2,10 @@ var newId = 0;
 
 var new_registration =
 "<div class='well registration'> \
+<div class='form-group'> \
+<label>Conductor Service</label><br> \
+<input type='url' name='service' aria-required='true' required='required' class='form-control' placeholder='Enter address of the Conductor Service'> \
+</div> \
 <div class='row'> \
 <div class='form col-md-8'> \
 <label>Projectname</label><br> \

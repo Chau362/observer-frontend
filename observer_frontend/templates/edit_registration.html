@@ -9,6 +9,7 @@ tr.strikeout td.strikable {
     text-decoration:line-through;
 }
 </style>
+<form method="POST" action="" id="reg-form">
 <div id="00">
 {% for service, projects in registrations.items()  %}
 <label>Registrations at {{ service }}</label><br><br>
@@ -22,29 +23,34 @@ tr.strikeout td.strikable {
 </tr>
 </thead>
 <tbody>
-<tr>
+
 {% for projectname, values in projects.items() %}
     {% set outerloop = loop %}
     {% set url = values['projectUrl'] %}
     {% set events = values['events'] %}
     {% for event in events %}
         <tr>
-            <td class="strikable">{{ outerloop.index }}</td>
+            <input type="hidden" name="service" value="{{ service }}">
+            <td class="strikable none">{{ outerloop.index + loop.index - 1 }}</td>
             <td class="strikable">{{ projectname }}</td>
+            <input type="hidden" name="projectName" value="{{ projectname }}">
             <td class="strikable">{{ url }}</td>
+            <input type="hidden" name="repository" value="{{ url }}">
             <td class="strikable">{{ event }}</td>
-            <td><button type="button" name="strikeoutbtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+            <input type="hidden" name="eventType" value="{{ event }}">
+            <td class="none"><button type="button" name="strikeoutbtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
         </tr>
     {% endfor %}
 {% endfor %}
-</tr>
+
 </tbody>
 </table>
 <br>
 {% endfor %}
 </div>
 <button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
-<button type="button" id="save-btn" class="btn btn-success">Save changes</button>
+<button type="submit" id="save-btn" class="btn btn-success">Save changes</button>
+</form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <script src="/static/js/autocomplete.js"></script>

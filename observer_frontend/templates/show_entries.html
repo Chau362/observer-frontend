@@ -22,7 +22,7 @@
     {% set events = values['events'] %}
     {% for event in events %}
         <tr>
-            <td>{{ outerloop.index }}</td>
+            <td>{{ outerloop.index + loop.index - 1 }}</td>
             <td>{{ projectname }}</td>
             <td>{{ url }}</td>
             <td>{{ event }}</td>
