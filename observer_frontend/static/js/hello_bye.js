@@ -1,15 +1,24 @@
 
-function regfunc(username){
+function regfunc(service, projectname, url, event){
     $.ajax({
     type: "POST",
-    url: "http://localhost:5000/profile/register/",
-    data: username,
+    url: service,
+    data: {
+        "eventType": event,
+        "project": projectname,
+        "projectUrl": url,
+        "callback": "http://localhost:5000/event/"
+     },
     contentType: "application/json; charset=utf-8",
     dataType: "json",
-    success: function(username){alert(username);},
+    success: function(id){
+                 alert(id);
+             },
     failure: function(errMsg) {
-        alert(errMsg);
-    }
+                 console.log(errMsg);
+                 $("#regButton").hide();
+             },
+    timeout: 3000
     });
 };
 
