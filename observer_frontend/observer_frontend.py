@@ -30,7 +30,7 @@ __status__ = "Development"
 app = Flask(__name__)
 # set configurations of this app
 app.config.update(dict(
-    SECRET_KEY="SECRET_KEY",
+    SECRET_KEY="SECRET_KEY",                # for use of session variable
     WTF_CSRF_SECRET_KEY="SUPER_SECRET_KEY"
 ))
 
@@ -131,16 +131,15 @@ def request_loader(request):
     return
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
     """Renders the homepage template.
     """
 
     if not flask_login.current_user.is_authenticated:
-        return render_template('home.html')
+        return redirect(url_for('login'))
     else:
-        return render_template('logged_in.html',
-                               username=flask_login.current_user.id)
+        return redirect(url_for('show_registrations'))
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -314,7 +313,9 @@ def edit_registrations():
     username = flask_login.current_user.id
     if request.method == 'GET':
         registrations = load_config(username)
-        return render_template("edit_registration.html", registrations=registrations)
+        return render_template("edit_registration.html",
+                               registrations=registrations,
+                               username=username)
     else:
         data = {}
         for i, entries in enumerate(zip(request.form.getlist('service'),
@@ -344,22 +345,24 @@ def change_password():
     """
 
     users = get_users()
-    user = flask_login.current_user.id
-    current_password = users[user]
+    username = flask_login.current_user.id
+    current_password = users[username]
     form = ChangePasswordForm(request.form)
     if form.validate_on_submit():
         if checkpw(request.form['currentPassword'].encode('utf-8'),
                    current_password.encode('utf-8')):
             if request.form['newPassword1'] == request.form['newPassword2']:
-                add_user_and_password(user, request.form['newPassword1'])
+                add_user_and_password(username, request.form['newPassword1'])
                 logger.info("Successfully changed password of "
-                            + user + '.')
+                            + username + '.')
                 return redirect(url_for('home'))
         logger.info("Unable to change password of "
-                    + user + '.')
+                    + username + '.')
         return redirect(url_for('change_password'))
     else:
-        return render_template('change_password.html', form=form)
+        return render_template('change_password.html',
+                               form=form,
+                               username=username)
 
 
 @app.route('/event/', methods=['POST'])
