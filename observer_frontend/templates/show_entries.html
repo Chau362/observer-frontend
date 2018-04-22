@@ -8,24 +8,29 @@
 <table class="table table-hover">
 <thead>
 <tr>
-<th scope="col">#</th>
 <th scope="col">Projectname</th>
 <th scope="col">URL</th>
 <th scope="col">Eventtype</th>
+<th scope="col">Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 {% for projectname, values in projects.items() %}
-    {% set outerloop = loop %}
     {% set url = values['projectUrl'] %}
     {% set events = values['events'] %}
     {% for event in events %}
         <tr>
-            <td>{{ outerloop.index + loop.index - 1 }}</td>
             <td>{{ projectname }}</td>
             <td>{{ url }}</td>
             <td>{{ event }}</td>
+            {% if (projectname, url, event) in session['registrations'] %}
+                <td class="none"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')">Unregister</button></td>
+            {% else %}
+               <td class="none"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+               <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')">Register</button></td>
+            {% endif %}
         </tr>
     {% endfor %}
 {% endfor %}
@@ -35,12 +40,11 @@
 <br>
 {% endfor %}
 <hr>
-<button type="button" id="reg-btn" class="btn btn-warning pull-right" onclick="regfunc('{{ username }}')">Register all projects</button>
 <button type="button" id="active-btn" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
 <button type="button" id="inactive-btn" class="btn btn-primary" style="display:none"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
 <br>
-<span class="label label-danger" id="stoplabel">Stopped</span>
-<span class="label label-success" id="runlabel" aria-hidden="true" style="display:none">Running</span>
+<span class="label label-danger" id="stoplabel">Inactive</span>
+<span class="label label-success" id="runlabel" aria-hidden="true" style="display:none">Active</span>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/static/js/hello_bye.js"></script>
 <script>$('#inactive-btn').hide()</script>
