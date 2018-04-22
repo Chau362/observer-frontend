@@ -40,7 +40,7 @@
 </div>
 <div class="col-lg-8 col-md-9">
 <center>
-<h1>Observerhive Application</h1>
+<h1>scab-observer-hive</h1>
 </center>
 </div>
 </div>
@@ -66,21 +66,26 @@
 
 <!-- Collect the nav links, forms, and other content for toggling -->
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-<ul class="nav navbar-nav">
-<li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-</ul>
 {% if current_user.is_authenticated %}
 <ul class="nav navbar-nav">
 <li><a href="/profile/">Registrations</a></li>
-<li><a href="/profile/edit">Edit</a></li>
+<li><a href="/profile/edit/">Edit</a></li>
 <li><a href="/change-password/">Change Password</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown">{{ current_user.id }}
+<span class="caret"></span></a>
+<ul class="dropdown-menu">
 <li><a href="/logout/">Logout</a></li>
 </ul>
+</li>
+</ul>
 {% else %}
-<ul class="nav navbar-nav navbar-right">
+<ul class="nav navbar-nav">
 <li><a href="/login/">Login</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
 <li><a href="/register/">Sign up</a></li>
 </ul>
 {% endif %}
