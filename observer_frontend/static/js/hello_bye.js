@@ -1,25 +1,46 @@
 
 function regfunc(service, projectname, url, event){
-    $.ajax({
-    type: "POST",
-    url: service,
-    data: {
-        "eventType": event,
-        "project": projectname,
-        "projectUrl": url,
-        "callback": "http://localhost:5000/event/"
-     },
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: function(id){
-                 alert(id);
-             },
-    failure: function(errMsg) {
-                 console.log(errMsg);
-                 $("#regButton").hide();
-             },
-    timeout: 3000
-    });
+    var parameters =  {"eventType": event, "project": projectname,"projectUrl": url, "callback": "http://localhost:5000/event/"};
+//
+//    $.ajax({
+//    type: "POST",
+//    url: service,
+//    data: JSON.stringify(parameters),
+//    dataType: "json",
+//    contentType: "application/json; charset=UTF-8",
+//    success: function(id){
+//                 console.log(id);
+//             },
+//    failure: function(errMsg) {
+//                 console.log(errMsg);
+//                 $("#regButton").hide();
+//             },
+//    timeout: 3000
+//    });
+
+//    $.post(service,
+//           JSON.stringify(parameters),
+//           function(data, status){
+//                var id = data;
+//                console.log(data, status)
+//           },
+//           processData = false);
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', service);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+        else if (xhr.status !== 200) {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send(JSON.stringify(parameters));
+
+//    $.post("http://localhost:5000/profile/register/", function(){console.log('hello')});
 };
 
 $("#active-btn").click(function(){

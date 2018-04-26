@@ -112961,3 +112961,42 @@ data-track='{
 2018-04-20 17:15:14 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
 2018-04-20 17:15:20 - [INFO] - observer_frontend.observer_frontend: Deactivated messages for user testUser.
 2018-04-20 17:19:34 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-23 09:23:34 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-23 09:23:40 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:23:41 - [INFO] - observer_frontend.observer_frontend: Deactivated messages for user testUser.
+2018-04-23 09:33:25 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:33:31 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:07 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:11 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:12 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:13 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:13 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:14 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:14 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:36:15 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:39:15 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:39:17 - [INFO] - observer_frontend.observer_frontend: Activated messages for user testUser.
+2018-04-23 09:55:19 - [INFO] - observer_frontend.observer_frontend: testUser has been logged out.
+2018-04-23 09:55:26 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.
+2018-04-23 10:22:35 - [INFO] - observer_frontend.request_maker: Could not register GIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:22:35 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:22:35 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:23:20 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:23:20 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:23:20 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:23:37 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:23:37 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:23:37 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:24:44 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:24:44 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:24:44 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:26:42 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:26:42 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:26:42 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:28:00 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:28:00 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:28:00 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:30:40 - [INFO] - observer_frontend.request_maker: Could not register GIT_COMMIT for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:30:40 - [INFO] - observer_frontend.request_maker: Could not register SVN for scab-oberserver due to fail at service http://192.168.4.46:8080/register.
+2018-04-23 10:30:40 - [INFO] - observer_frontend.observer_frontend: Made no registrations for user testUser.
+2018-04-23 10:39:08 - [INFO] - observer_frontend.observer_frontend: testUser successfully logged in.

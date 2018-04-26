@@ -25,11 +25,9 @@
             <td>{{ url }}</td>
             <td>{{ event }}</td>
             {% if (projectname, url, event) in session['registrations'] %}
-                <td class="none"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
-                <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')">Unregister</button></td>
+                <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></td>
             {% else %}
-               <td class="none"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
-               <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')">Register</button></td>
+               <td><button type="button" class="btn btn-warning" onclick="regfunc('{{ service }}, {{ projectname }}, {{ url }}, {{ event }}')"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></td>
             {% endif %}
         </tr>
     {% endfor %}
