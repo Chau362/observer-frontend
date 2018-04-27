@@ -109,6 +109,7 @@ def close_userfile(error):
         g.pop('users', None)
 
 
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     """Renders the homepage template.
