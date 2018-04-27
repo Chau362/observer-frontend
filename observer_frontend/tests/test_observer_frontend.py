@@ -1,4 +1,4 @@
-from observer_frontend.observer_frontend import app
+from observer_frontend.observer_frontend import app, session, json
 import unittest
 import tempfile
 
@@ -52,11 +52,11 @@ class ObserverFrontendTestCase(unittest.TestCase):
            ID (which is the username) of the current user and that
            the current user is not anonymous.
         """
-        from flask_login import current_user
         with self.app:
+            user = json.loads(session['user'])
             self.login('testUser', 'xxx')
-            self.assertTrue(current_user.id == 'testUser')
-            self.assertFalse(current_user.is_anonymous)
+            self.assertTrue(user['id'] == 'testUser')
+            self.assertFalse(user['is_anonymous'])
 
     def test_login_logout(self):
         """Check behaviour of log ins.
@@ -66,13 +66,13 @@ class ObserverFrontendTestCase(unittest.TestCase):
             incorrect password.
         """
         with self.app:
-            from flask_login import current_user
+            user = json.loads(session['user'])
             self.login('testUser', 'xxx')
-            self.assertTrue(current_user.id == 'testUser')
+            self.assertTrue(user['id'] == 'testUser')
             self.logout()
-            self.assertTrue(current_user.is_anonymous)
+            self.assertTrue(user['is_anonymous'])
             self.login('testUser', 'yyy')
-            self.assertTrue(current_user.is_anonymous)
+            self.assertTrue(user['is_anonymous'])
 
     def test_access_denied(self):
         rv = self.app.get('/change-password/')
