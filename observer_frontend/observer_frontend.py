@@ -9,9 +9,9 @@
 """
 
 import os
-from flask import Flask, redirect, render_template, request, url_for, Response, g, session, jsonify, json
+from flask import Flask, redirect, render_template, request, url_for, Response, g, session
+import flask_login
 from bcrypt import hashpw, gensalt, checkpw
-from functools import wraps
 import observer_frontend.request_maker as registrator
 from .observer_user import User, Anonymous
 from observer_frontend.user_configs.configloader import load_config, save_config
@@ -50,30 +50,13 @@ console_log.setFormatter(
 logger.addHandler(logger_file_handler)
 logger.addHandler(console_log)
 
-
-# class MyJSONEncoder(json.JSONEncoder):
-#     def default(self, obj):
-#         if isinstance(obj, User):
-#             return {
-#                 'id': obj.id,
-#                 'is_authenticated': obj.is_authenticated,
-#                 'is_active': obj.is_active,
-#                 'active': obj.active,
-#             }
-#         return super(MyJSONEncoder, self).default(obj)
-#
-#
-# app.json_encoder = MyJSONEncoder
-
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user' not in session:
-            return redirect(url_for('login', next=request.url))
-        return f(*args, **kwargs)
-
-    return decorated_function
+# configure login manager
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+# redirect to login page if user is not authenticated
+login_manager.login_view = "login"
+# produce an anonymous user to use when no one is logged in
+login_manager.anonymous_user = Anonymous
 
 
 def get_users():
@@ -109,13 +92,44 @@ def close_userfile(error):
         g.pop('users', None)
 
 
+@login_manager.user_loader
+def user_loader(username):
+    """Callback function for reloading a user from the session.
+
+        The function takes the username and returns a user object
+        or None if the user does not exist.
+    """
+
+    users = get_users()
+    if username not in users:
+        return
+
+    user = User()
+    user.id = username
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+    """Callback function for reloading a user from the session.
+
+        The function takes the Flask request and returns a user object
+        or None if the user does not exist.
+    """
+
+    if 'username' in session:
+        user = User()
+        user.id = request.cookies['userID']
+        return user
+    return
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     """Renders the homepage template.
     """
 
-    if 'user' not in session:
+    if not flask_login.current_user.is_authenticated:
         return redirect(url_for('login'))
     else:
         return redirect(url_for('show_registrations'))
@@ -139,10 +153,12 @@ def login():
                        users[usrname].encode('utf-8')):
                 user = User()
                 user.id = usrname
-                session['user'] = json.dumps(user.serialize())
-                session['logged_in'] = True
+                session['username'] = usrname
+                flask_login.login_user(user)
                 logger.info(usrname + ' successfully logged in.')
-                return redirect(request.args.get("next") or url_for("home"))
+                response = redirect(request.args.get("next") or url_for("home"))
+                #response.set_cookie('userID', usrname)
+                return response
             else:
                 logger.info('Denied access to '
                             + usrname
@@ -158,7 +174,7 @@ def login():
 
 
 @app.route('/logout/', methods=['GET', 'POST'])
-@login_required
+@flask_login.login_required
 def logout():
     """Log the current user out.
 
@@ -167,10 +183,10 @@ def logout():
     """
 
     # remove the username from the session if it is there
-    out_user = json.loads(session['user'])['id']
-    session['logged_in'] = False
+    out_user = flask_login.current_user.id
+    flask_login.logout_user()
     session.pop('registrations', None)
-    session.pop('user', None)
+    session.pop('username', None)
     logger.info(out_user + ' has been logged out.')
     return redirect(url_for('home'))
 
@@ -195,7 +211,7 @@ def register():
 
 
 @app.route('/profile/', methods=['GET', 'POST'])
-@login_required
+@flask_login.login_required
 def show_registrations():
     """Retrieve all registered projects of the current user and show them.
 
@@ -203,14 +219,14 @@ def show_registrations():
        passes them to the corresponding template.
     """
 
-    username = json.loads(session['user'])['id']
+    username = flask_login.current_user.id
     registrations = load_config(username)
     return render_template("show_entries.html", registrations=registrations,
                            username=username)
 
 
-@app.route('/profile/register/', methods=['POST'])
-@login_required
+@app.route('/profile/registration/', methods=['POST'])
+@flask_login.login_required
 def register_remaining():
     """Register all projects at Conductor service if not done already.
 
@@ -219,40 +235,43 @@ def register_remaining():
        at the specified Conductor Service.
     """
 
-    username = json.loads(session['user'])['id']
-    userconfigs = load_config(username)
-    registrations = {}
-    change_count = 0
+    logger.info(request.form)
+    return Response('Cool')
 
-    if 'registrations' not in session:
-        for service, projects in userconfigs.items():
-            requester = registrator.MyHTTPRequester(port='5000')
-            for projectname, entries in projects.items():
-                url = entries['projectUrl']
-                events = entries['events']
-                for event in events:
-                    new_id = requester.register(event_type=event,
-                                                project=projectname,
-                                                projectUrl=url,
-                                                service_address=service)
-                    if new_id is not None:
-                        registrations[new_id] = {projectname: event}
-                        logger.info('Added new id for registration.')
-                        change_count += 1
-        if change_count > 0:
-            session['registrations'] = registrations
-            logger.info('Made ' + str(change_count) + ' registration(s) for user '
-                        + username + '.')
-            return Response('Registrations were successful.')
-        else:
-            logger.info('Made no registrations for user '
-                        + username + '.')
-            return Response('Could not register any projects.')
-    return Response('Already registered.')
+    # username = flask_login.current_user.id
+    # userconfigs = load_config(username)
+    # registrations = {}
+    # change_count = 0
+    #
+    # if 'registrations' not in session:
+    #     for service, projects in userconfigs.items():
+    #         requester = registrator.MyHTTPRequester(port='5000')
+    #         for projectname, entries in projects.items():
+    #             url = entries['projectUrl']
+    #             events = entries['events']
+    #             for event in events:
+    #                 new_id = requester.register(event_type=event,
+    #                                             project=projectname,
+    #                                             projectUrl=url,
+    #                                             service_address=service)
+    #                 if new_id is not None:
+    #                     registrations[new_id] = {projectname: event}
+    #                     logger.info('Added new id for registration.')
+    #                     change_count += 1
+    #     if change_count > 0:
+    #         session['registrations'] = registrations
+    #         logger.info('Made ' + str(change_count) + ' registration(s) for user '
+    #                     + username + '.')
+    #         return Response('Registrations were successful.')
+    #     else:
+    #         logger.info('Made no registrations for user '
+    #                     + username + '.')
+    #         return Response('Could not register any projects.')
+    # return Response('Already registered.')
 
 
 @app.route('/profile/activate/', methods=['POST'])
-@login_required
+@flask_login.login_required
 def activate_user_setup():
     """Set the active flag to True.
 
@@ -260,14 +279,14 @@ def activate_user_setup():
        receiving events for the project he has registered for.
     """
 
-    json.loads(session['user'])['active'] = True
+    flask_login.current_user.active = True
     logger.info('Activated messages for user '
-                + g.user.id + '.')
+                + flask_login.current_user.id + '.')
     return Response('200')
 
 
 @app.route('/profile/deactivate/', methods=['POST'])
-@login_required
+@flask_login.login_required
 def deactivate_user_setup():
     """Set the active flag to False.
 
@@ -275,14 +294,14 @@ def deactivate_user_setup():
        receiving events for the project he has registered for.
     """
 
-    session['user'].active = False
+    flask_login.current_user.active = False
     logger.info('Deactivated messages for user '
-                + g.user.id + '.')
+                + flask_login.current_user.id + '.')
     return Response('200')
 
 
 @app.route('/profile/edit/', methods=['GET', 'POST'])
-@login_required
+@flask_login.login_required
 def edit_registrations():
     """Retrieve all registered projects of the current user and show them.
 
@@ -291,7 +310,7 @@ def edit_registrations():
        manipulate them if wished.
     """
 
-    username = json.loads(session['user'])['id']
+    username = flask_login.current_user.id
     if request.method == 'GET':
         registrations = load_config(username)
         return render_template("edit_registration.html",
@@ -316,7 +335,7 @@ def edit_registrations():
 
 
 @app.route('/change-password/', methods=['GET', 'POST'])
-@login_required
+@flask_login.login_required
 def change_password():
     """Render the form to change password of current user.
 
@@ -326,7 +345,7 @@ def change_password():
     """
 
     users = get_users()
-    username = json.loads(session['user'])['id']
+    username = flask_login.current_user.id
     current_password = users[username]
     form = ChangePasswordForm(request.form)
     if form.validate_on_submit():
@@ -356,8 +375,9 @@ def render_event():
 
     logger.info('Received the following: '
                 + str(request.data.decode('utf-8')))
-    if json.loads(session['user'])['active'] == True:
+    if flask_login.current_user.active == True:
         # blink_thread = Thread(target=Blink, kwargs={'numTimes': 10,'speed': 0.5})
         # blink_thread.start()
         pass
     return Response('Received POSTed event.')
+
