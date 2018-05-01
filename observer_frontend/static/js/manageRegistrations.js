@@ -1,5 +1,5 @@
 
-$(".register").click(function(){
+$(".register, .unregister").click(function(){
 
     var parameters = JSON.stringify({"eventType": $(this).parent().siblings("[name='event']").text(),
                                      "project": $(this).parent().siblings("[name='projectname']").text(),
@@ -8,62 +8,51 @@ $(".register").click(function(){
 
 
     var $button = $(this);
+    var service = $(this).parent().parent().parent().parent().prop("title")
 
-
-    $.ajax({
-    type: "POST",
-    url:  "http://localhost:5000/event/",
-    data: parameters,
-    contentType: "application/json; charset=UTF-8",
-    async: false,
-    success: function(result, status, xhr){
-        console.log(result);
-        $button.prop("class", "btn btn-success unregister");
-        $button.children().prop("class", "glyphicon glyphicon-ok");
-    },
-    failure: function(xhr, status, error) {
-                 console.log(xhr.responseText);
-             },
-    complete: function(result, status, xhr){
-            $.post('registration/', status, function(data){console.log(data)});
-    },
-    timeout: 3000
-    });
-
-});
-
-
-$(".unregister").click(function(){
-
-    var parameters = JSON.stringify({"eventType": $(this).parent().siblings("[name='event']").text(),
-                                     "project": $(this).parent().siblings("[name='projectname']").text(),
-                                     "projectUrl": $(this).parent().siblings("[name='url']").text(),
-                                     "callback": "http://observer/event/"});
-
-
-    var $button = $(this);
-
-
-    $.ajax({
-    type: "POST",
-    url:  "http://localhost:5000/event/",
-    data: parameters,
-    contentType: "application/json; charset=UTF-8",
-    async: false,
-    success: function(result, status, xhr){
-        console.log(result);
-        $button.prop("class", "btn btn-warning register");
-        $button.children().prop("class", "glyphicon glyphicon-minus");
-    },
-    failure: function(xhr, status, error) {
-                 console.log(xhr.responseText);
-             },
-    complete: function(result, status, xhr){
-            $.post('registration/', status, function(data){console.log(data)});
-    },
-    timeout: 3000
-    });
-
+    if ($(this).prop("class").includes("unregister")) {
+        $.ajax({
+            type: "POST",
+            url:  "http://localhost:5000/event/",
+            data: parameters,
+            contentType: "application/json; charset=UTF-8",
+            async: false,
+            success: function(result, status, xhr){
+                console.log(result);
+                $button.prop("class", "btn btn-warning register");
+                $button.children().prop("class", "glyphicon glyphicon-minus");
+            },
+            failure: function(xhr, status, error) {
+                         console.log(status);
+                     },
+            complete: function(result, status, xhr){
+                    $.post('registration/', status, function(data){console.log(data)});
+            },
+            timeout: 3000
+        });
+    }
+    else {
+        $.ajax({
+            type: "POST",
+            url:  "http://localhost:5000/event/",
+            data: parameters,
+            contentType: "application/json; charset=UTF-8",
+            async: false,
+            success: function(result, status, xhr){
+                console.log(result);
+                console.log(service);
+                $button.prop("class", "btn btn-success unregister");
+                $button.children().prop("class", "glyphicon glyphicon-ok");
+            },
+            failure: function(xhr, status, error) {
+                         console.log(status);
+                     },
+            complete: function(result, status, xhr){
+                    $.post('registration/', status, function(data){console.log(data)});
+            },
+            timeout: 3000
+        });
+    };
 });
 
 
