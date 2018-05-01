@@ -1,5 +1,7 @@
 
-function projectAutocomplete(field) {
+function projectAutocomplete(field, service) {
+
+   console.log(service)
    $.ajax({
       type: 'GET',
       url: 'http://localhost:8080/projects',
