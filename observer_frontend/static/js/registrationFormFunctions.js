@@ -4,7 +4,7 @@ var new_registration =
 "<div class='well registration'> \
 <div class='form-group'> \
 <label>Conductor Service</label><br> \
-<input type='url' name='service' aria-required='true' required='required' class='form-control' placeholder='Enter address of the Conductor Service'> \
+<input id='service-%' type='url' onblur='projectAutocomplete(document.getElementById(%), this.value)' name='service' aria-required='true' required='required' class='form-control' placeholder='Enter address of the Conductor Service'> \
 </div> \
 <div class='row'> \
 <div class='form col-md-8'> \
@@ -23,10 +23,7 @@ var new_registration =
 <button type='button' id='removebtn' onclick='removeRegistration(this)' class='btn btn-warning btn-sm' style='float:right'>Remove</button> \
 <br> \
 </div> \
-<script src='/static/js/autocomplete.js'></script> \
-<script> \
-projectAutocomplete(document.getElementById(%)); \
-</script>"
+<script src='/static/js/autocomplete.js'></script>"
 
 
 function duplicate() {
