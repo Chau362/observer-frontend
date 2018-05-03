@@ -39,3 +39,21 @@ function removeRegistration(caller) {
 function add_field() {
     $("#login").append_field('password', PasswordField('password'))(password="Password123");
 };
+
+function checkUsername(caller, username) {
+    $usernameInput = $(this);
+    $.ajax({
+        url: '/check-usernames/',
+        contentType: "text/plain; charset=UTF-8",
+        data: username,
+        type: 'POST',
+        success: function(data) {
+            console.log(caller);
+            console.log(data);
+            caller.setAttribute("aria-invalid", data);
+        },
+        error: function() {
+            console.log('Shit happened while checking username.')
+        }
+    });
+};

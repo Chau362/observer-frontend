@@ -210,6 +210,22 @@ def register():
         return render_template('signup.html', form=form)
 
 
+@app.route('/check-usernames/', methods=['POST'])
+def check_usernames():
+    """Retrieve all usernames and check if POSTed username already exists.
+
+       The function is meant to check if a username which is about to be used
+       for a new registration is already in use.
+    """
+
+    users = get_users()
+    username = request.data.decode('utf-8')
+    if username in users:
+        return Response('true')
+    else:
+        return Response('false')
+
+
 @app.route('/profile/', methods=['GET', 'POST'])
 @flask_login.login_required
 def show_registrations():
