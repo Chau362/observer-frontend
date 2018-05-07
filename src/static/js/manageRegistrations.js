@@ -13,7 +13,7 @@ $(".register, .unregister").click(function(){
     if ($(this).prop("class").includes("unregister")) {
         $.ajax({
             type: "POST",
-            url:  "http://localhost:5000/event/",
+            url:  service,
             data: parameters,
             contentType: "application/json; charset=UTF-8",
             async: false,
@@ -34,7 +34,7 @@ $(".register, .unregister").click(function(){
     else {
         $.ajax({
             type: "POST",
-            url:  "http://localhost:5000/event/",
+            url:  service,
             data: parameters,
             contentType: "application/json; charset=UTF-8",
             async: false,

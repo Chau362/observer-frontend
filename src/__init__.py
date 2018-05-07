@@ -107,7 +107,7 @@ def request_loader(request):
 
     if 'username' in session:
         user = User()
-        user.id = request.cookies['userID']
+        user.id = session['username']
         return user
     return
 
