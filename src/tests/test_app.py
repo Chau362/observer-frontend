@@ -19,8 +19,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
 
     def setUp(self):
         # disable error catching during request handling
-        app.testing = True
-        app.config['WTF_CSRF_ENABLED'] = False
+        app.config.from_object("src.config.TestingConfig")
         #  test client provides a simple interface to the application
         self.app = app.test_client()
 
