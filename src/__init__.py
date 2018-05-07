@@ -230,7 +230,7 @@ def register_remaining():
 
     logger.info(request.form)
     return Response('Cool')
-
+    #
     # username = flask_login.current_user.id
     # userconfigs = load_config(username)
     # registrations = {}
