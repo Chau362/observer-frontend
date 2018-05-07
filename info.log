@@ -113398,3 +113398,57 @@ data-track='{
 [2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
 2018-05-07 09:59:31 - [INFO] - src.request_maker: Received the ID  for scam concerning GIT_COMMIT.
 2018-05-07 09:59:33 - [INFO] - src.request_maker: Unregistered event with ID 0
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:28 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: Received the following: 
+[2018-05-07 10:16:29 +0200] [33060] [INFO] - src.loggers: Received the following: 
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:30 +0200] [33060] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 10:16:31 +0200] [33060] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 10:16:31 +0200] [33060] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 10:16:31 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:31 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:32 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:16:32 +0200] [33060] [INFO] - src.loggers: testUser successfully logged in.
+2018-05-07 10:16:34 - [INFO] - src.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-05-07 10:16:36 - [INFO] - src.request_maker: Unregistered event with ID 0
+2018-05-07 10:38:50 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+[2018-05-07 10:38:55 +0200] [36216] [INFO] - src.loggers: MensMa has been logged out.
+[2018-05-07 10:39:00 +0200] [36216] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 10:39:46 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:39:46 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:39:58 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:39:58 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:14 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"SVN","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:40:14 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:15 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver\t","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\t","callback":"http://observer/event/"}
+[2018-05-07 10:40:15 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:16 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:40:16 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:16 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"SVN","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:40:17 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:17 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
+[2018-05-07 10:40:18 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:40:18 +0200] [36216] [INFO] - src.loggers: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver\t","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\t","callback":"http://observer/event/"}
+[2018-05-07 10:40:18 +0200] [36216] [INFO] - src.loggers: ImmutableMultiDict([('success', '')])
+[2018-05-07 10:41:08 +0200] [36216] [INFO] - src.loggers: testUser has been logged out.
