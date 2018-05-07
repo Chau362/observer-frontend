@@ -9,14 +9,13 @@
 """
 
 import os
-from flask import Flask, redirect, render_template, request, url_for, Response, g, session
+from flask import Flask, redirect, render_template, request, \
+    url_for, Response, g, session
 import flask_login
-from bcrypt import hashpw, gensalt, checkpw
-import observer_frontend.request_maker as registrator
-from .observer_user import User, Anonymous
-from observer_frontend.user_configs.configloader import load_config, save_config
-from .forms import LoginForm, ChangePasswordForm, RegisterForm
-import logging
+from bcrypt import hashpw, gensalt
+from .models import User, Anonymous
+from src.user_configs.configloader import load_config, save_config
+from .loggers import setup_flask_logging, setup_gunicorn_log
 import json
 from threading import Thread
 
@@ -29,26 +28,15 @@ __status__ = "Development"
 # create the application instance
 app = Flask(__name__)
 # set configurations of this app
-app.config.update(dict(
-    SECRET_KEY="SECRET_KEY",  # for use of session variable
-    WTF_CSRF_SECRET_KEY="SUPER_SECRET_KEY"
-))
+app.config.from_object("src.config.ProductionConfig")
 
-# logging setup
-logger = logging.getLogger(__name__)
-logger.setLevel('INFO')
-logger_file_handler = logging.FileHandler('info.log')
-logger_file_handler.setLevel('INFO')
-logger_file_handler.setFormatter(
-    logging.Formatter("%(asctime)s - [%(levelname)s] - %(name)s: %(message)s",
-                      datefmt='%Y-%m-%d %H:%M:%S'))
-console_log = logging.StreamHandler()
-console_log.setLevel('INFO')
-console_log.setFormatter(
-    logging.Formatter("%(asctime)s - [%(levelname)s] - %(name)s: %(message)s",
-                      datefmt='%Y-%m-%d %H:%M:%S'))
-logger.addHandler(logger_file_handler)
-logger.addHandler(console_log)
+# check how app is run and set logging appropriately
+if "SERVER_SOFTWARE" in os.environ:
+    if "gunicorn" in os.environ["SERVER_SOFTWARE"]:
+        logger = setup_gunicorn_log(app)
+else:
+    LOG_LEVEL = "INFO"
+    logger = setup_flask_logging(LOG_LEVEL)
 
 # configure login manager
 login_manager = flask_login.LoginManager()
@@ -143,32 +131,19 @@ def login():
        does exist and the provided password is correct when the user
        submits his or her data.
     """
+
+    from .forms import LoginForm
+
     form = LoginForm(request.form)
-    users = get_users()
     if form.validate_on_submit():
         usrname = request.form['username']
-        password = request.form['password']
-        if usrname in users:
-            if checkpw(password.encode('utf-8'),
-                       users[usrname].encode('utf-8')):
-                user = User()
-                user.id = usrname
-                session['username'] = usrname
-                flask_login.login_user(user)
-                logger.info(usrname + ' successfully logged in.')
-                response = redirect(request.args.get("next") or url_for("home"))
-                #response.set_cookie('userID', usrname)
-                return response
-            else:
-                logger.info('Denied access to '
-                            + usrname
-                            + ' due to wrong password.')
-                form.password.errors.append('Wrong password for user.')
-                return redirect(url_for('login'))
-        else:
-            logger.info(usrname + ' unknown.')
-            form.username.errors.append(usrname + ' unknown.')
-            return render_template('login.html', form=form)
+        user = User()
+        user.id = usrname
+        session['username'] = usrname
+        flask_login.login_user(user)
+        logger.info(usrname + ' successfully logged in.')
+        response = redirect(request.args.get("next") or url_for("home"))
+        return response
     else:
         return render_template('login.html', form=form)
 
@@ -199,6 +174,8 @@ def register():
        if the current user submitted the form.
     """
 
+    from .forms import RegisterForm
+
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         username = request.form['username']
@@ -211,15 +188,15 @@ def register():
 
 
 @app.route('/check-usernames/', methods=['POST'])
-def check_usernames():
-    """Retrieve all usernames and check if POSTed username already exists.
+def check_username():
+    """Check if POSTed username does already exist.
 
-       The function is meant to check if a username which is about to be used
-       for a new registration is already in use.
+    :return: true if username already in use
     """
 
     users = get_users()
     username = request.data.decode('utf-8')
+
     if username in users:
         return Response('true')
     else:
@@ -360,21 +337,15 @@ def change_password():
        hashes the password and stores it in the users file of the app.
     """
 
-    users = get_users()
+    from .forms import ChangePasswordForm
+
     username = flask_login.current_user.id
-    current_password = users[username]
     form = ChangePasswordForm(request.form)
     if form.validate_on_submit():
-        if checkpw(request.form['currentPassword'].encode('utf-8'),
-                   current_password.encode('utf-8')):
-            if request.form['newPassword1'] == request.form['newPassword2']:
-                add_user_and_password(username, request.form['newPassword1'])
-                logger.info("Successfully changed password of "
-                            + username + '.')
-                return redirect(url_for('home'))
-        logger.info("Unable to change password of "
+        add_user_and_password(username, request.form['newPassword1'])
+        logger.info("Successfully changed password of "
                     + username + '.')
-        return redirect(url_for('change_password'))
+        return redirect(url_for('home'))
     else:
         return render_template('change_password.html',
                                form=form,
@@ -396,4 +367,3 @@ def render_event():
         # blink_thread.start()
         pass
     return Response('Received POSTed event.')
-

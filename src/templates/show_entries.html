@@ -3,6 +3,9 @@
 <title>Observerhive: Registrations</title>
 {% endblock %}
 {% block content %}
+{% if None == registrations %}
+<h2>You are currently not registered for any projects.</h2>
+{% else %}
 {% for service, projects in registrations.items()  %}
 <label>Registrations at {{ service }}</label><br><br>
 <table class="table table-hover" title="{{ service }}">
@@ -42,6 +45,7 @@
 </table>
 <br>
 {% endfor %}
+{% endif %}
 <hr>
 <button type="button" id="active-btn" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
 <button type="button" id="inactive-btn" class="btn btn-primary" style="display:none"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>

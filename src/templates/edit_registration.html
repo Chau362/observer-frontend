@@ -9,6 +9,13 @@ tr.strikeout td.strikable {
     text-decoration:line-through;
 }
 </style>
+{% if None == registrations %}
+<h2>You are currently not registered for any projects.</h2>
+<form method="POST" action="" id="reg-form">
+<div id="00">
+</div>
+</form>
+{% else %}
 <form method="POST" action="" id="reg-form">
 <div id="00">
 {% for service, projects in registrations.items()  %}
@@ -45,6 +52,7 @@ tr.strikeout td.strikable {
 <br>
 {% endfor %}
 </div>
+{% endif %}
 <button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
 <button type="submit" id="save-btn" class="btn btn-success">Save changes</button>
 </form>

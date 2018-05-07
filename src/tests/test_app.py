@@ -1,4 +1,4 @@
-from observer_frontend.observer_frontend import app, session, json
+from src.__init__ import app, session, json
 import unittest
 import tempfile
 
@@ -91,7 +91,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
         with self.app:
             self.login('testUser', 'xxx')
             self.assertTrue(current_user.id == 'testUser')
-            rv = self.app.post('/profile/register/', data=current_user.id)
+            rv = self.app.post('/profile/registration/', data=current_user.id)
             self.assertEqual(rv.status_code, 200)
 
     def test_unauthenticated_profile_view(self):

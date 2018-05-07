@@ -113288,3 +113288,113 @@ data-track='{
 2018-04-30 18:02:07 - [INFO] - observer_frontend.observer_frontend: ImmutableMultiDict([('success', '')])
 2018-04-30 18:02:58 - [INFO] - observer_frontend.observer_frontend: Received the following: {"eventType":"GIT_COMMIT","project":"scab-oberserver-hive","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","callback":"http://observer/event/"}
 2018-04-30 18:02:59 - [INFO] - observer_frontend.observer_frontend: ImmutableMultiDict([('success', '')])
+[2018-05-07 09:30:24 +0200] [25964] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:30:30 +0200] [25964] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:12 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:36:13 +0200] [25960] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:14 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:15 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:15 +0200] [25960] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:36:15 +0200] [25960] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:36:15 +0200] [25960] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:36:16 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:16 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:16 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:36:16 +0200] [25960] [INFO] - src.loggers: testUser successfully logged in.
+2018-05-07 09:36:18 - [INFO] - src.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-05-07 09:36:20 - [INFO] - src.request_maker: Unregistered event with ID 0
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:21 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:39:22 +0200] [31400] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:23 +0200] [31400] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:39:24 +0200] [31400] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:39:24 +0200] [31400] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:39:24 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:24 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:25 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:39:25 +0200] [31400] [INFO] - src.loggers: testUser successfully logged in.
+2018-05-07 09:39:27 - [INFO] - src.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-05-07 09:39:29 - [INFO] - src.request_maker: Unregistered event with ID 0
+[2018-05-07 09:49:38 +0200] [32512] [INFO] - src.loggers: MensMa successfully logged in.
+2018-05-07 09:49:39 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+2018-05-07 09:53:26 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+2018-05-07 09:56:52 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+2018-05-07 09:56:57 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+[2018-05-07 09:57:18 +0200] [15724] [INFO] - src.loggers: Attempt to change password of MensMa failed due to wrong current password.
+[2018-05-07 09:57:58 +0200] [15724] [INFO] - src.loggers: Successfully changed password of MensMa.
+2018-05-07 09:57:59 - [INFO] - src.user_configs.configloader: Could not retrieve configurations of user MensMa.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: Activated messages for user foobar.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:59:25 +0200] [32804] [INFO] - src.loggers: Deactivated messages for user foobar.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:59:26 +0200] [32804] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: Denied access to testUser due to wrong password.
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:59:27 +0200] [32804] [INFO] - src.loggers: Received the following: 
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: ImmutableMultiDict([])
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:28 +0200] [32804] [INFO] - src.loggers: foobar successfully logged in.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: Successfully changed password of foobar.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-07 09:59:29 +0200] [32804] [INFO] - src.loggers: testUser successfully logged in.
+2018-05-07 09:59:31 - [INFO] - src.request_maker: Received the ID  for scam concerning GIT_COMMIT.
+2018-05-07 09:59:33 - [INFO] - src.request_maker: Unregistered event with ID 0

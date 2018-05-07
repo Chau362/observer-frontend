@@ -1,4 +1,4 @@
-from observer_frontend import request_maker
+from src import request_maker
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
 import socket

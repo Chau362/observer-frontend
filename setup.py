@@ -11,7 +11,7 @@ def show_license():
         return lice.read()
 
 
-setup(name='observer_frontend',
+setup(name='src',
       version='0.4',
       description='Frontend for iteratec\'s Observerhive Application',
       long_description=readme(),
@@ -19,7 +19,7 @@ setup(name='observer_frontend',
       author='Masud Afschar',
       author_email='m.afschar@protonmail.com',
       license=show_license(),
-      packages=['observer_frontend'],
+      packages=['src'],
       install_requires=[
           'flask',
           'flask_login',
@@ -35,5 +35,4 @@ setup(name='observer_frontend',
         'pytest',
       ],
       include_package_data=True,
-      scripts=['bin/observer-frontend'],
       zip_safe=False)
