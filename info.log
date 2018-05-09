@@ -113475,3 +113475,20 @@ data-track='{
 [2018-05-07 13:37:42 +0200] [42488] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
 [2018-05-07 13:37:44 +0200] [42488] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
 [2018-05-07 13:37:48 +0200] [42488] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
+[2018-05-09 11:17:14 +0200] [37384] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-09 11:17:19 +0200] [37384] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
+[2018-05-09 11:17:37 +0200] [37384] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
+[2018-05-09 11:20:31 +0200] [37384] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
+[2018-05-09 11:22:11 +0200] [37384] [INFO] - src.loggers: ImmutableMultiDict([('error', '')])
+[2018-05-09 11:32:33 +0200] [14520] [INFO] - src.loggers: ImmutableMultiDict([('{"eventType":"GIT_COMMIT","project":"scab-oberserver\\t","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\\t","callback":"http://observer/event/"}', '')])
+[2018-05-09 11:38:24 +0200] [38400] [INFO] - src.loggers: []
+[2018-05-09 11:40:15 +0200] [38508] [INFO] - src.loggers: []
+[2018-05-09 11:49:53 +0200] [39756] [INFO] - src.loggers: <generator object MultiDict.items at 0x05B55A20>
+[2018-05-09 11:51:48 +0200] [39656] [INFO] - src.loggers: {'{"eventType":"GIT_COMMIT","project":"scab-oberserver\\t","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\\t","callback":"http://observer/event/"}': ''}
+[2018-05-09 11:54:01 +0200] [24756] [INFO] - src.loggers: dict_keys(['{"eventType":"GIT_COMMIT","project":"scab-oberserver\\t","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\\t","callback":"http://observer/event/"}'])
+[2018-05-09 12:00:29 +0200] [40620] [INFO] - src.loggers: ImmutableMultiDict([('eventType', 'GIT_COMMIT'), ('project', 'scab-oberserver\t'), ('projectUrl', 'https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git\t'), ('callback', 'http://observer/event/')])
+[2018-05-09 12:01:05 +0200] [39956] [INFO] - src.loggers: ['GIT_COMMIT']
+[2018-05-09 12:02:11 +0200] [804] [INFO] - src.loggers: ['GIT_COMMIT']
+[2018-05-09 12:33:53 +0200] [41716] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-09 12:34:01 +0200] [41716] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-09 14:02:42 +0200] [42800] [INFO] - src.loggers: testUser successfully logged in.

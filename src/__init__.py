@@ -9,6 +9,7 @@
 """
 
 import os
+
 from flask import Flask, redirect, render_template, request, \
     url_for, Response, g, session
 import flask_login
@@ -140,6 +141,7 @@ def login():
         user = User()
         user.id = usrname
         session['username'] = usrname
+        session['registrations'] = []
         flask_login.login_user(user)
         logger.info(usrname + ' successfully logged in.')
         response = redirect(request.args.get("next") or url_for("home"))
@@ -220,47 +222,52 @@ def show_registrations():
 
 @app.route('/profile/registration/', methods=['POST'])
 @flask_login.login_required
-def register_remaining():
-    """Register all projects at Conductor service if not done already.
+def register_project():
+    """Register a project at Conductor service if not done already.
 
        The function checks all projects in the users config file and if
        a project does not have an id already it will try register it
        at the specified Conductor Service.
     """
 
-    logger.info(request.form)
-    return Response('Cool')
-    #
-    # username = flask_login.current_user.id
-    # userconfigs = load_config(username)
-    # registrations = {}
-    # change_count = 0
-    #
-    # if 'registrations' not in session:
-    #     for service, projects in userconfigs.items():
-    #         requester = registrator.MyHTTPRequester(port='5000')
-    #         for projectname, entries in projects.items():
-    #             url = entries['projectUrl']
-    #             events = entries['events']
-    #             for event in events:
-    #                 new_id = requester.register(event_type=event,
-    #                                             project=projectname,
-    #                                             projectUrl=url,
-    #                                             service_address=service)
-    #                 if new_id is not None:
-    #                     registrations[new_id] = {projectname: event}
-    #                     logger.info('Added new id for registration.')
-    #                     change_count += 1
-    #     if change_count > 0:
-    #         session['registrations'] = registrations
-    #         logger.info('Made ' + str(change_count) + ' registration(s) for user '
-    #                     + username + '.')
-    #         return Response('Registrations were successful.')
-    #     else:
-    #         logger.info('Made no registrations for user '
-    #                     + username + '.')
-    #         return Response('Could not register any projects.')
-    # return Response('Already registered.')
+    project = request.form.getlist("project")
+    project_url = request.form.getlist("projectUrl")
+    event_type = request.form.getlist("eventType")
+
+    if project is None:
+        return Response('Received empty value for project.')
+    if project_url is None:
+        return Response('Received empty value for projectUrl.')
+    if event_type is None:
+        return Response('Received empty value for eventType.')
+
+    session['registrations'] += [((project, project_url, event_type), 1)]
+    return Response('Saved registration.')
+
+
+@app.route('/profile/deregistration/', methods=['POST'])
+@flask_login.login_required
+def deregister_project():
+    """Deregister a project at Conductor service if not done already.
+
+       The function checks all projects in the users config file and if
+       a project does not have an id already it will try register it
+       at the specified Conductor Service.
+    """
+
+    project = request.form.getlist("project")
+    project_url = request.form.getlist("projectUrl")
+    event_type = request.form.getlist("eventType")
+
+    if project is None:
+        return Response('Received empty value for project.')
+    if project_url is None:
+        return Response('Received empty value for projectUrl.')
+    if event_type is None:
+        return Response('Received empty value for eventType.')
+
+    session['registrations'].remove(((project, project_url, event_type), 1))
+    return Response('Removed registration.')
 
 
 @app.route('/profile/activate/', methods=['POST'])

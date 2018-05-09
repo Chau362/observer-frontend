@@ -1,20 +1,22 @@
 
 $(".register, .unregister").click(function(){
 
-    var parameters = JSON.stringify({"eventType": $(this).parent().siblings("[name='event']").text(),
+    var parameters = {"eventType": $(this).parent().siblings("[name='event']").text(),
                                      "project": $(this).parent().siblings("[name='projectname']").text(),
                                      "projectUrl": $(this).parent().siblings("[name='url']").text(),
-                                     "callback": "http://observer/event/"});
+                                     "callback": "http://observer/event/"};
 
 
     var $button = $(this);
     var service = $(this).parent().parent().parent().parent().prop("title")
 
     if ($(this).prop("class").includes("unregister")) {
+        addr = service.slice(0,-8) + "/delete/"
         $.ajax({
             type: "POST",
             url:  service,
             data: parameters,
+            processData: false,
             contentType: "application/json; charset=UTF-8",
             async: false,
             success: function(result, status, xhr){
@@ -35,12 +37,12 @@ $(".register, .unregister").click(function(){
         $.ajax({
             type: "POST",
             url:  service,
-            data: parameters,
+            data: JSON.stringify(parameters),
+            processData: false,
             contentType: "application/json; charset=UTF-8",
             async: false,
             success: function(result, status, xhr){
-                console.log(result);
-                console.log(service);
+                $.post('registration/', parameters, function(data){console.log(data)});
                 $button.prop("class", "btn btn-success unregister");
                 $button.children().prop("class", "glyphicon glyphicon-ok");
             },
@@ -48,7 +50,7 @@ $(".register, .unregister").click(function(){
                          console.log(status);
                      },
             complete: function(result, status, xhr){
-                    $.post('registration/', status, function(data){console.log(data)});
+
             },
             timeout: 3000
         });
