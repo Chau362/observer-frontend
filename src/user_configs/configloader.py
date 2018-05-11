@@ -6,20 +6,7 @@ import json
 import logging
 
 # logging setup
-logger = logging.getLogger(__name__)
-logger.setLevel('INFO')
-logger_file_handler = logging.FileHandler('info.log')
-logger_file_handler.setLevel('INFO')
-logger_file_handler.setFormatter(
-    logging.Formatter("%(asctime)s - [%(levelname)s] - %(name)s: %(message)s",
-                      datefmt='%Y-%m-%d %H:%M:%S'))
-console_log = logging.StreamHandler()
-console_log.setLevel('INFO')
-console_log.setFormatter(
-    logging.Formatter("%(asctime)s - [%(levelname)s] - %(name)s: %(message)s",
-                      datefmt='%Y-%m-%d %H:%M:%S'))
-logger.addHandler(logger_file_handler)
-logger.addHandler(console_log)
+logger = logging.getLogger('src')
 
 
 def load_config(username):
@@ -49,7 +36,7 @@ def save_config(username, data):
             json.dump(data, jsonuser, sort_keys=True, indent=4)
     except FileNotFoundError:
         logger.error('Could not save configurations for user '
-                    + username + '.')
+                     + username + '.')
 
 
 def delete_configs(username):
