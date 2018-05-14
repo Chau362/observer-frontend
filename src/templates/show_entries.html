@@ -6,9 +6,9 @@
 {% if None == registrations %}
 <h2>You are currently not registered for any projects.</h2>
 {% else %}
-{% for service, projects in registrations.items()  %}
-<label>Registrations at {{ service }}</label><br><br>
-<table class="table table-hover" title="{{ service }}">
+{% for sub_table in registrations %}
+<label>Registrations at {{ sub_table[0].service }}</label><br><br>
+<table class="table table-hover" title="{{ sub_table[0].service }}">
 <thead>
 <tr>
 <th scope="col">Projectname</th>
@@ -19,27 +19,23 @@
 </thead>
 <tbody>
 <tr>
-{% for projectname, values in projects.items() %}
-    {% set url = values['projectUrl'] %}
-    {% set events = values['events'] %}
-    {% for event in events %}
-        <tr>
-            <td name="projectname">{{ projectname }}</td>
-            <td name="url">{{ url }}</td>
-            <td name="event">{{ event }}</td>
-            <td class="none">
-            {% if (projectname, url, event) in session['registrations'] %}
-                {% set btn_class = "btn-success unregister" %}
-                {% set glyph_class = "glyphicon-ok" %}
-            {% else %}
-                {% set btn_class = "btn-warning register" %}
-                {% set glyph_class = "glyphicon-minus" %}
-            {% endif %}
-            <button type="button" class="btn {{ btn_class }}"><span class="glyphicon {{ glyph_class }}" aria-hidden="true"></span></button>
-            </td>
-        </tr>
+    {% for registration in sub_table | sort(attribute='project_url')  %}
+    <tr>
+        <td name="project_name">{{ registration.project_name }}</td>
+        <td name="project_url">{{ registration.project_url }}</td>
+        <td name="event">{{ registration.event }}</td>
+        <td class="none">
+        {% if registration.active %}
+            {% set btn_class = "btn-success unregister" %}
+            {% set glyph_class = "glyphicon-ok" %}
+        {% else %}
+            {% set btn_class = "btn-warning register" %}
+            {% set glyph_class = "glyphicon-minus" %}
+        {% endif %}
+        <button type="button" class="btn {{ btn_class }}"><span class="glyphicon {{ glyph_class }}" aria-hidden="true"></span></button>
+        </td>
+    </tr>
     {% endfor %}
-{% endfor %}
 </tr>
 </tbody>
 </table>
@@ -47,11 +43,13 @@
 {% endfor %}
 {% endif %}
 <hr>
-<button type="button" id="active-btn" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
-<button type="button" id="inactive-btn" class="btn btn-primary" style="display:none"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
-<span class="label label-danger pull-right" id="stoplabel" style="font-size:20px;">Inactive</span>
-<span class="label label-success pull-right" id="runlabel" aria-hidden="true" style="display:none;font-size:20px;">Active</span>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{% if active %}
+<button name="pause-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
+<span class="label label-success pull-right" aria-hidden="true" style="font-size:20px;">Active</span>
+{% else %}
+<button name="play-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+<span class="label label-danger pull-right" style="font-size:20px;">Inactive</span>
+{% endif %}
+<script src="/static/js/jquery.js"></script>
 <script src="/static/js/manageRegistrations.js"></script>
-<script>$('#inactive-btn').hide()</script>
 {% endblock %}

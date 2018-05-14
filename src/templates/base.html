@@ -70,7 +70,7 @@
 <ul class="nav navbar-nav">
 <li><a href="/profile/">Registrations</a></li>
 <li><a href="/profile/edit/">Edit</a></li>
-<li><a href="/change-password/">Change Password</a></li>
+<li><a href="/change-credentials/">Change Credentials</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li class="dropdown">
@@ -111,8 +111,9 @@ can change the styles by placing the changes after the Bootstrap CDN link -->
 </footer>
 </div>
 <!-- include jQuery library and Bootstrap Javascript files -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/popper.js"></script>
+<script src="/static/js/bootstrap.js"></script>
 <!--Switch navbar active state -->
 <script>$(document).ready(function() {$('li.active').removeClass('active');$('a[href="' + location.pathname + '"]').closest('li').addClass('active'); });</script>
 </body>

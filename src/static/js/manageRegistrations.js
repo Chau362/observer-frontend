@@ -1,21 +1,21 @@
 
 $(".register, .unregister").click(function(){
 
-    var parameters = {"eventType": $(this).parent().siblings("[name='event']").text(),
-                                     "project": $(this).parent().siblings("[name='projectname']").text(),
-                                     "projectUrl": $(this).parent().siblings("[name='url']").text(),
-                                     "callback": "http://observer/event/"};
-
+    var service = $(this).parent().parent().parent().parent().prop("title")
+    var parameters = {'event': $(this).parent().siblings("[name='event']").text(),
+                                     'project_name': $(this).parent().siblings("[name='project_name']").text(),
+                                     'project_url': $(this).parent().siblings("[name='project_url']").text(),
+                                     'service': service};
 
     var $button = $(this);
-    var service = $(this).parent().parent().parent().parent().prop("title")
+
+    console.log(parameters)
 
     if ($(this).prop("class").includes("unregister")) {
-        addr = service.slice(0,-8) + "/delete/"
         $.ajax({
             type: "POST",
-            url:  service,
-            data: parameters,
+            url:  "remove-follow/",
+            data: JSON.stringify(parameters),
             processData: false,
             contentType: "application/json; charset=UTF-8",
             async: false,
@@ -25,10 +25,7 @@ $(".register, .unregister").click(function(){
                 $button.children().prop("class", "glyphicon glyphicon-minus");
             },
             failure: function(xhr, status, error) {
-                         console.log(status);
-                     },
-            complete: function(result, status, xhr){
-                    $.post('registration/', status, function(data){console.log(data)});
+                console.log(status);
             },
             timeout: 3000
         });
@@ -36,45 +33,36 @@ $(".register, .unregister").click(function(){
     else {
         $.ajax({
             type: "POST",
-            url:  service,
+            url:  "add-follow/",
             data: JSON.stringify(parameters),
-            processData: false,
             contentType: "application/json; charset=UTF-8",
-            async: false,
             success: function(result, status, xhr){
-                $.post('registration/', parameters, function(data){console.log(data)});
+                console.log(result);
                 $button.prop("class", "btn btn-success unregister");
                 $button.children().prop("class", "glyphicon glyphicon-ok");
             },
             failure: function(xhr, status, error) {
-                         console.log(status);
-                     },
-            complete: function(result, status, xhr){
-
-            },
+                console.log(status);
+             },
             timeout: 3000
         });
     };
 });
 
 
-$("#active-btn").click(function(){
-    $.post("activate/", function(){
-        $("#active-btn").hide();
-        $("#stoplabel").hide();
-        $("#inactive-btn").show();
-        $("#runlabel").show();
-    });
+$("[name*='btn']").click(function(){
+    if ($(this).attr("name") == "pause-btn"){
+        $.post("deactivate/", function(){
+            location.reload();
+        });
+    }
+    else {
+        $.post("activate/", function(){
+            location.reload();
+        });
+    }
 });
 
-$("#inactive-btn").click(function(){
-    $.post("deactivate/", function(){
-            $("#runlabel").hide();
-            $("#inactive-btn").hide();
-            $("#active-btn").show();
-            $("#stoplabel").show();
-    });
-});
 
 $( '[name="strikeoutbtn"]' ).click(function() {
     if ($(this).attr("name") == "strikeoutbtn"){

@@ -2,13 +2,16 @@
 """
 
 import os
-from src import logger
+import logging
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, EqualTo, Length
 import json
 from bcrypt import checkpw
+
+
+logger = logging.getLogger('src')
 
 
 def get_users():
@@ -20,14 +23,15 @@ def get_users():
 
 class LoginForm(FlaskForm):
     """This class defines the login form.
+
        The form provides two entry fields for the user's
        credentials: username and password.
     """
 
-    username = StringField('Username',
+    username = StringField('username',
                            validators=[InputRequired(
                                message="Please enter a Username.")])
-    password = PasswordField('Password',
+    password = PasswordField('password',
                              validators=[InputRequired(
                                  message="Please enter your Password.")])
 
@@ -58,11 +62,16 @@ class LoginForm(FlaskForm):
         return True
 
 
-class ChangePasswordForm(FlaskForm):
+class ChangeCredentialsForm(FlaskForm):
     """This class defines the form to change an existing users password.
+
        The form provides one entry fields for the current password and two
        entry fields for new password, the second one being used for verification.
     """
+
+    username = StringField('username',
+                           validators=[InputRequired(
+                               message="Please enter a Username.")])
 
     currentPassword = PasswordField('currentPassword',
                                     validators=[
@@ -105,11 +114,12 @@ class ChangePasswordForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     """This class defines part the registration form.
+
        The form provides entry fields for the chosen username and
        two entry fields for a password, the second one being used for verification.
     """
 
-    username = StringField('Username',
+    username = StringField('username',
                            validators=[InputRequired(
                                message="Please enter a Username.")])
 

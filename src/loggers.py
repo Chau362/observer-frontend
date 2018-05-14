@@ -12,7 +12,7 @@ __author__ = "Masud Afschar"
 __status__ = "Development"
 
 
-def setup_gunicorn_log(app):
+def setup_gunicorn_logging(app):
     """This is meant to be called if the Flask app is run by Gunicorn.
 
     The logger will set the handlers of the Flask app logger
@@ -35,7 +35,7 @@ def setup_flask_logging(log_level="INFO"):
     :param log_level: granularity of logging messages
     :return: the logger object
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('src')
     logger.setLevel(log_level)
 
     logger_file_handler = logging.FileHandler('info.log')

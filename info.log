@@ -113492,3 +113492,51 @@ data-track='{
 [2018-05-09 12:33:53 +0200] [41716] [INFO] - src.loggers: testUser has been logged out.
 [2018-05-09 12:34:01 +0200] [41716] [INFO] - src.loggers: testUser successfully logged in.
 [2018-05-09 14:02:42 +0200] [42800] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-14 09:19:52 +0200] [7196] [INFO] - src.loggers: testUser successfully logged in.
+[2018-05-14 09:20:43 +0200] [10660] [INFO] - src.loggers: testUser has been logged out.
+[2018-05-14 09:20:58 +0200] [10660] [INFO] - src.loggers: Created account for tester.
+[2018-05-14 09:20:58 +0200] [10660] [INFO] - src.loggers: Logged tester in after account creation.
+[2018-05-14 09:22:19 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:20 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:21 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:23 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:27 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:37 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:38 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:39 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:41 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:45 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:47 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:49 +0200] [11636] [INFO] - src: Could not retrieve configurations of user tester.
+[2018-05-14 09:22:49 +0200] [11636] [INFO] - src: tester has been logged out.
+[2018-05-14 09:27:05 +0200] [5752] [INFO] - src: testUser successfully logged in.
+[2018-05-14 11:01:50 +0200] [14692] [INFO] - src: testUser has been logged out.
+[2018-05-14 11:04:38 +0200] [19020] [INFO] - src: Created account for newUser.
+[2018-05-14 11:04:38 +0200] [19020] [INFO] - src: Logged newUser in after account creation.
+[2018-05-14 15:47:29 +0200] [21216] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:05:35 +0200] [28804] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:06:29 +0200] [28804] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:11:16 +0200] [30248] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:13:12 +0200] [32668] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:15:00 +0200] [23300] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:15:10 +0200] [23300] [INFO] - src: newUser has been logged out.
+[2018-05-14 16:15:19 +0200] [23300] [INFO] - src: newUser successfully logged in.
+[2018-05-14 16:15:23 +0200] [23300] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 16:15:37 +0200] [23300] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:15:44 +0200] [23300] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 16:15:55 +0200] [23300] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:20:53 +0200] [23300] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 16:21:10 +0200] [23300] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:21:14 +0200] [23300] [INFO] - src: newUser has been logged out.
+[2018-05-14 16:21:28 +0200] [23300] [INFO] - src: newUser successfully logged in.
+[2018-05-14 16:23:32 +0200] [23300] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 16:23:41 +0200] [23300] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 16:41:17 +0200] [23300] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 16:43:11 +0200] [33636] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 18:54:53 +0200] [36040] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 18:54:56 +0200] [36040] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 18:58:13 +0200] [30748] [INFO] - src: Activated messages for user newUser.
+[2018-05-14 18:58:20 +0200] [30748] [INFO] - src: newUser has been logged out.
+[2018-05-14 18:58:31 +0200] [30748] [INFO] - src: newUser successfully logged in.
+[2018-05-14 18:58:34 +0200] [30748] [INFO] - src: Deactivated messages for user newUser.
+[2018-05-14 19:02:52 +0200] [40416] [INFO] - src: newUser has been logged out.
