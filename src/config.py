@@ -3,6 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    """Template class for Flask configuration.
+    """
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
