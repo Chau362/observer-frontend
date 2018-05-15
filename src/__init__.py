@@ -17,8 +17,7 @@ from .myflask import FlaskApp
 from .models import User, Anonymous, Registration, RegistrationSerializer
 from .loggers import setup_flask_logging, setup_gunicorn_logging
 from threading import Thread
-
-# from lights.led_blinker import Blink
+from src.lights import eventhandler
 
 
 __author__ = "Masud Afschar"
@@ -47,9 +46,7 @@ login_manager.anonymous_user = Anonymous
 
 
 def split_registrations(list_of_registrations):
-
-    sorted(list_of_registrations,
-           key=lambda registration: registration.service)
+    list_of_registrations.sort(key=lambda registration: registration.service)
 
     sub_list = []
     main_list = []
@@ -210,8 +207,10 @@ def show_registrations():
     """
 
     username = current_user.get_id()
-    registrations = split_registrations(current_user.registrations)
-    return render_template("show_entries.html", registrations=registrations,
+    registrations = current_user.registrations
+    registrations.sort(key=lambda registration: registration.service)
+    presorted_registrations = split_registrations(registrations)
+    return render_template("show_entries.html", registrations=presorted_registrations,
                            username=username, active=(username in app.active_users))
 
 
@@ -250,7 +249,7 @@ def register_project():
     registrations.append(new_follower)
     registrations = list(map(RegistrationSerializer.deserialize_registration,
                              registrations))
-    sorted(registrations, key=lambda registration: registration['service'])
+    registrations.sort(key=lambda registration: registration['service'])
     app.save_config(current_user.id, {"registrations": registrations})
 
     return Response('Saved registration.')
@@ -280,8 +279,6 @@ def deregister_project():
     if event is None:
         return Response('Received empty value for event.')
 
-    print(service, project_name, project_url, event)
-
     new_follower = Registration(service=service, project_name=project_name,
                                 project_url=project_url, event=event,
                                 active=False)
@@ -291,7 +288,7 @@ def deregister_project():
     registrations.append(new_follower)
     registrations = list(map(RegistrationSerializer.deserialize_registration,
                              registrations))
-    sorted(registrations, key=lambda registration: registration['service'])
+    registrations.sort(key=lambda registration: registration['service'])
     app.save_config(current_user.id, {"registrations": registrations})
 
     return Response('Removed registration.')
@@ -378,7 +375,6 @@ def delete_account():
     return Response('Account successfully deleted.')
 
 
-
 @app.route('/change-credentials/', methods=['GET', 'POST'])
 @login_required
 def change_password():
@@ -413,11 +409,10 @@ def render_event():
        The function checks what kind of information was sent and
        forwards it to the lights class to process it.
     """
-
-    logger.info('Received the following: '
-                + str(request.data.decode('utf-8')))
-    if current_user.is_active == True:
-        # blink_thread = Thread(target=Blink, kwargs={'numTimes': 10,'speed': 0.5})
-        # blink_thread.start()
-        pass
+    event = request.json
+    logger.info('Received a ' + event['eventType'] + ' to show.')
+    event_thread = Thread(target=eventhandler.play,
+                          kwargs={'type': event['eventType'],
+                                  'active_users': app.active_users})
+    event_thread.start()
     return Response('Received POSTed event.')
