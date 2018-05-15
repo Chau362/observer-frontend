@@ -9,6 +9,8 @@
 """
 
 import os
+# import signal
+from multiprocessing import Process
 from flask import redirect, render_template, request, \
     url_for, Response, session
 from flask_login import LoginManager, current_user, login_required, \
@@ -16,8 +18,7 @@ from flask_login import LoginManager, current_user, login_required, \
 from .myflask import FlaskApp
 from .models import User, Anonymous, Registration, RegistrationSerializer
 from .loggers import setup_flask_logging, setup_gunicorn_logging
-from threading import Thread
-from src.lights import eventhandler
+# from src.lights.eventhandler import handle_event
 
 
 __author__ = "Masud Afschar"
@@ -411,8 +412,16 @@ def render_event():
     """
     event = request.json
     logger.info('Received a ' + event['eventType'] + ' to show.')
-    event_thread = Thread(target=eventhandler.play,
-                          kwargs={'type': event['eventType'],
-                                  'active_users': app.active_users})
-    event_thread.start()
+
+    for pid in app.active_processes:
+        # os.kill(pid, signal.SIGKILL)
+        app.active_processes.remove(pid)
+
+    # event_process = Process(target=handle_event,
+    #                         kwargs={'type': event['eventType'],
+    #                                 'active_users': app.active_users})
+    # event_process.start()
+
+    # app.active_processes.append(event_process.pid)
+
     return Response('Received POSTed event.')

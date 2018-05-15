@@ -113549,3 +113549,14 @@ data-track='{
 [2018-05-15 08:51:15 +0200] [6060] [INFO] - src: Received the following: {"eventType":"GIT_COMMIT","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git","parameters":{"commit":"5152bed956f923ff3bd7cf8215b4293de2fae166","author":"cpham <chau-tan.pham@iteratec.de>","commiter":"cpham <chau-tan.pham@iteratec.de>","date":"2018-04-05 11:43:03 +0200","paths":[{"insertions":"0","deletions":"27","path":"gitlog.sh"}],"projectName":"scab-oberserver-hive","projectUrl":"https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git"},"project":null}
 [2018-05-15 09:12:28 +0200] [14476] [INFO] - src: Received a GIT_COMMIT to show.
 [2018-05-15 09:13:46 +0200] [2676] [INFO] - src: Received a GIT_COMMIT to show.
+[2018-05-15 17:19:53 +0200] [43480] [INFO] - src: newUser successfully logged in.
+[2018-05-15 17:19:58 +0200] [43480] [INFO] - src: Activated messages for user newUser.
+[2018-05-15 18:03:41 +0200] [58988] [INFO] - src: newUser has been logged out.
+[2018-05-15 18:03:53 +0200] [58988] [INFO] - src: Created account for sudo.
+[2018-05-15 18:03:53 +0200] [58988] [INFO] - src: Logged sudo in after account creation.
+[2018-05-15 18:03:54 +0200] [58988] [INFO] - src: Could not retrieve configurations of user sudo.
+[2018-05-15 18:03:54 +0200] [58988] [INFO] - src: Could not retrieve configurations of user sudo.
+[2018-05-15 18:04:54 +0200] [58988] [INFO] - src: Could not retrieve configurations of user sudo.
+[2018-05-15 18:04:58 +0200] [58988] [INFO] - src: Could not retrieve configurations of user sudo.
+[2018-05-15 18:04:58 +0200] [58988] [INFO] - src: Deleted account of user sudo.
+[2018-05-15 18:04:58 +0200] [58988] [INFO] - src: Logged sudo out after account deletion.

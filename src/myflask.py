@@ -18,7 +18,7 @@ def get_users():
 
     cwd = os.path.dirname(os.path.abspath(__file__))
     with open(cwd + '/users.json') as registered_users:
-        users: dict = json.load(registered_users)
+        users = json.load(registered_users)
     return users
 
 
@@ -31,6 +31,7 @@ class FlaskApp(Flask):
 
     users = get_users()
     active_users = []
+    active_processes = []
     registrations = {}
 
     def __init__(self, *args, **kwargs):
