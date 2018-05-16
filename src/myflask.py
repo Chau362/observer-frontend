@@ -65,6 +65,8 @@ class FlaskApp(Flask):
         cwd = os.path.dirname(os.path.abspath(__file__))
         with open(cwd + "/users.json", "w") as outfile:
             json.dump(users, outfile, sort_keys=True, indent=4)
+        file = username + ".json"
+        os.remove(cwd + "/user_configs/" + file)
         cls.users = users
 
     @staticmethod
@@ -91,9 +93,12 @@ class FlaskApp(Flask):
 
         path = os.path.dirname(os.path.abspath(__file__))
         file = username + ".json"
+        data.sort(key=lambda registration: registration['id'])
+        data.sort(key=lambda registration: registration['project_name'])
+        data.sort(key=lambda registration: registration['service'])
         try:
             with open(path + "/user_configs/" + file, "w") as jsonuser:
-                json.dump(data, jsonuser, sort_keys=True, indent=4)
+                json.dump({"registrations": data}, jsonuser, sort_keys=True, indent=4)
         except FileNotFoundError:
             logger.error('Could not save configurations for user '
                          + username + '.')

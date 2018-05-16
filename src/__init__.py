@@ -9,8 +9,10 @@
 """
 
 import os
+import socket
+import requests
 # import signal
-from multiprocessing import Process
+# from multiprocessing import Process
 from flask import redirect, render_template, request, \
     url_for, Response, session
 from flask_login import LoginManager, current_user, login_required, \
@@ -18,8 +20,6 @@ from flask_login import LoginManager, current_user, login_required, \
 from .myflask import FlaskApp
 from .models import User, Anonymous, Registration, RegistrationSerializer
 from .loggers import setup_flask_logging, setup_gunicorn_logging
-# from src.lights.eventhandler import handle_event
-
 
 __author__ = "Masud Afschar"
 __status__ = "Development"
@@ -209,9 +209,9 @@ def show_registrations():
 
     username = current_user.get_id()
     registrations = current_user.registrations
-    registrations.sort(key=lambda registration: registration.service)
-    presorted_registrations = split_registrations(registrations)
-    return render_template("show_entries.html", registrations=presorted_registrations,
+    if registrations:
+        registrations = split_registrations(registrations)
+    return render_template("show_entries.html", registrations=registrations,
                            username=username, active=(username in app.active_users))
 
 
@@ -225,11 +225,14 @@ def register_project():
        at the specified Conductor Service.
     """
 
+    registration_id = request.json["id"]
     service = request.json["service"]
     project_name = request.json["project_name"]
     project_url = request.json["project_url"]
     event = request.json["event"]
 
+    if registration_id is None:
+        return Response('Received empty value for ID of registration.')
     if service is None:
         return Response('Received empty value for service.')
     if project_name is None:
@@ -239,19 +242,19 @@ def register_project():
     if event is None:
         return Response('Received empty value for event.')
 
-    print(service, project_name, project_url, event)
-
-    new_follower = Registration(service=service, project_name=project_name,
+    new_follower = Registration(registration_id=registration_id,
+                                service=service, project_name=project_name,
                                 project_url=project_url, event=event,
                                 active=True)
 
     registrations = current_user.registrations
     registrations.remove(new_follower)
     registrations.append(new_follower)
+
     registrations = list(map(RegistrationSerializer.deserialize_registration,
                              registrations))
-    registrations.sort(key=lambda registration: registration['service'])
-    app.save_config(current_user.id, {"registrations": registrations})
+
+    app.save_config(current_user.id, registrations)
 
     return Response('Saved registration.')
 
@@ -266,11 +269,14 @@ def deregister_project():
        at the specified Conductor Service.
     """
 
+    registration_id = request.json["id"]
     service = request.json["service"]
     project_name = request.json["project_name"]
     project_url = request.json["project_url"]
     event = request.json["event"]
 
+    if registration_id is None:
+        return Response('Received empty value for ID of registration.')
     if service is None:
         return Response('Received empty value for service.')
     if project_name is None:
@@ -280,17 +286,19 @@ def deregister_project():
     if event is None:
         return Response('Received empty value for event.')
 
-    new_follower = Registration(service=service, project_name=project_name,
+    new_follower = Registration(registration_id=registration_id,
+                                service=service, project_name=project_name,
                                 project_url=project_url, event=event,
                                 active=False)
 
     registrations = current_user.registrations
     registrations.remove(new_follower)
     registrations.append(new_follower)
+
     registrations = list(map(RegistrationSerializer.deserialize_registration,
                              registrations))
-    registrations.sort(key=lambda registration: registration['service'])
-    app.save_config(current_user.id, {"registrations": registrations})
+
+    app.save_config(current_user.id, registrations)
 
     return Response('Removed registration.')
 
@@ -337,25 +345,48 @@ def edit_registrations():
 
     username = current_user.get_id()
     if request.method == 'GET':
-        registrations = split_registrations(current_user.registrations)
+        registrations = current_user.registrations
+        if registrations:
+            registrations = split_registrations(current_user.registrations)
         return render_template("edit_registration.html",
                                registrations=registrations,
                                username=username)
     else:
-        data = {}
-        for i, entries in enumerate(zip(request.form.getlist('service'),
+        attributes = ['id', 'service', 'projectName',
+                      'repository', 'eventType']
+
+        for attribute in attributes:
+            if not request.form.getlist(attribute):
+                return Response('Received missing attribute '
+                                + attribute + '.')
+
+        new_registrations = []
+        for i, entries in enumerate(zip(request.form.getlist('id'),
+                                        request.form.getlist('service'),
                                         request.form.getlist('projectName'),
                                         request.form.getlist('repository'),
                                         request.form.getlist('eventType'))):
+            entries = list(entries)
+            if entries[0] == "None":
+                callback_address = "http://" + socket.gethostname() + ":9090"
+                data = {"projectUrl": entries[3],
+                        "eventType": entries[4],
+                        "project": entries[2],
+                        "callback": callback_address}
+                response = requests.post(entries[1], json=data)
+                entries[0] = response.text
 
-            if entries[0] not in data:
-                data[entries[0]] = {entries[1]: {"projectUrl": entries[2], "events": [entries[3]]}}
-            elif entries[1] not in data[entries[0]]:
-                data[entries[0]][entries[1]] = {"projectUrl": entries[2], "events": [entries[3]]}
-            else:
-                data[entries[0]][entries[1]]["events"].append(entries[3])
+            new_registration = Registration(registration_id=entries[0],
+                                            service=entries[1],
+                                            project_name=entries[2],
+                                            project_url=entries[3],
+                                            event=entries[4])
+            new_registrations.append(new_registration)
 
-        app.save_config(username, data)
+        new_registrations = list(map(RegistrationSerializer.deserialize_registration,
+                                     new_registrations))
+
+        app.save_config(username, new_registrations)
         return redirect('/profile/')
 
 
@@ -370,8 +401,6 @@ def delete_account():
     app.delete_user(username)
     logger.info('Deleted account of user ' + username + '.')
     logout_user()
-    session.pop('registrations', None)
-    session.pop('username', None)
     logger.info('Logged ' + username + ' out after account deletion.')
     return Response('Account successfully deleted.')
 
@@ -411,11 +440,13 @@ def render_event():
        forwards it to the lights class to process it.
     """
     event = request.json
+    if event is None:
+        return Response('Received empty POST.')
     logger.info('Received a ' + event['eventType'] + ' to show.')
 
-    for pid in app.active_processes:
-        # os.kill(pid, signal.SIGKILL)
-        app.active_processes.remove(pid)
+    # for pid in app.active_processes:
+    # os.kill(pid, signal.SIGKILL)
+    # app.active_processes.remove(pid)
 
     # event_process = Process(target=handle_event,
     #                         kwargs={'type': event['eventType'],

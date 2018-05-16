@@ -12,7 +12,7 @@ class Registration:
     """Generic class for a registration.
     """
 
-    def __init__(self, service, project_name, project_url, event, active=False):
+    def __init__(self, registration_id, service, project_name, project_url, event, active=False):
         """
         :type service: string
         :type project_name: string
@@ -21,6 +21,7 @@ class Registration:
         :type active: bool
         """
 
+        self.id = registration_id
         self.service = service
         self.project_name = project_name
         self.project_url = project_url
@@ -73,7 +74,7 @@ class Registration:
                      self.project_url, self.event))
 
     def __repr__(self):
-        return repr((self.service, self.project_name,
+        return repr((self.id, self.service, self.project_name,
                      self.project_url, self.event))
 
 
@@ -81,7 +82,7 @@ class RegistrationSerializer:
 
     @staticmethod
     def serialize_registration(registration):
-        return Registration(registration['service'],
+        return Registration(registration['id'], registration['service'],
                             registration['project_name'],
                             registration['project_url'],
                             registration['event'],

@@ -3,6 +3,7 @@ var newId = 0;
 var new_registration =
 "<div class='well registration'> \
 <div class='form-group'> \
+<input type='hidden' name='id' value='None'> \
 <label>Conductor Service</label><br> \
 <input id='service-%' type='url' onblur='projectAutocomplete(document.getElementById(%), this.value)' name='service' aria-required='true' required='required' class='form-control' placeholder='Enter address of the Conductor Service'> \
 </div> \
@@ -48,8 +49,6 @@ function checkUsername(caller, username) {
         data: username,
         type: 'POST',
         success: function(data) {
-            console.log(caller);
-            console.log(data);
             caller.setAttribute("aria-invalid", data);
         },
         error: function() {

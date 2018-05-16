@@ -3,7 +3,7 @@
 <title>Observerhive: Registrations</title>
 {% endblock %}
 {% block content %}
-{% if None == registrations %}
+{% if not registrations %}
 <h2>You are currently not registered for any projects.</h2>
 {% else %}
 {% for sub_table in registrations %}
@@ -21,6 +21,7 @@
 <tr>
     {% for registration in sub_table | sort(attribute='project_url')  %}
     <tr>
+        <input type="hidden" name="id" value="{{ registration.id }}">
         <td name="project_name">{{ registration.project_name }}</td>
         <td name="project_url">{{ registration.project_url }}</td>
         <td name="event">{{ registration.event }}</td>

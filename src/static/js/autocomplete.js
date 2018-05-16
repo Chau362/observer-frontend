@@ -2,9 +2,10 @@
 function projectAutocomplete(field, service) {
 
    console.log(service)
+   var registrations = service.slice(0,-8) + 'registrations'
    $.ajax({
       type: 'GET',
-      url: 'http://localhost:8080/projects',
+      url: registrations,
       cache: false,
       async: false,
       contentType: 'application/json',

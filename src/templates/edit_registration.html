@@ -9,7 +9,7 @@ tr.strikeout td.strikable {
     text-decoration:line-through;
 }
 </style>
-{% if None == registrations %}
+{% if not registrations %}
 <h2>You are currently not registered for any projects.</h2>
 <form method="POST" action="" id="reg-form">
 <div id="00">
@@ -32,6 +32,7 @@ tr.strikeout td.strikable {
 <tr>
 {% for registration in sub_table %}
         <tr>
+            <input type="hidden" name="id" value="{{ registration.id }}">
             <input type="hidden" name="service" value="{{ registration.service }}">
             <td class="strikable">{{ registration.project_name }}</td>
             <input type="hidden" name="projectName" value="{{ registration.project_name }}">
@@ -50,11 +51,8 @@ tr.strikeout td.strikable {
 </div>
 {% endif %}
 <button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
-<button type="submit" id="save-btn" class="btn btn-success">Save changes</button>
+<button type="submit" form="reg-form" id="save-btn" class="btn btn-success">Save changes</button>
 </form>
-<script src="/static/js/jquery.js"></script>
-<script src="/static/js/bootstrap.js"></script>
-<script src="/static/js/autocomplete.js"></script>
 <script src="/static/js/registrationFormFunctions.js"></script>
 <script src="/static/js/manageRegistrations.js"></script>
 {% endblock %}
