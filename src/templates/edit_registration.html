@@ -41,6 +41,7 @@ tr.strikeout td.strikable {
             <td class="strikable">{{ registration.event }}</td>
             <input type="hidden" name="eventType" value="{{ registration.event }}">
             <td class="none"><button type="button" name="strikeoutbtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+            <input type="hidden" name="active" value="{{ registration.active }}">
         </tr>
 {% endfor %}
 </tr>
@@ -53,6 +54,7 @@ tr.strikeout td.strikable {
 <button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
 <button type="submit" form="reg-form" id="save-btn" class="btn btn-success">Save changes</button>
 </form>
+<script src="/static/js/jquery.js"></script>
 <script src="/static/js/registrationFormFunctions.js"></script>
 <script src="/static/js/manageRegistrations.js"></script>
 {% endblock %}

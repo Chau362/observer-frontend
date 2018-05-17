@@ -49,8 +49,11 @@ class FlaskApp(Flask):
         users[username] = hashpw(password.encode('utf-8'),
                                  gensalt()).decode('utf-8')
         cwd = os.path.dirname(os.path.abspath(__file__))
-        with open(cwd + "/users.json", "w") as outfile:
-            json.dump(users, outfile, sort_keys=True, indent=4)
+        try:
+            with open(cwd + "/users.json", "w") as outfile:
+                json.dump(users, outfile, sort_keys=True, indent=4)
+        except:
+            logger.info('Unable to write new user file.')
         cls.users = users
 
     @classmethod
@@ -63,11 +66,43 @@ class FlaskApp(Flask):
         users = cls.users
         users.pop(username, None)
         cwd = os.path.dirname(os.path.abspath(__file__))
-        with open(cwd + "/users.json", "w") as outfile:
-            json.dump(users, outfile, sort_keys=True, indent=4)
-        file = username + ".json"
-        os.remove(cwd + "/user_configs/" + file)
+        try:
+            with open(cwd + "/users.json", "w") as outfile:
+                json.dump(users, outfile, sort_keys=True, indent=4)
+            try:
+                file = username + ".json"
+                os.remove(cwd + "/user_configs/" + file)
+            except FileNotFoundError:
+                logger.info('User ' + username + ' had no registered projects.')
+        except FileNotFoundError:
+            logger.info('Unable to write new user file.')
         cls.users = users
+
+    @classmethod
+    def rename_user(cls, current_name, new_name, new_password):
+        users = cls.users
+        users.pop(current_name, None)
+
+        users[new_name] = hashpw(new_password.encode('utf-8'),
+                                 gensalt()).decode('utf-8')
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        try:
+            with open(cwd + "/users.json", "w") as outfile:
+                json.dump(users, outfile, sort_keys=True, indent=4)
+        except:
+            logger.info('Unable to write new user file.')
+
+        cls.users = users
+
+        old_file = current_name + ".json"
+        new_file = new_name + ".json"
+        try:
+            os.rename(cwd + "/user_configs/" + old_file, cwd + "/user_configs/" + new_file)
+            logger.info("Renamed file containing configs of user "
+                        + current_name + ".")
+        except FileNotFoundError:
+            logger.info('User ' + current_name + ' had no registered projects.')
+
 
     @staticmethod
     def load_config(username):

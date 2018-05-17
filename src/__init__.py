@@ -353,7 +353,7 @@ def edit_registrations():
                                username=username)
     else:
         attributes = ['id', 'service', 'projectName',
-                      'repository', 'eventType']
+                      'repository', 'eventType', 'active']
 
         for attribute in attributes:
             if not request.form.getlist(attribute):
@@ -365,7 +365,8 @@ def edit_registrations():
                                         request.form.getlist('service'),
                                         request.form.getlist('projectName'),
                                         request.form.getlist('repository'),
-                                        request.form.getlist('eventType'))):
+                                        request.form.getlist('eventType'),
+                                        request.form.getlist('active'))):
             entries = list(entries)
             if entries[0] == "None":
                 callback_address = "http://" + socket.gethostname() + ":9090"
@@ -380,7 +381,9 @@ def edit_registrations():
                                             service=entries[1],
                                             project_name=entries[2],
                                             project_url=entries[3],
-                                            event=entries[4])
+                                            event=entries[4],
+                                            active=entries[5])
+            print(entries[5])
             new_registrations.append(new_registration)
 
         new_registrations = list(map(RegistrationSerializer.deserialize_registration,
@@ -419,13 +422,22 @@ def change_password():
 
     username = current_user.get_id()
     form = ChangeCredentialsForm(request.form)
+
     if form.validate_on_submit():
-        if request.form['username'] != current_user.get_id():
-            app.delete_user(username)
-        app.add_user_and_password(request.form['username'], request.form['newPassword1'])
-        logger.info("Successfully changed password of "
+        logger.info(username + " wants to change something.")
+        if request.form['username'] != username:
+            logger.info("User " + username + " wants to change the username.")
+            app.rename_user(username, request.form['username'],
+                            request.form['newPassword1'])
+        else:
+            logger.info("Changing password of user " + username + ".")
+            app.add_user_and_password(request.form['username'],
+                                      request.form['newPassword1'])
+
+        logger.info("Successfully changed credentials of "
                     + username + '.')
         return redirect(url_for('home'))
+
     else:
         return render_template('change-credentials.html',
                                form=form,

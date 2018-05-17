@@ -1,12 +1,14 @@
 
 $(".register, .unregister").click(function(){
 
+    var active = $(this).parent().siblings("[name='active']").val() == "false" ? false : true;
     var service = $(this).parent().parent().parent().parent().prop("title")
     var parameters = {'event': $(this).parent().siblings("[name='event']").text(),
                                      'id': $(this).parent().siblings("[name='id']").val(),
                                      'project_name': $(this).parent().siblings("[name='project_name']").text(),
                                      'project_url': $(this).parent().siblings("[name='project_url']").text(),
-                                     'service': service};
+                                     'service': service,
+                                     'active': active};
 
     var $button = $(this);
 

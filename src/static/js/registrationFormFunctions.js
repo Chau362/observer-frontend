@@ -4,6 +4,7 @@ var new_registration =
 "<div class='well registration'> \
 <div class='form-group'> \
 <input type='hidden' name='id' value='None'> \
+<input type='hidden' name='active' value='false'> \
 <label>Conductor Service</label><br> \
 <input id='service-%' type='url' onblur='projectAutocomplete(document.getElementById(%), this.value)' name='service' aria-required='true' required='required' class='form-control' placeholder='Enter address of the Conductor Service'> \
 </div> \

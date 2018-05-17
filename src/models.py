@@ -90,7 +90,12 @@ class RegistrationSerializer:
 
     @staticmethod
     def deserialize_registration(registration):
-        return registration.__dict__
+        attributes = registration.__dict__
+        try:
+            attributes['_active'] = True if attributes['_active'] == 'True' else False
+        except AttributeError:
+            logger.error('Checked Registration object has not attribute `active`.')
+        return attributes
 
 
 class User(UserMixin):
