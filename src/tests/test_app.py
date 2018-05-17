@@ -1,30 +1,39 @@
-from src.__init__ import app
+
+import os
 import unittest
-import tempfile
+from tempfile import NamedTemporaryFile
+from src.__init__ import app
 
 
 class ObserverFrontendTestCase(unittest.TestCase):
     """This class implements all tests for the flask app which runs the frontend.
     """
 
+    test_user = "foobar"
+    # fd = None
+    # path_to_user_configs = None
+    users = None
+
     @classmethod
     def setUpClass(cls):
+        # disable error catching during request handling
+        app.config.from_object("src.config.TestingConfig")
+        #  test client provides a simple interface to the application
+        cls.app = app.test_client()
         # make temporary users file
-        # cls.users = tempfile.mkstemp()
-        pass
+        NamedTemporaryFile(prefix="foobar",
+                           suffix=".json",
+                           dir=app.cwd + "/user_configs/")
 
     @classmethod
     def tearDownClass(cls):
         pass
 
     def setUp(self):
-        # disable error catching during request handling
-        app.config.from_object("src.config.TestingConfig")
-        #  test client provides a simple interface to the application
-        self.app = app.test_client()
+        pass
 
     def tearDown(self):
-        pass
+        self.logout()
 
     def login(self, username, password):
         return self.app.post('/login/', data=dict(
@@ -78,7 +87,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
         self.assertEqual(rv.status_code, 302)
 
     def test_invalid_login(self):
-        self.login('testUser', 'xxx')
+        self.login('testUser', 'hello')
         rv = self.app.get('/profile/')
 
     def test_unauthorized_access(self):
