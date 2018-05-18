@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.models &#8212; iteranoid 0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html"/>
+    <link rel="search" title="Search" href="../../search.html"/>
+
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css"/>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Source code for src.models</h1>
+                <div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module defines the user models which are used in the app.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span
+                        class="n">UserMixin</span><span class="p">,</span> <span class="n">AnonymousUserMixin</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span
+                        class="n">getLogger</span><span class="p">(</span><span
+                        class="s1">&#39;src.models&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Registration"><a class="viewcode-back" href="../../code.html#src.models.Registration">[docs]</a><span
+        class="k">class</span> <span class="nc">Registration</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generic class for a registration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">registration_id</span><span class="p">,</span> <span
+            class="n">service</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span
+            class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span
+            class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">False</span><span
+            class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type service: string</span>
+<span class="sd">        :type project_name: string</span>
+<span class="sd">        :type project_url: string</span>
+<span class="sd">        :type event: string</span>
+<span class="sd">        :type active: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="n">registration_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span
+            class="o">=</span> <span class="n">service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span
+            class="n">project_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_url</span> <span class="o">=</span> <span
+            class="n">project_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span
+            class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span
+            class="o">=</span> <span class="n">active</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active</span>
+
+    <span class="nd">@active</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span
+            class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span
+            class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Attribute must be boolean.&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span
+            class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the equality of two registrations.</span>
+
+<span class="sd">        :param other: object to compare to</span>
+<span class="sd">        :return: true if all attributes are the same</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span
+            class="p">,</span> <span class="n">Registration</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">service</span> <span class="o">==</span> <span class="n">other</span><span
+            class="o">.</span><span class="n">service</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">project_name</span> <span class="o">==</span> <span class="n">other</span><span
+            class="o">.</span><span class="n">project_name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">project_url</span> <span class="o">==</span> <span
+            class="n">other</span><span class="o">.</span><span class="n">project_url</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">event</span> <span class="o">==</span> <span class="n">other</span><span
+            class="o">.</span><span class="n">event</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the inequality of two registrations.</span>
+
+<span class="sd">        :param other: object to compare to</span>
+<span class="sd">        :return: true if any attribute is not the same</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">equal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span
+            class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">equal</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span
+            class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">project_url</span><span
+            class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span
+            class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">((</span><span
+            class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">project_url</span><span
+            class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span
+            class="p">))</span></div>
+
+
+<span class="k">class</span> <span class="nc">RegistrationSerializer</span><span class="p">:</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">serialize_registration</span><span class="p">(</span><span class="n">registration</span><span
+                        class="p">):</span>
+        <span class="k">return</span> <span class="n">Registration</span><span class="p">(</span><span class="n">registration</span><span
+                        class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">registration</span><span
+                        class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">],</span>
+                            <span class="n">registration</span><span class="p">[</span><span class="s1">&#39;project_name&#39;</span><span
+                        class="p">],</span>
+                            <span class="n">registration</span><span class="p">[</span><span class="s1">&#39;project_url&#39;</span><span
+                        class="p">],</span>
+                            <span class="n">registration</span><span class="p">[</span><span
+                        class="s1">&#39;event&#39;</span><span class="p">],</span>
+                            <span class="n">registration</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
+                        class="p">])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">deserialize_registration</span><span class="p">(</span><span class="n">registration</span><span
+                        class="p">):</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">registration</span><span
+                        class="o">.</span><span class="vm">__dict__</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
+                        class="p">]</span> <span class="o">=</span> <span class="kc">True</span> <span
+                        class="k">if</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
+                        class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span> <span
+                        class="k">else</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span
+                        class="p">(</span><span class="s1">&#39;Checked Registration object has not attribute `active`.&#39;</span><span
+                        class="p">)</span>
+        <span class="k">return</span> <span class="n">attributes</span>
+
+
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../code.html#src.models.User">[docs]</a><span
+        class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic class for authenticated users.</span>
+
+<span class="sd">    Besides the inherited methods and attributes it defines an active</span>
+<span class="sd">    flag to indicate if a user is currently interested in receiving</span>
+<span class="sd">    information about new events.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registrations</span> <span
+            class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">registrations</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">_registrations</span>
+
+    <span class="nd">@registrations</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">registrations</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">list_of_registrations</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registrations</span> <span
+            class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span
+            class="p">(</span><span class="n">RegistrationSerializer</span><span class="o">.</span><span class="n">serialize_registration</span><span
+            class="p">,</span>
+                                       <span class="n">list_of_registrations</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Anonymous"><a class="viewcode-back"
+                                              href="../../code.html#src.models.Anonymous">[docs]</a><span class="k">class</span> <span
+        class="nc">Anonymous</span><span class="p">(</span><span class="n">AnonymousUserMixin</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic class for anonymous user.</span>
+
+<span class="sd">    Besides the inherited methods and attributes it defines an id</span>
+<span class="sd">    attribute which is set to Guest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="s1">&#39;Guest&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registrations</span> <span
+            class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span
+            class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s1">&#39;is_authenticated&#39;</span><span class="p">:</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">is_authenticated</span><span
+            class="p">,</span>
+                <span class="s1">&#39;is_active&#39;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">is_active</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../index.html">Module code</a>
+                                <ul>
+                                    <li><a href="../src.html">src</a>
+                                        <ul>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <div class="searchformwrapper">
+                    <form class="search" action="../../search.html" method="get">
+                        <input type="text" name="q"/>
+                        <input type="submit" value="Go"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2018, iteratec.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+
+</div>
+
+
+</body>
+</html>

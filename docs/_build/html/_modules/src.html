@@ -1,0 +1,908 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src &#8212; iteranoid 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html"/>
+    <link rel="search" title="Search" href="../search.html"/>
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css"/>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Source code for src</h1>
+                <div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot; This module runs the frontend app of iteratec&#39;s Observerhive.</span>
+
+<span class="sd">    The app implements a simple webservice where the user can either register</span>
+<span class="sd">    projects at a Conductor Service, check his or her registrations or turn</span>
+<span class="sd">    on and off receiving event messages for the registered projects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1"># import signal</span>
+<span class="c1"># from multiprocessing import Process</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">redirect</span><span
+                        class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span
+                        class="n">request</span><span class="p">,</span> \
+    <span class="n">url_for</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span
+                        class="n">session</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">LoginManager</span><span
+                        class="p">,</span> <span class="n">current_user</span><span class="p">,</span> <span class="n">login_required</span><span
+                        class="p">,</span> \
+    <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span>
+<span class="kn">from</span> <span class="nn">.myflask</span> <span class="k">import</span> <span
+                        class="n">FlaskApp</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span
+                        class="n">User</span><span class="p">,</span> <span class="n">Anonymous</span><span
+                        class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationSerializer</span>
+<span class="kn">from</span> <span class="nn">.loggers</span> <span class="k">import</span> <span class="n">setup_flask_logging</span><span
+                        class="p">,</span> <span class="n">setup_gunicorn_logging</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Masud Afschar&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="c1"># create the application instance</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">FlaskApp</span><span class="p">(</span><span
+                        class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># set configurations of this app</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span
+                        class="p">(</span><span class="s2">&quot;src.config.ProductionConfig&quot;</span><span
+                        class="p">)</span>
+
+<span class="c1"># check how app is run and set logging appropriately</span>
+<span class="k">if</span> <span class="s2">&quot;SERVER_SOFTWARE&quot;</span> <span class="ow">in</span> <span
+                        class="n">os</span><span class="o">.</span><span class="n">environ</span><span
+                        class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;gunicorn&quot;</span> <span class="ow">in</span> <span
+                        class="n">os</span><span class="o">.</span><span class="n">environ</span><span
+                        class="p">[</span><span class="s2">&quot;SERVER_SOFTWARE&quot;</span><span class="p">]:</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_gunicorn_logging</span><span
+                        class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_flask_logging</span><span
+                        class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+
+<span class="c1"># configure login manager</span>
+<span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span
+                        class="p">()</span>
+<span class="n">login_manager</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span
+                        class="n">app</span><span class="p">)</span>
+<span class="c1"># redirect to login page if user is not authenticated</span>
+<span class="n">login_manager</span><span class="o">.</span><span class="n">login_view</span> <span
+                        class="o">=</span> <span class="s2">&quot;login&quot;</span>
+<span class="c1"># produce an anonymous user to use when no one is logged in</span>
+<span class="n">login_manager</span><span class="o">.</span><span class="n">anonymous_user</span> <span
+                        class="o">=</span> <span class="n">Anonymous</span>
+
+
+<span class="k">def</span> <span class="nf">split_registrations</span><span class="p">(</span><span class="n">list_of_registrations</span><span
+                        class="p">):</span>
+    <span class="n">list_of_registrations</span><span class="o">.</span><span class="n">sort</span><span
+                        class="p">(</span><span class="n">key</span><span class="o">=</span><span
+                        class="k">lambda</span> <span class="n">registration</span><span class="p">:</span> <span
+                        class="n">registration</span><span class="o">.</span><span class="n">service</span><span
+                        class="p">)</span>
+
+    <span class="n">sub_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">main_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">previous</span> <span class="o">=</span> <span class="n">list_of_registrations</span><span
+                        class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">registration</span> <span class="ow">in</span> <span class="n">list_of_registrations</span><span
+                        class="p">:</span>
+        <span class="k">if</span> <span class="n">previous</span><span class="o">.</span><span class="n">service</span> <span
+                        class="o">==</span> <span class="n">registration</span><span class="o">.</span><span class="n">service</span><span
+                        class="p">:</span>
+            <span class="n">sub_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+                        class="n">registration</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">main_list</span><span class="o">.</span><span class="n">append</span><span
+                        class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
+            <span class="n">sub_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">registration</span><span
+                        class="p">]</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">registration</span>
+
+    <span class="n">main_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+                        class="n">sub_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">main_list</span>
+
+
+<div class="viewcode-block" id="user_loader"><a class="viewcode-back"
+                                                href="../code.html#src.user_loader">[docs]</a><span class="nd">@login_manager</span><span
+        class="o">.</span><span class="n">user_loader</span>
+<span class="k">def</span> <span class="nf">user_loader</span><span class="p">(</span><span
+            class="n">username</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Callback function for reloading a user from the session.</span>
+
+<span class="sd">        The function takes the username and returns a user object</span>
+<span class="sd">        or None if the user does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">users</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span
+            class="n">users</span>
+    <span class="k">if</span> <span class="n">username</span> <span class="ow">not</span> <span
+            class="ow">in</span> <span class="n">users</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="n">username</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">registrations</span> <span
+            class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">load_config</span><span
+            class="p">(</span><span class="n">username</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">user</span></div>
+
+
+<div class="viewcode-block" id="request_loader"><a class="viewcode-back"
+                                                   href="../code.html#src.request_loader">[docs]</a><span class="nd">@login_manager</span><span
+        class="o">.</span><span class="n">request_loader</span>
+<span class="k">def</span> <span class="nf">request_loader</span><span class="p">(</span><span
+            class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Callback function for reloading a user from a Flask request.</span>
+
+<span class="sd">        The function takes the Flask request and returns a user object</span>
+<span class="sd">        or None if the user does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">session</span><span
+            class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span
+            class="p">])</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span
+            class="p">]</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">registrations</span> <span class="o">=</span> <span
+            class="n">app</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span
+            class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="home"><a class="viewcode-back" href="../code.html#src.home">[docs]</a><span class="nd">@app</span><span
+        class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span
+        class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span
+        class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span
+        class="p">])</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Renders the homepage template.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">current_user</span><span
+            class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">url_for</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span
+            class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">url_for</span><span class="p">(</span><span class="s1">&#39;show_registrations&#39;</span><span
+            class="p">))</span></div>
+
+
+<div class="viewcode-block" id="login"><a class="viewcode-back" href="../code.html#src.login">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/login/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Render the login page and check login credentials.</span>
+
+<span class="sd">       The function renders the login form and checks if username</span>
+<span class="sd">       does exist and the provided password is correct when the user</span>
+<span class="sd">       submits his or her data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span
+            class="n">LoginForm</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">LoginForm</span><span class="p">(</span><span
+            class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span
+            class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">form</span><span class="p">[</span><span
+            class="s1">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="n">username</span>
+        <span class="n">login_user</span><span class="p">(</span><span class="n">user</span><span
+            class="p">,</span> <span class="n">remember</span><span class="o">=</span><span class="kc">True</span><span
+            class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="n">username</span> <span class="o">+</span> <span
+            class="s1">&#39; successfully logged in.&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span
+            class="n">get</span><span class="p">(</span><span class="s2">&quot;next&quot;</span><span class="p">)</span> <span
+            class="ow">or</span> <span class="n">url_for</span><span class="p">(</span><span
+            class="s2">&quot;home&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;login.html&#39;</span><span
+            class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="logout"><a class="viewcode-back" href="../code.html#src.logout">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/logout/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Log the current user out.</span>
+
+<span class="sd">       Calls the logout_user() function of flask_login and</span>
+<span class="sd">       redirects to the homepage of this app.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># remove the username from the session if it is there</span>
+    <span class="n">out_user</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">()</span>
+    <span class="n">logout_user</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="n">out_user</span> <span class="o">+</span> <span
+            class="s1">&#39; has been logged out.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">url_for</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span
+            class="p">))</span></div>
+
+
+<div class="viewcode-block" id="register"><a class="viewcode-back" href="../code.html#src.register">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/register/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Render the form to register a new user.</span>
+
+<span class="sd">       The function renders the registration form and stores its values</span>
+<span class="sd">       if the current user submitted the form.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">RegisterForm</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">RegisterForm</span><span
+            class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span
+            class="p">)</span>
+
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span
+            class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">form</span><span class="p">[</span><span
+            class="s1">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">form</span><span class="p">[</span><span
+            class="s1">&#39;password1&#39;</span><span class="p">]</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">add_user_and_password</span><span
+            class="p">(</span><span class="n">username</span><span class="p">,</span> <span
+            class="n">password</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Created account for &#39;</span> <span class="o">+</span> <span
+            class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span
+            class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;rememberMe&quot;</span> <span class="ow">in</span> <span
+            class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span
+            class="n">username</span>
+            <span class="n">session</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span
+            class="p">]</span> <span class="o">=</span> <span class="n">username</span>
+            <span class="n">session</span><span class="p">[</span><span class="s1">&#39;registrations&#39;</span><span
+            class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">login_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span
+            class="n">remember</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
+            class="p">(</span><span class="s1">&#39;Logged &#39;</span> <span class="o">+</span> <span class="n">username</span> <span
+            class="o">+</span> <span class="s1">&#39; in after account creation.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">url_for</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span
+            class="p">))</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;signup.html&#39;</span><span
+            class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_username"><a class="viewcode-back"
+                                                   href="../code.html#src.check_username">[docs]</a><span class="nd">@app</span><span
+        class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/check-usernames/&#39;</span><span
+        class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">check_username</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Check if POSTed username does already exist.</span>
+
+<span class="sd">    :return: true if username already in use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">users</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span
+            class="n">users</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span
+            class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span
+            class="n">users</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;true&#39;</span><span
+            class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;false&#39;</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="show_registrations"><a class="viewcode-back" href="../code.html#src.show_registrations">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">show_registrations</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve all registered projects of the current user and show them.</span>
+
+<span class="sd">       The function retrieves the current users stored configurations and</span>
+<span class="sd">       passes them to the corresponding template.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">()</span>
+    <span class="n">registrations</span> <span class="o">=</span> <span class="n">current_user</span><span
+            class="o">.</span><span class="n">registrations</span>
+    <span class="k">if</span> <span class="n">registrations</span><span class="p">:</span>
+        <span class="n">registrations</span> <span class="o">=</span> <span class="n">split_registrations</span><span
+            class="p">(</span><span class="n">registrations</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;show_entries.html&quot;</span><span
+            class="p">,</span> <span class="n">registrations</span><span class="o">=</span><span
+            class="n">registrations</span><span class="p">,</span>
+                           <span class="n">username</span><span class="o">=</span><span class="n">username</span><span
+            class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="p">(</span><span
+            class="n">username</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span
+            class="n">active_users</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="register_project"><a class="viewcode-back" href="../code.html#src.register_project">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/add-follow/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">register_project</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Register a project at Conductor service if not done already.</span>
+
+<span class="sd">       The function checks all projects in the users config file and if</span>
+<span class="sd">       a project does not have an id already it will try register it</span>
+<span class="sd">       at the specified Conductor Service.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">registration_id</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span
+            class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">json</span><span class="p">[</span><span class="s2">&quot;service&quot;</span><span
+            class="p">]</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;project_name&quot;</span><span
+            class="p">]</span>
+    <span class="n">project_url</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;project_url&quot;</span><span
+            class="p">]</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">json</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span
+            class="p">]</span>
+
+    <span class="k">if</span> <span class="n">registration_id</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for ID of registration.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">service</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for service.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">project_name</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for project name.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">project_url</span> <span class="ow">is</span> <span class="kc">None</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for project url.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for event.&#39;</span><span
+            class="p">)</span>
+
+    <span class="n">new_follower</span> <span class="o">=</span> <span class="n">Registration</span><span
+            class="p">(</span><span class="n">registration_id</span><span class="o">=</span><span class="n">registration_id</span><span
+            class="p">,</span>
+                                <span class="n">service</span><span class="o">=</span><span
+            class="n">service</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span
+            class="n">project_name</span><span class="p">,</span>
+                                <span class="n">project_url</span><span class="o">=</span><span
+            class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span
+            class="o">=</span><span class="n">event</span><span class="p">,</span>
+                                <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span
+            class="p">)</span>
+
+    <span class="n">registrations</span> <span class="o">=</span> <span class="n">current_user</span><span
+            class="o">.</span><span class="n">registrations</span>
+    <span class="n">registrations</span><span class="o">.</span><span class="n">remove</span><span
+            class="p">(</span><span class="n">new_follower</span><span class="p">)</span>
+    <span class="n">registrations</span><span class="o">.</span><span class="n">append</span><span
+            class="p">(</span><span class="n">new_follower</span><span class="p">)</span>
+
+    <span class="n">registrations</span> <span class="o">=</span> <span class="nb">list</span><span
+            class="p">(</span><span class="nb">map</span><span class="p">(</span><span
+            class="n">RegistrationSerializer</span><span class="o">.</span><span
+            class="n">deserialize_registration</span><span class="p">,</span>
+                             <span class="n">registrations</span><span class="p">))</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">save_config</span><span class="p">(</span><span
+            class="n">current_user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span
+            class="n">registrations</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Saved registration.&#39;</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deregister_project"><a class="viewcode-back" href="../code.html#src.deregister_project">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/remove-follow/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">deregister_project</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Deregister a project at Conductor service if not done already.</span>
+
+<span class="sd">       The function checks all projects in the users config file and if</span>
+<span class="sd">       a project does not have an id already it will try register it</span>
+<span class="sd">       at the specified Conductor Service.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">registration_id</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span
+            class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">json</span><span class="p">[</span><span class="s2">&quot;service&quot;</span><span
+            class="p">]</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;project_name&quot;</span><span
+            class="p">]</span>
+    <span class="n">project_url</span> <span class="o">=</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;project_url&quot;</span><span
+            class="p">]</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">json</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span
+            class="p">]</span>
+
+    <span class="k">if</span> <span class="n">registration_id</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for ID of registration.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">service</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for service.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">project_name</span> <span class="ow">is</span> <span
+            class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for project name.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">project_url</span> <span class="ow">is</span> <span class="kc">None</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for project url.&#39;</span><span
+            class="p">)</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty value for event.&#39;</span><span
+            class="p">)</span>
+
+    <span class="n">new_follower</span> <span class="o">=</span> <span class="n">Registration</span><span
+            class="p">(</span><span class="n">registration_id</span><span class="o">=</span><span class="n">registration_id</span><span
+            class="p">,</span>
+                                <span class="n">service</span><span class="o">=</span><span
+            class="n">service</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span
+            class="n">project_name</span><span class="p">,</span>
+                                <span class="n">project_url</span><span class="o">=</span><span
+            class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span
+            class="o">=</span><span class="n">event</span><span class="p">,</span>
+                                <span class="n">active</span><span class="o">=</span><span class="kc">False</span><span
+            class="p">)</span>
+
+    <span class="n">registrations</span> <span class="o">=</span> <span class="n">current_user</span><span
+            class="o">.</span><span class="n">registrations</span>
+    <span class="n">registrations</span><span class="o">.</span><span class="n">remove</span><span
+            class="p">(</span><span class="n">new_follower</span><span class="p">)</span>
+    <span class="n">registrations</span><span class="o">.</span><span class="n">append</span><span
+            class="p">(</span><span class="n">new_follower</span><span class="p">)</span>
+
+    <span class="n">registrations</span> <span class="o">=</span> <span class="nb">list</span><span
+            class="p">(</span><span class="nb">map</span><span class="p">(</span><span
+            class="n">RegistrationSerializer</span><span class="o">.</span><span
+            class="n">deserialize_registration</span><span class="p">,</span>
+                             <span class="n">registrations</span><span class="p">))</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">save_config</span><span class="p">(</span><span
+            class="n">current_user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span
+            class="n">registrations</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Removed registration.&#39;</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="activate_user_setup"><a class="viewcode-back"
+                                                        href="../code.html#src.activate_user_setup">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/activate/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">activate_user_setup</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Set the active flag to True.</span>
+
+<span class="sd">       The active flag indicates if a user is currently interested in</span>
+<span class="sd">       receiving events for the project he has registered for.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="o">.</span><span
+            class="n">append</span><span class="p">(</span><span class="n">current_user</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Activated messages for user &#39;</span>
+                <span class="o">+</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span
+            class="p">()</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span
+            class="s1">&#39;200&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deactivate_user_setup"><a class="viewcode-back"
+                                                          href="../code.html#src.deactivate_user_setup">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/deactivate/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">deactivate_user_setup</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Set the active flag to False.</span>
+
+<span class="sd">       The active flag indicates if a user is currently interested in</span>
+<span class="sd">       receiving events for the project he has registered for.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="o">.</span><span
+            class="n">remove</span><span class="p">(</span><span class="n">current_user</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Deactivated messages for user &#39;</span>
+                <span class="o">+</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span
+            class="p">()</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span
+            class="s1">&#39;200&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="edit_registrations"><a class="viewcode-back" href="../code.html#src.edit_registrations">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/profile/edit/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">edit_registrations</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve all registered projects of the current user and show them.</span>
+
+<span class="sd">       The function retrieves the current users stored configurations and</span>
+<span class="sd">       passes them to the corresponding template so that the user can</span>
+<span class="sd">       manipulate them if wished.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span
+            class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+        <span class="n">registrations</span> <span class="o">=</span> <span class="n">current_user</span><span
+            class="o">.</span><span class="n">registrations</span>
+        <span class="k">if</span> <span class="n">registrations</span><span class="p">:</span>
+            <span class="n">registrations</span> <span class="o">=</span> <span
+            class="n">split_registrations</span><span class="p">(</span><span class="n">current_user</span><span
+            class="o">.</span><span class="n">registrations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;edit_registration.html&quot;</span><span
+            class="p">,</span>
+                               <span class="n">registrations</span><span class="o">=</span><span
+            class="n">registrations</span><span class="p">,</span>
+                               <span class="n">username</span><span class="o">=</span><span
+            class="n">username</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span
+            class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;service&#39;</span><span
+            class="p">,</span> <span class="s1">&#39;projectName&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;repository&#39;</span><span class="p">,</span> <span class="s1">&#39;eventType&#39;</span><span
+            class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span
+            class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="n">attribute</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received missing attribute &#39;</span>
+                                <span class="o">+</span> <span class="n">attribute</span> <span class="o">+</span> <span
+            class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+        <span class="n">new_registrations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">entries</span> <span
+            class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span
+            class="nb">zip</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;id&#39;</span><span class="p">),</span>
+                                        <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;service&#39;</span><span class="p">),</span>
+                                        <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;projectName&#39;</span><span class="p">),</span>
+                                        <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;repository&#39;</span><span class="p">),</span>
+                                        <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;eventType&#39;</span><span class="p">),</span>
+                                        <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span
+            class="s1">&#39;active&#39;</span><span class="p">))):</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span
+            class="n">entries</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">entries</span><span class="p">[</span><span
+            class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span
+            class="s2">&quot;None&quot;</span><span class="p">:</span>
+                <span class="n">callback_address</span> <span class="o">=</span> <span
+            class="s2">&quot;http://&quot;</span> <span class="o">+</span> <span class="n">socket</span><span class="o">.</span><span
+            class="n">gethostname</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;:9090&quot;</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;projectUrl&quot;</span><span
+            class="p">:</span> <span class="n">entries</span><span class="p">[</span><span class="mi">3</span><span
+            class="p">],</span>
+                        <span class="s2">&quot;eventType&quot;</span><span class="p">:</span> <span
+            class="n">entries</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                        <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span
+            class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                        <span class="s2">&quot;callback&quot;</span><span class="p">:</span> <span class="n">callback_address</span><span
+            class="p">}</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span
+            class="n">post</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span
+            class="mi">1</span><span class="p">],</span> <span class="n">json</span><span class="o">=</span><span
+            class="n">data</span><span class="p">)</span>
+                <span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span
+            class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+
+            <span class="n">new_registration</span> <span class="o">=</span> <span class="n">Registration</span><span
+            class="p">(</span><span class="n">registration_id</span><span class="o">=</span><span
+            class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                            <span class="n">service</span><span class="o">=</span><span class="n">entries</span><span
+            class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                            <span class="n">project_name</span><span class="o">=</span><span class="n">entries</span><span
+            class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                            <span class="n">project_url</span><span class="o">=</span><span class="n">entries</span><span
+            class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                            <span class="n">event</span><span class="o">=</span><span
+            class="n">entries</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                                            <span class="n">active</span><span class="o">=</span><span
+            class="n">entries</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">entries</span><span
+            class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="n">new_registrations</span><span class="o">.</span><span class="n">append</span><span
+            class="p">(</span><span class="n">new_registration</span><span class="p">)</span>
+
+        <span class="n">new_registrations</span> <span class="o">=</span> <span class="nb">list</span><span
+            class="p">(</span><span class="nb">map</span><span class="p">(</span><span
+            class="n">RegistrationSerializer</span><span class="o">.</span><span
+            class="n">deserialize_registration</span><span class="p">,</span>
+                                     <span class="n">new_registrations</span><span class="p">))</span>
+
+        <span class="n">app</span><span class="o">.</span><span class="n">save_config</span><span
+            class="p">(</span><span class="n">username</span><span class="p">,</span> <span
+            class="n">new_registrations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/profile/&#39;</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_account"><a class="viewcode-back"
+                                                   href="../code.html#src.delete_account">[docs]</a><span class="nd">@app</span><span
+        class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/profile/delete/&#39;</span><span
+        class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span
+        class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">delete_account</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Delete the account of the given user.</span>
+
+<span class="sd">    :return: HTTP response 302 and redirect to home endpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span><span
+            class="n">username</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Deleted account of user &#39;</span> <span class="o">+</span> <span
+            class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span
+            class="p">)</span>
+    <span class="n">logout_user</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Logged &#39;</span> <span class="o">+</span> <span class="n">username</span> <span
+            class="o">+</span> <span class="s1">&#39; out after account deletion.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Account successfully deleted.&#39;</span><span
+            class="p">)</span></div>
+
+
+<div class="viewcode-block" id="change_password"><a class="viewcode-back"
+                                                    href="../code.html#src.change_password">[docs]</a><span class="nd">@app</span><span
+        class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/change-credentials/&#39;</span><span
+        class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span
+        class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span
+        class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span> <span class="nf">change_password</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Render the form to change password of current user.</span>
+
+<span class="sd">       The function retrieves the form to change one&#39;s password and</span>
+<span class="sd">       renders it. If the current user submitted the form, the function</span>
+<span class="sd">       hashes the password and stores it in the users file of the app.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">ChangeCredentialsForm</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">()</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ChangeCredentialsForm</span><span
+            class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span
+            class="p">)</span>
+
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span
+            class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="n">username</span> <span class="o">+</span> <span
+            class="s2">&quot; wants to change something.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span
+            class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span
+            class="o">!=</span> <span class="n">username</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
+            class="p">(</span><span class="s2">&quot;User &quot;</span> <span class="o">+</span> <span class="n">username</span> <span
+            class="o">+</span> <span class="s2">&quot; wants to change the username.&quot;</span><span
+            class="p">)</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">rename_user</span><span class="p">(</span><span
+            class="n">username</span><span class="p">,</span> <span class="n">request</span><span
+            class="o">.</span><span class="n">form</span><span class="p">[</span><span
+            class="s1">&#39;username&#39;</span><span class="p">],</span>
+                            <span class="n">request</span><span class="o">.</span><span class="n">form</span><span
+            class="p">[</span><span class="s1">&#39;newPassword1&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
+            class="p">(</span><span class="s2">&quot;Changing password of user &quot;</span> <span
+            class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span
+            class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">add_user_and_password</span><span
+            class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span
+            class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">],</span>
+                                      <span class="n">request</span><span class="o">.</span><span
+            class="n">form</span><span class="p">[</span><span class="s1">&#39;newPassword1&#39;</span><span class="p">])</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s2">&quot;Successfully changed credentials of &quot;</span>
+                    <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span
+            class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span
+            class="n">url_for</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span
+            class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;change-credentials.html&#39;</span><span
+            class="p">,</span>
+                               <span class="n">form</span><span class="o">=</span><span class="n">form</span><span
+            class="p">,</span>
+                               <span class="n">username</span><span class="o">=</span><span
+            class="n">username</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="render_event"><a class="viewcode-back"
+                                                 href="../code.html#src.render_event">[docs]</a><span
+        class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+        class="s1">&#39;/event/&#39;</span><span class="p">,</span> <span class="n">methods</span><span
+        class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">render_event</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Catch POSTed data and process it.</span>
+
+<span class="sd">       The function checks what kind of information was sent and</span>
+<span class="sd">       forwards it to the lights class to process it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
+            class="n">json</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty POST.&#39;</span><span
+            class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
+            class="s1">&#39;Received a &#39;</span> <span class="o">+</span> <span class="n">event</span><span
+            class="p">[</span><span class="s1">&#39;eventType&#39;</span><span class="p">]</span> <span
+            class="o">+</span> <span class="s1">&#39; to show.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># for pid in app.active_processes:</span>
+    <span class="c1"># os.kill(pid, signal.SIGKILL)</span>
+    <span class="c1"># app.active_processes.remove(pid)</span>
+
+    <span class="c1"># event_process = Process(target=handle_event,</span>
+    <span class="c1">#                         kwargs={&#39;type&#39;: event[&#39;eventType&#39;],</span>
+    <span class="c1">#                                 &#39;active_users&#39;: app.active_users})</span>
+    <span class="c1"># event_process.start()</span>
+
+    <span class="c1"># app.active_processes.append(event_process.pid)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received POSTed event.&#39;</span><span
+            class="p">)</span></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="index.html">Module code</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <div class="searchformwrapper">
+                    <form class="search" action="../search.html" method="get">
+                        <input type="text" name="q"/>
+                        <input type="submit" value="Go"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2018, iteratec.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+
+</div>
+
+
+</body>
+</html>

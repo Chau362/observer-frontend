@@ -51,9 +51,10 @@ class EventHandler(BaseHTTPRequestHandler):
         # event_process.start()
 
 
-port = 9090
-server_address = ('', port)
-httpd = HTTPServer(server_address, EventHandler)
+if __name__ == '__main__':
+    port = 9090
+    server_address = ('', port)
+    httpd = HTTPServer(server_address, EventHandler)
 
-print('Started server process listening on port ' + str(port))
-httpd.serve_forever()
+    print('Started server process listening on port ' + str(port))
+    httpd.serve_forever()

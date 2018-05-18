@@ -9,12 +9,10 @@ logger = logging.getLogger('src')
 
 
 def get_users(cwd, file_name):
-    """Opens the users file containing all usernames and passwords.
+    """Get users and their passwords.
 
-    Provides the dictionary with usernames and corresponding passwords
-    of all users for the current application.
-    :param str file_name: name of the file containing user credentials
     :param str cwd: current working directory
+    :param str file_name: name of the file containing the credentials
     :return: dictionary of users and passwords
     """
 
@@ -25,8 +23,6 @@ def get_users(cwd, file_name):
 
 class FlaskApp(Flask):
     """This class provides a customized Flask application for the client frontend.
-
-    It provides a couple of class attributes to manage configurations.
     """
 
     cwd = os.path.dirname(os.path.abspath(__file__))

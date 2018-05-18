@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>The iteranoid API reference &#8212; iteranoid 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css"/>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html"/>
+    <link rel="search" title="Search" href="search.html"/>
+    <link rel="prev" title="Welcome to iteranoid’s documentation!" href="index.html"/>
+
+    <link rel="stylesheet" href="_static/custom.css" type="text/css"/>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <div class="section" id="the-iteranoid-api-reference">
+                    <h1>The iteranoid API reference<a class="headerlink" href="#the-iteranoid-api-reference"
+                                                      title="Permalink to this headline">¶</a></h1>
+                    <div class="section" id="module-src">
+                        <span id="the-view-functions"></span>
+                        <h2>The view functions<a class="headerlink" href="#module-src"
+                                                 title="Permalink to this headline">¶</a></h2>
+                        <p>This module runs the frontend app of iteratec’s Observerhive.</p>
+                        <p>The app implements a simple webservice where the user can either register
+                            projects at a Conductor Service, check his or her registrations or turn
+                            on and off receiving event messages for the registered projects.</p>
+                        <dl class="function">
+                            <dt id="src.activate_user_setup">
+                                <code class="descclassname">src.</code><code class="descname">activate_user_setup</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#activate_user_setup"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.activate_user_setup"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Set the active flag to True.</p>
+                                <p>The active flag indicates if a user is currently interested in
+                                    receiving events for the project he has registered for.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.change_password">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">change_password</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#change_password"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.change_password"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Render the form to change password of current user.</p>
+                                <p>The function retrieves the form to change one’s password and
+                                    renders it. If the current user submitted the form, the function
+                                    hashes the password and stores it in the users file of the app.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.check_username">
+                                <code class="descclassname">src.</code><code class="descname">check_username</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#check_username"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.check_username"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Check if POSTed username does already exist.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Returns:</th>
+                                        <td class="field-body">true if username already in use</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.deactivate_user_setup">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">deactivate_user_setup</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#deactivate_user_setup"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.deactivate_user_setup"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Set the active flag to False.</p>
+                                <p>The active flag indicates if a user is currently interested in
+                                    receiving events for the project he has registered for.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.delete_account">
+                                <code class="descclassname">src.</code><code class="descname">delete_account</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#delete_account"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.delete_account"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Delete the account of the given user.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Returns:</th>
+                                        <td class="field-body">HTTP response 302 and redirect to home endpoint.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.deregister_project">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">deregister_project</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#deregister_project"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.deregister_project"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Deregister a project at Conductor service if not done already.</p>
+                                <p>The function checks all projects in the users config file and if
+                                    a project does not have an id already it will try register it
+                                    at the specified Conductor Service.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.edit_registrations">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">edit_registrations</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#edit_registrations"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.edit_registrations"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Retrieve all registered projects of the current user and show them.</p>
+                                <p>The function retrieves the current users stored configurations and
+                                    passes them to the corresponding template so that the user can
+                                    manipulate them if wished.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.home">
+                                <code class="descclassname">src.</code><code class="descname">home</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#home"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.home"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Renders the homepage template.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.login">
+                                <code class="descclassname">src.</code><code class="descname">login</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#login"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.login"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Render the login page and check login credentials.</p>
+                                <p>The function renders the login form and checks if username
+                                    does exist and the provided password is correct when the user
+                                    submits his or her data.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.logout">
+                                <code class="descclassname">src.</code><code class="descname">logout</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#logout"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.logout"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Log the current user out.</p>
+                                <p>Calls the logout_user() function of flask_login and
+                                    redirects to the homepage of this app.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.register">
+                                <code class="descclassname">src.</code><code class="descname">register</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#register"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.register"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Render the form to register a new user.</p>
+                                <p>The function renders the registration form and stores its values
+                                    if the current user submitted the form.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.register_project">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">register_project</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#register_project"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.register_project"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Register a project at Conductor service if not done already.</p>
+                                <p>The function checks all projects in the users config file and if
+                                    a project does not have an id already it will try register it
+                                    at the specified Conductor Service.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.render_event">
+                                <code class="descclassname">src.</code><code class="descname">render_event</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#render_event"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.render_event"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Catch POSTed data and process it.</p>
+                                <p>The function checks what kind of information was sent and
+                                    forwards it to the lights class to process it.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.request_loader">
+                                <code class="descclassname">src.</code><code class="descname">request_loader</code><span
+                                    class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#request_loader"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.request_loader"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Callback function for reloading a user from a Flask request.</p>
+                                <p>The function takes the Flask request and returns a user object
+                                    or None if the user does not exist.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.show_registrations">
+                                <code class="descclassname">src.</code><code
+                                    class="descname">show_registrations</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src.html#show_registrations"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.show_registrations"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Retrieve all registered projects of the current user and show them.</p>
+                                <p>The function retrieves the current users stored configurations and
+                                    passes them to the corresponding template.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.user_loader">
+                                <code class="descclassname">src.</code><code class="descname">user_loader</code><span
+                                    class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src.html#user_loader"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.user_loader"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Callback function for reloading a user from the session.</p>
+                                <p>The function takes the username and returns a user object
+                                    or None if the user does not exist.</p>
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="the-myflask-module">
+                        <h2>The “myflask” module<a class="headerlink" href="#the-myflask-module"
+                                                   title="Permalink to this headline">¶</a></h2>
+                        <dl class="function">
+                            <dt id="src.myflask.get_users">
+                                <code class="descclassname">src.myflask.</code><code
+                                    class="descname">get_users</code><span class="sig-paren">(</span><em>cwd</em>, <em>file_name</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/myflask.html#get_users"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.myflask.get_users"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Get users and their passwords.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body">
+                                            <ul class="first simple">
+                                                <li><strong>cwd</strong> (<a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                             title="(in Python v3.6)"><em>str</em></a>)
+                                                    – current working directory
+                                                </li>
+                                                <li><strong>file_name</strong> (<a class="reference external"
+                                                                                   href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                   title="(in Python v3.6)"><em>str</em></a>)
+                                                    – name of the file containing the credentials
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Returns:</th>
+                                        <td class="field-body"><p class="first last">dictionary of users and
+                                            passwords</p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.myflask.FlaskApp">
+                                <em class="property">class </em><code class="descclassname">src.myflask.</code><code
+                                    class="descname">FlaskApp</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/myflask.html#FlaskApp"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.myflask.FlaskApp"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>This class provides a customized Flask application for the client frontend.</p>
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.add_user_and_password">
+                                        <em class="property">classmethod </em><code class="descname">add_user_and_password</code><span
+                                            class="sig-paren">(</span><em>username</em>, <em>password</em><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/myflask.html#FlaskApp.add_user_and_password"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.add_user_and_password"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Adds credentials for a new user to the users file.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body">
+                                                    <ul class="first last simple">
+                                                        <li><strong>username</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.6)"><em>str</em></a>)
+                                                            – name the user has chosen for his account
+                                                        </li>
+                                                        <li><strong>password</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.6)"><em>str</em></a>)
+                                                            – with which the user can access his account
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.delete_config">
+                                        <em class="property">classmethod </em><code
+                                            class="descname">delete_config</code><span class="sig-paren">(</span><em>username</em><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/myflask.html#FlaskApp.delete_config"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.delete_config"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Delete a config file for specified user.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body"><strong>username</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.6)"><em>str</em></a>) – specifying the user
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.delete_user">
+                                        <em class="property">classmethod </em><code
+                                            class="descname">delete_user</code><span class="sig-paren">(</span><em>username</em><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/myflask.html#FlaskApp.delete_user"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.delete_user"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Removes credentials from users file.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body"><strong>username</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.6)"><em>str</em></a>) – indicates which
+                                                    account credentials to remove
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.load_config">
+                                        <em class="property">classmethod </em><code
+                                            class="descname">load_config</code><span class="sig-paren">(</span><em>username</em><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/myflask.html#FlaskApp.load_config"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.load_config"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Loads the config file and returns the list of registrations.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body"><strong>username</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.6)"><em>str</em></a>) –
+                                                </td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Returns:</th>
+                                                <td class="field-body"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.rename_user">
+                                        <em class="property">classmethod </em><code
+                                            class="descname">rename_user</code><span class="sig-paren">(</span><em>current_name</em>,
+                                        <em>new_name</em>, <em>new_password</em><span class="sig-paren">)</span><a
+                                            class="reference internal"
+                                            href="_modules/src/myflask.html#FlaskApp.rename_user"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.rename_user"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Changes user credentials as indicated.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body">
+                                                    <ul class="first last simple">
+                                                        <li><strong>current_name</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.6)"><em>str</em></a>)
+                                                            –
+                                                        </li>
+                                                        <li><strong>new_name</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.6)"><em>str</em></a>)
+                                                            –
+                                                        </li>
+                                                        <li><strong>new_password</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.6)"><em>str</em></a>)
+                                                            –
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                                <dl class="classmethod">
+                                    <dt id="src.myflask.FlaskApp.save_config">
+                                        <em class="property">classmethod </em><code
+                                            class="descname">save_config</code><span class="sig-paren">(</span><em>username</em>,
+                                        <em>data</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                        href="_modules/src/myflask.html#FlaskApp.save_config"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.myflask.FlaskApp.save_config"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Write and safe new config file.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body">
+                                                    <ul class="first last simple">
+                                                        <li><strong>username</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.6)"><em>str</em></a>)
+                                                            – specifying the user
+                                                        </li>
+                                                        <li><strong>data</strong> (<a class="reference external"
+                                                                                      href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                                      title="(in Python v3.6)"><em>dict</em></a>)
+                                                            – dictionary containing all registrations to save
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.models">
+                        <span id="the-models-module"></span>
+                        <h2>The “models” module<a class="headerlink" href="#module-src.models"
+                                                  title="Permalink to this headline">¶</a></h2>
+                        <p>This module defines the user models which are used in the app.</p>
+                        <dl class="class">
+                            <dt id="src.models.Anonymous">
+                                <em class="property">class </em><code class="descclassname">src.models.</code><code
+                                    class="descname">Anonymous</code><a class="reference internal"
+                                                                        href="_modules/src/models.html#Anonymous"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.models.Anonymous"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Generic class for anonymous user.</p>
+                                <p>Besides the inherited methods and attributes it defines an id
+                                    attribute which is set to Guest.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.models.Registration">
+                                <em class="property">class </em><code class="descclassname">src.models.</code><code
+                                    class="descname">Registration</code><span class="sig-paren">(</span><em>registration_id</em>,
+                                <em>service</em>, <em>project_name</em>, <em>project_url</em>, <em>event</em>, <em>active=False</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/models.html#Registration"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.models.Registration"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Generic class for a registration.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.models.User">
+                                <em class="property">class </em><code class="descclassname">src.models.</code><code
+                                    class="descname">User</code><a class="reference internal"
+                                                                   href="_modules/src/models.html#User"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.models.User"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Generic class for authenticated users.</p>
+                                <p>Besides the inherited methods and attributes it defines an active
+                                    flag to indicate if a user is currently interested in receiving
+                                    information about new events.</p>
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.forms">
+                        <span id="the-forms-module"></span>
+                        <h2>The “forms” module<a class="headerlink" href="#module-src.forms"
+                                                 title="Permalink to this headline">¶</a></h2>
+                        <p>This module contains all forms used by the Observer-Hive frontend.</p>
+                        <dl class="class">
+                            <dt id="src.forms.ChangeCredentialsForm">
+                                <em class="property">class </em><code class="descclassname">src.forms.</code><code
+                                    class="descname">ChangeCredentialsForm</code><span class="sig-paren">(</span><em>*args</em>,
+                                <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                    href="_modules/src/forms.html#ChangeCredentialsForm"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.forms.ChangeCredentialsForm"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>This class defines the form to change an existing users password.</p>
+                                <p>The form provides one entry fields for the current password and two
+                                    entry fields for new password, the second one being used for verification.</p>
+                                <dl class="method">
+                                    <dt id="src.forms.ChangeCredentialsForm.validate">
+                                        <code class="descname">validate</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/forms.html#ChangeCredentialsForm.validate"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.forms.ChangeCredentialsForm.validate"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Validates the form by calling <cite>validate</cite> on each field, passing
+                                        any
+                                        extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field
+                                        validator.</p>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.forms.LoginForm">
+                                <em class="property">class </em><code class="descclassname">src.forms.</code><code
+                                    class="descname">LoginForm</code><span class="sig-paren">(</span><em>*args</em>,
+                                <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                    href="_modules/src/forms.html#LoginForm"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.forms.LoginForm"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>This class defines the login form.</p>
+                                <p>The form provides two entry fields for the user’s
+                                    credentials: username and password.</p>
+                                <dl class="method">
+                                    <dt id="src.forms.LoginForm.validate">
+                                        <code class="descname">validate</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/forms.html#LoginForm.validate"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.forms.LoginForm.validate"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Validates the form by calling <cite>validate</cite> on each field, passing
+                                        any
+                                        extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field
+                                        validator.</p>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.forms.RegisterForm">
+                                <em class="property">class </em><code class="descclassname">src.forms.</code><code
+                                    class="descname">RegisterForm</code><span class="sig-paren">(</span><em>*args</em>,
+                                <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                    href="_modules/src/forms.html#RegisterForm"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.forms.RegisterForm"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>This class defines part the registration form.</p>
+                                <p>The form provides entry fields for the chosen username and
+                                    two entry fields for a password, the second one being used for verification.</p>
+                                <dl class="method">
+                                    <dt id="src.forms.RegisterForm.validate">
+                                        <code class="descname">validate</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/forms.html#RegisterForm.validate"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.forms.RegisterForm.validate"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Validates the form by calling <cite>validate</cite> on each field, passing
+                                        any
+                                        extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field
+                                        validator.</p>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                </div>
+                <div class="section" id="the-lights-api-reference">
+                    <h1>The “lights” API reference<a class="headerlink" href="#the-lights-api-reference"
+                                                     title="Permalink to this headline">¶</a></h1>
+                    <div class="section" id="module-src.lights">
+                        <span id="the-lights-module"></span>
+                        <h2>The “lights” module<a class="headerlink" href="#module-src.lights"
+                                                  title="Permalink to this headline">¶</a></h2>
+                        <dl class="class">
+                            <dt id="src.lights.EventHandler">
+                                <em class="property">class </em><code class="descclassname">src.lights.</code><code
+                                    class="descname">EventHandler</code><span class="sig-paren">(</span><em>request</em>,
+                                <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a
+                                    class="reference internal" href="_modules/src/lights.html#EventHandler"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.lights.EventHandler"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd>
+                                <dl class="method">
+                                    <dt id="src.lights.EventHandler._set_headers">
+                                        <code class="descname">_set_headers</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/lights.html#EventHandler._set_headers"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.lights.EventHandler._set_headers"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Set header according to response.</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.lights.EventHandler.do_GET">
+                                        <code class="descname">do_GET</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/lights.html#EventHandler.do_GET"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.lights.EventHandler.do_GET"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Respond to a GET request.</p>
+                                        <p>This request type shall not be allowed.</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.lights.EventHandler.do_HEAD">
+                                        <code class="descname">do_HEAD</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/lights.html#EventHandler.do_HEAD"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.lights.EventHandler.do_HEAD"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Respond to a HEAD request.</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.lights.EventHandler.do_POST">
+                                        <code class="descname">do_POST</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/lights.html#EventHandler.do_POST"><span
+                                            class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                        href="#src.lights.EventHandler.do_POST"
+                                                                                        title="Permalink to this definition">¶</a>
+                                    </dt>
+                                    <dd><p>Respond to a POST request.</p>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.lights.eventhandler">
+                        <span id="the-eventhandler-module"></span>
+                        <h2>The “eventhandler” module<a class="headerlink" href="#module-src.lights.eventhandler"
+                                                        title="Permalink to this headline">¶</a></h2>
+                    </div>
+                    <div class="section" id="module-src.lights.led_blinker">
+                        <span id="the-blinker-module"></span>
+                        <h2>The “blinker” module<a class="headerlink" href="#module-src.lights.led_blinker"
+                                                   title="Permalink to this headline">¶</a></h2>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+                <li><a class="reference internal" href="#">The iteranoid API reference</a>
+                    <ul>
+                        <li><a class="reference internal" href="#module-src">The view functions</a></li>
+                        <li><a class="reference internal" href="#the-myflask-module">The “myflask” module</a></li>
+                        <li><a class="reference internal" href="#module-src.models">The “models” module</a></li>
+                        <li><a class="reference internal" href="#module-src.forms">The “forms” module</a></li>
+                    </ul>
+                </li>
+                <li><a class="reference internal" href="#the-lights-api-reference">The “lights” API reference</a>
+                    <ul>
+                        <li><a class="reference internal" href="#module-src.lights">The “lights” module</a></li>
+                        <li><a class="reference internal" href="#module-src.lights.eventhandler">The “eventhandler”
+                            module</a></li>
+                        <li><a class="reference internal" href="#module-src.lights.led_blinker">The “blinker” module</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="index.html">Documentation overview</a>
+                        <ul>
+                            <li>Previous: <a href="index.html" title="previous chapter">Welcome to iteranoid’s
+                                documentation!</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div role="note" aria-label="source link">
+                <h3>This Page</h3>
+                <ul class="this-page-menu">
+                    <li><a href="_sources/code.rst.txt"
+                           rel="nofollow">Show Source</a></li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <div class="searchformwrapper">
+                    <form class="search" action="search.html" method="get">
+                        <input type="text" name="q"/>
+                        <input type="submit" value="Go"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2018, iteratec.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+
+    |
+    <a href="_sources/code.rst.txt"
+       rel="nofollow">Page source</a>
+</div>
+
+
+</body>
+</html>
