@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -572,6 +573,80 @@
                         </dl>
 
                     </div>
+                    <div class="section" id="module-src.config">
+                        <span id="the-config-module"></span>
+                        <h2>The “config” module<a class="headerlink" href="#module-src.config"
+                                                  title="Permalink to this headline">¶</a></h2>
+                        <p>This module provides configurations for the Flask app.</p>
+                        <p>Classes and inheritance are used for configuration. The variables are
+                            passed through an <cite>from_object()</cite> call.</p>
+                        <dl class="class">
+                            <dt id="src.config.Config">
+                                <em class="property">class </em><code class="descclassname">src.config.</code><code
+                                    class="descname">Config</code><a class="reference internal"
+                                                                     href="_modules/src/config.html#Config"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.config.Config"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Template class for Flask configuration.</p>
+                                <p>These settings are the default values when in Production mode.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.config.DevelopmentConfig">
+                                <em class="property">class </em><code class="descclassname">src.config.</code><code
+                                    class="descname">DevelopmentConfig</code><a class="reference internal"
+                                                                                href="_modules/src/config.html#DevelopmentConfig"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.config.DevelopmentConfig"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class providing all variables when in Development mode.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.config.ProductionConfig">
+                                <em class="property">class </em><code class="descclassname">src.config.</code><code
+                                    class="descname">ProductionConfig</code><a class="reference internal"
+                                                                               href="_modules/src/config.html#ProductionConfig"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.config.ProductionConfig"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class providing all variables when in Production mode.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.config.StagingConfig">
+                                <em class="property">class </em><code class="descclassname">src.config.</code><code
+                                    class="descname">StagingConfig</code><a class="reference internal"
+                                                                            href="_modules/src/config.html#StagingConfig"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.config.StagingConfig"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class providing all variables when in Staging mode.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.config.TestingConfig">
+                                <em class="property">class </em><code class="descclassname">src.config.</code><code
+                                    class="descname">TestingConfig</code><a class="reference internal"
+                                                                            href="_modules/src/config.html#TestingConfig"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.config.TestingConfig"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class providing all variables when in Testing mode.</p>
+                            </dd>
+                        </dl>
+
+                    </div>
                     <div class="section" id="module-src.models">
                         <span id="the-models-module"></span>
                         <h2>The “models” module<a class="headerlink" href="#module-src.models"
@@ -826,6 +901,7 @@
                     <ul>
                         <li><a class="reference internal" href="#module-src">The view functions</a></li>
                         <li><a class="reference internal" href="#the-myflask-module">The “myflask” module</a></li>
+                        <li><a class="reference internal" href="#module-src.config">The “config” module</a></li>
                         <li><a class="reference internal" href="#module-src.models">The “models” module</a></li>
                         <li><a class="reference internal" href="#module-src.forms">The “forms” module</a></li>
                     </ul>

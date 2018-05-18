@@ -4,7 +4,6 @@
 import logging
 from flask_login import UserMixin, AnonymousUserMixin
 
-
 logger = logging.getLogger('src.models')
 
 
@@ -132,10 +131,7 @@ class Anonymous(AnonymousUserMixin):
 
     def serialize(self):
         return {
-                'id': self.id,
-                'is_authenticated': self.is_authenticated,
-                'is_active': self.is_active,
+            'id': self.id,
+            'is_authenticated': self.is_authenticated,
+            'is_active': self.is_active,
         }
-
-
-

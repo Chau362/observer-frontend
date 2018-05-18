@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -37,18 +38,17 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">current_user</span>
+<span class="kn">from</span> <span class="nn">bcrypt</span> <span class="k">import</span> <span class="n">checkpw</span>
 <span class="kn">from</span> <span class="nn">flask_wtf</span> <span class="k">import</span> <span
                         class="n">FlaskForm</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">current_user</span>
 <span class="kn">from</span> <span class="nn">wtforms</span> <span class="k">import</span> <span
                         class="n">StringField</span><span class="p">,</span> <span class="n">PasswordField</span>
 <span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="k">import</span> <span class="n">InputRequired</span><span
                         class="p">,</span> <span class="n">EqualTo</span><span class="p">,</span> <span
                         class="n">Length</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">bcrypt</span> <span class="k">import</span> <span class="n">checkpw</span>
-
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span
                         class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span
@@ -76,8 +76,8 @@
         class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class defines the login form.</span>
 
-<span class="sd">       The form provides two entry fields for the user&#39;s</span>
-<span class="sd">       credentials: username and password.</span>
+<span class="sd">     The form provides two entry fields for the user&#39;s</span>
+<span class="sd">     credentials: username and password.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">username</span> <span class="o">=</span> <span class="n">StringField</span><span
@@ -149,8 +149,8 @@
         class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class defines the form to change an existing users password.</span>
 
-<span class="sd">       The form provides one entry fields for the current password and two</span>
-<span class="sd">       entry fields for new password, the second one being used for verification.</span>
+<span class="sd">     The form provides one entry fields for the current password and two</span>
+<span class="sd">     entry fields for new password, the second one being used for verification.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">username</span> <span class="o">=</span> <span class="n">StringField</span><span
@@ -233,8 +233,8 @@
         class="n">FlaskForm</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class defines part the registration form.</span>
 
-<span class="sd">       The form provides entry fields for the chosen username and</span>
-<span class="sd">       two entry fields for a password, the second one being used for verification.</span>
+<span class="sd">    The form provides entry fields for the chosen username and</span>
+<span class="sd">    two entry fields for a password, the second one being used for verification.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">username</span> <span class="o">=</span> <span class="n">StringField</span><span

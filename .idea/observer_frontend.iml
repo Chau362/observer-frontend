@@ -9,7 +9,12 @@
     <orderEntry type="library" name="R Skeletons" level="application" />
     <orderEntry type="library" name="R User Library" level="project" />
   </component>
+  <component name="ReSTService">
+    <option name="workdir" value="C:\Users\mafschar\PycharmProjects\observer_frontend\docs" />
+    <option name="DOC_DIR" value="C:\Users\mafschar\PycharmProjects\observer_frontend\docs" />
+  </component>
   <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
+    <option name="projectConfiguration" value="py.test" />
+    <option name="PROJECT_TEST_RUNNER" value="py.test" />
   </component>
 </module>

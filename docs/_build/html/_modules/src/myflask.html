@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -36,9 +37,9 @@
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">Flask</span>
 <span class="kn">from</span> <span class="nn">bcrypt</span> <span class="k">import</span> <span
                         class="n">hashpw</span><span class="p">,</span> <span class="n">gensalt</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">Flask</span>
 
 <span class="c1"># logging setup</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span
@@ -160,7 +161,8 @@
             <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
             class="s1">&#39;User &#39;</span> <span class="o">+</span> <span class="n">username</span> <span
-            class="o">+</span> <span class="s1">&#39; had no registered projects.&#39;</span><span class="p">)</span>
+            class="o">+</span>
+                            <span class="s1">&#39; had no registered projects.&#39;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
             class="p">(</span><span class="s1">&#39;Unable to write new user file.&#39;</span><span class="p">)</span>
@@ -217,17 +219,17 @@
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span
             class="bp">cls</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span
             class="s2">&quot;/user_configs/&quot;</span> <span class="o">+</span> <span class="n">old_file</span><span
-            class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">cwd</span> <span
-            class="o">+</span> <span class="s2">&quot;/user_configs/&quot;</span> <span class="o">+</span> <span
-            class="n">new_file</span><span class="p">)</span>
+            class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">cwd</span>
+                      <span class="o">+</span> <span class="s2">&quot;/user_configs/&quot;</span> <span
+            class="o">+</span> <span class="n">new_file</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
             class="p">(</span><span class="s2">&quot;Renamed file containing configs of user &quot;</span>
                         <span class="o">+</span> <span class="n">current_name</span> <span class="o">+</span> <span
             class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span
-            class="p">(</span><span class="s1">&#39;User &#39;</span> <span class="o">+</span> <span class="n">current_name</span> <span
-            class="o">+</span> <span class="s1">&#39; had no registered projects.&#39;</span><span
+            class="p">(</span><span class="s1">&#39;User &#39;</span> <span class="o">+</span> <span class="n">current_name</span>
+                        <span class="o">+</span> <span class="s1">&#39; had no registered projects.&#39;</span><span
             class="p">)</span></div>
 
 <div class="viewcode-block" id="FlaskApp.load_config"><a class="viewcode-back"
@@ -295,9 +297,10 @@
             class="k">as</span> <span class="n">jsonuser</span><span class="p">:</span>
                 <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span
             class="p">({</span><span class="s2">&quot;registrations&quot;</span><span class="p">:</span> <span
-            class="n">data</span><span class="p">},</span> <span class="n">jsonuser</span><span class="p">,</span> <span
-            class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span
-            class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            class="n">data</span><span class="p">},</span> <span class="n">jsonuser</span><span class="p">,</span>
+                          <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span
+            class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span
+            class="p">)</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span
             class="p">(</span><span class="s1">&#39;Could not save configurations for user &#39;</span>

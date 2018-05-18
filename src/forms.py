@@ -2,14 +2,13 @@
 """
 
 import os
+import json
 import logging
-from flask_login import current_user
+from bcrypt import checkpw
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, EqualTo, Length
-import json
-from bcrypt import checkpw
-
 
 logger = logging.getLogger('src')
 
@@ -24,8 +23,8 @@ def get_users():
 class LoginForm(FlaskForm):
     """This class defines the login form.
 
-       The form provides two entry fields for the user's
-       credentials: username and password.
+     The form provides two entry fields for the user's
+     credentials: username and password.
     """
 
     username = StringField('username',
@@ -65,8 +64,8 @@ class LoginForm(FlaskForm):
 class ChangeCredentialsForm(FlaskForm):
     """This class defines the form to change an existing users password.
 
-       The form provides one entry fields for the current password and two
-       entry fields for new password, the second one being used for verification.
+     The form provides one entry fields for the current password and two
+     entry fields for new password, the second one being used for verification.
     """
 
     username = StringField('username',
@@ -115,8 +114,8 @@ class ChangeCredentialsForm(FlaskForm):
 class RegisterForm(FlaskForm):
     """This class defines part the registration form.
 
-       The form provides entry fields for the chosen username and
-       two entry fields for a password, the second one being used for verification.
+    The form provides entry fields for the chosen username and
+    two entry fields for a password, the second one being used for verification.
     """
 
     username = StringField('username',

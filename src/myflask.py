@@ -10,7 +10,6 @@ logger = logging.getLogger('src')
 
 def get_users(cwd, file_name):
     """Get users and their passwords.
-
     :param str cwd: current working directory
     :param str file_name: name of the file containing the credentials
     :return: dictionary of users and passwords
@@ -23,6 +22,9 @@ def get_users(cwd, file_name):
 
 class FlaskApp(Flask):
     """This class provides a customized Flask application for the client frontend.
+    :ivar str cwd:
+    :ivar dict users:
+    :ivar list active_users:
     """
 
     cwd = os.path.dirname(os.path.abspath(__file__))
@@ -35,7 +37,6 @@ class FlaskApp(Flask):
     @classmethod
     def add_user_and_password(cls, username, password):
         """Adds credentials for a new user to the users file.
-
         :param str username: name the user has chosen for his account
         :param str password: with which the user can access his account
         """
@@ -53,7 +54,6 @@ class FlaskApp(Flask):
     @classmethod
     def delete_user(cls, username):
         """Removes credentials from users file.
-
         :param str username: indicates which account credentials to remove
         """
 
@@ -74,7 +74,6 @@ class FlaskApp(Flask):
     @classmethod
     def rename_user(cls, current_name, new_name, new_password):
         """Changes user credentials as indicated.
-
         :param str current_name:
         :param str new_name:
         :param str new_password:
@@ -104,7 +103,6 @@ class FlaskApp(Flask):
     @classmethod
     def load_config(cls, username):
         """Loads the config file and returns the list of registrations.
-
         :param str username:
         :return:
         """
@@ -123,7 +121,6 @@ class FlaskApp(Flask):
     @classmethod
     def save_config(cls, username, data):
         """Write and safe new config file.
-
         :param str username: specifying the user
         :param dict data: dictionary containing all registrations to save
         """
@@ -142,7 +139,6 @@ class FlaskApp(Flask):
     @classmethod
     def delete_config(cls, username):
         """Delete a config file for specified user.
-
         :param str username: specifying the user
         """
 

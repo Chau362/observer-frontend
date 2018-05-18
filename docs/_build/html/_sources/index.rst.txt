@@ -7,15 +7,7 @@ Welcome to iteranoid's documentation!
 =====================================
 
 .. toctree::
+   :caption: Table of Contents
    :name: mastertoc
 
    code
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

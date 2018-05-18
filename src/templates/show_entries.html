@@ -9,46 +9,49 @@
 {% for sub_table in registrations %}
 <label>Registrations at {{ sub_table[0].service }}</label><br><br>
 <table class="table table-hover" title="{{ sub_table[0].service }}">
-<thead>
-<tr>
-<th scope="col">Projectname</th>
-<th scope="col">URL</th>
-<th scope="col">Eventtype</th>
-<th scope="col">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-    {% for registration in sub_table | sort(attribute='project_url')  %}
+    <thead>
+    <tr>
+        <th scope="col">Projectname</th>
+        <th scope="col">URL</th>
+        <th scope="col">Eventtype</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for registration in sub_table | sort(attribute='project_url') %}
     <tr>
         <input type="hidden" name="id" value="{{ registration.id }}">
         <td name="project_name">{{ registration.project_name }}</td>
         <td name="project_url">{{ registration.project_url }}</td>
         <td name="event">{{ registration.event }}</td>
         <td class="none">
-        {% if registration.active %}
+            {% if registration.active %}
             {% set btn_class = "btn-success unregister" %}
             {% set glyph_class = "glyphicon-ok" %}
-        {% else %}
+            {% else %}
             {% set btn_class = "btn-warning register" %}
             {% set glyph_class = "glyphicon-minus" %}
-        {% endif %}
-        <button type="button" class="btn {{ btn_class }}"><span class="glyphicon {{ glyph_class }}" aria-hidden="true"></span></button>
+            {% endif %}
+            <button type="button" class="btn {{ btn_class }}"><span class="glyphicon {{ glyph_class }}"
+                                                                    aria-hidden="true"></span></button>
         </td>
     </tr>
     {% endfor %}
-</tr>
-</tbody>
+    </tr>
+    </tbody>
 </table>
 <br>
 {% endfor %}
 {% endif %}
 <hr>
 {% if active %}
-<button name="pause-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
+<button name="pause-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pause"
+                                                                     aria-hidden="true"></span></button>
 <span class="label label-success pull-right" aria-hidden="true" style="font-size:20px;">Active</span>
 {% else %}
-<button name="play-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+<button name="play-btn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-play"
+                                                                    aria-hidden="true"></span></button>
 <span class="label label-danger pull-right" style="font-size:20px;">Inactive</span>
 {% endif %}
 <script src="/static/js/jquery.js"></script>

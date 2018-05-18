@@ -29,10 +29,10 @@ setup(name='src',
           'requests',
       ],
       setup_requires=[
-        'pytest-runner',
+          'pytest-runner',
       ],
       tests_require=[
-        'pytest',
+          'pytest',
       ],
       include_package_data=True,
       zip_safe=False)

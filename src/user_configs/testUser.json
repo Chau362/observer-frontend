@@ -1,40 +1,40 @@
 {
-    "registrations": [
-        {
-            "_active": false,
-            "event": "GIT_COMMIT",
-            "id": "2",
-            "project_name": "scab-oberserver",
-            "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
-            "service": "http://192.168.4.44:8080/register",
-            "status": "ok"
-        },
-        {
-            "_active": true,
-            "event": "SVN_COMMIT",
-            "id": "4",
-            "project_name": "scab-oberserver",
-            "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
-            "service": "http://192.168.4.44:8080/register",
-            "status": "ok"
-        },
-        {
-            "_active": true,
-            "event": "GIT_COMMIT",
-            "id": "1",
-            "project_name": "scab-oberserver",
-            "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
-            "service": "http://192.168.4.46:8080/register",
-            "status": "ok"
-        },
-        {
-            "_active": false,
-            "event": "SVN_COMMIT",
-            "id": "6",
-            "project_name": "scab-oberserver",
-            "project_url": "file:///home/cpham/eclipse-workspace/svn/scab-oberserver-hive",
-            "service": "http://observer:8080/register",
-            "status": "ok"
-        }
-    ]
+  "registrations": [
+    {
+      "_active": false,
+      "event": "GIT_COMMIT",
+      "id": "2",
+      "project_name": "scab-oberserver",
+      "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+      "service": "http://192.168.4.44:8080/register",
+      "status": "ok"
+    },
+    {
+      "_active": true,
+      "event": "SVN_COMMIT",
+      "id": "4",
+      "project_name": "scab-oberserver",
+      "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+      "service": "http://192.168.4.44:8080/register",
+      "status": "ok"
+    },
+    {
+      "_active": true,
+      "event": "GIT_COMMIT",
+      "id": "1",
+      "project_name": "scab-oberserver",
+      "project_url": "https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive.git",
+      "service": "http://192.168.4.46:8080/register",
+      "status": "ok"
+    },
+    {
+      "_active": false,
+      "event": "SVN_COMMIT",
+      "id": "6",
+      "project_name": "scab-oberserver",
+      "project_url": "file:///home/cpham/eclipse-workspace/svn/scab-oberserver-hive",
+      "service": "http://observer:8080/register",
+      "status": "ok"
+    }
+  ]
 }

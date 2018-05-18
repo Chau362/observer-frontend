@@ -7,7 +7,6 @@
 
 import logging
 
-
 __author__ = "Masud Afschar"
 __status__ = "Development"
 

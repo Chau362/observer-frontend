@@ -8,51 +8,57 @@ tr.strikeout td.strikable {
     position: relative;
     text-decoration:line-through;
 }
+
 </style>
 {% if not registrations %}
 <h2>You are currently not registered for any projects.</h2>
 <form method="POST" action="" id="reg-form">
-<div id="00">
-</div>
+    <div id="00">
+    </div>
 </form>
 {% else %}
 <form method="POST" action="" id="reg-form">
-<div id="00">
-{% for sub_table in registrations %}
-<label>Registrations at {{ sub_table[0].service }}</label><br><br>
-<table class="table table-hover" contenteditable="true">
-<thead>
-<tr>
-<th scope="col">Projectname</th>
-<th scope="col">URL</th>
-<th scope="col">Eventtype</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-{% for registration in sub_table %}
-        <tr>
-            <input type="hidden" name="id" value="{{ registration.id }}">
-            <input type="hidden" name="service" value="{{ registration.service }}">
-            <td class="strikable">{{ registration.project_name }}</td>
-            <input type="hidden" name="projectName" value="{{ registration.project_name }}">
-            <td class="strikable">{{ registration.project_url }}</td>
-            <input type="hidden" name="repository" value="{{ registration.project_url }}">
-            <td class="strikable">{{ registration.event }}</td>
-            <input type="hidden" name="eventType" value="{{ registration.event }}">
-            <td class="none"><button type="button" name="strikeoutbtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
-            <input type="hidden" name="active" value="{{ registration.active }}">
-        </tr>
-{% endfor %}
-</tr>
-</tbody>
-</table>
-<br>
-{% endfor %}
-</div>
-{% endif %}
-<button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project</button><br><br>
-<button type="submit" form="reg-form" id="save-btn" class="btn btn-success">Save changes</button>
+    <div id="00">
+        {% for sub_table in registrations %}
+        <label>Registrations at {{ sub_table[0].service }}</label><br><br>
+        <table class="table table-hover" contenteditable="true">
+            <thead>
+            <tr>
+                <th scope="col">Projectname</th>
+                <th scope="col">URL</th>
+                <th scope="col">Eventtype</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for registration in sub_table %}
+            <tr>
+                <input type="hidden" name="id" value="{{ registration.id }}">
+                <input type="hidden" name="service" value="{{ registration.service }}">
+                <td class="strikable">{{ registration.project_name }}</td>
+                <input type="hidden" name="projectName" value="{{ registration.project_name }}">
+                <td class="strikable">{{ registration.project_url }}</td>
+                <input type="hidden" name="repository" value="{{ registration.project_url }}">
+                <td class="strikable">{{ registration.event }}</td>
+                <input type="hidden" name="eventType" value="{{ registration.event }}">
+                <td class="none">
+                    <button type="button" name="strikeoutbtn" class="btn btn-danger"><span
+                            class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+                <input type="hidden" name="active" value="{{ registration.active }}">
+            </tr>
+            {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <button type="button" id="addbtn" onclick="duplicate()" class="btn btn-primary pull-right">Add another project
+    </button>
+    <br><br>
+    <button type="submit" form="reg-form" id="save-btn" class="btn btn-success">Save changes</button>
 </form>
 <script src="/static/js/jquery.js"></script>
 <script src="/static/js/registrationFormFunctions.js"></script>

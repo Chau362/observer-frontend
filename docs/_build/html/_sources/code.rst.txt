@@ -13,6 +13,11 @@ The “myflask” module
 .. autoclass:: src.myflask.FlaskApp
    :members:
 
+The “config” module
+-------------------
+.. automodule:: src.config
+   :members:
+
 The “models” module
 -------------------
 .. automodule:: src.models
