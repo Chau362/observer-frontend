@@ -315,12 +315,11 @@ def activate_user_setup():
     """
 
     projects_list = app.load_config(current_user.get_id())
-    active_projects_set = set()
+    active_projects_list = []
     for project in projects_list:
         if project['_active']:
-            active_project = Project(project['project_url'], project['event'], project)
-            active_projects_set.add(active_project)
-    app.active_users[current_user.get_id()] = active_projects_set
+            active_projects_list.append(project)
+    app.active_users[current_user.get_id()] = active_projects_list
     logger.info('Activated messages for user '
                 + current_user.get_id() + '.')
     return Response('200')
@@ -480,7 +479,7 @@ def render_event():
 
 @app.route('/active-users/', methods=['GET'])
 def return_active_users():
-    return Response(json.dumps(app.active_users))
+    return json.dumps(app.active_users)
 
 
 if __name__ == '__main__':

@@ -8,13 +8,14 @@ logger = logging.getLogger('src.models')
 
 
 class Project:
+    """Generic class for registered projects.
+    """
 
     def __init__(self, project_url, event, credentials):
-        """Generic class for registered projects.
-
-        :param project_url:
-        :param event:
-        :param credentials:
+        """
+        :param str project_url:
+        :param str event:
+        :param dict credentials:
         """
 
         self.project_url = project_url
@@ -53,6 +54,9 @@ class Project:
 
     def __repr__(self):
         return repr((self.project_url, self.event))
+
+    def __str__(self):
+        return self.event
 
 
 class Registration:
@@ -165,7 +169,7 @@ class Anonymous(AnonymousUserMixin):
     """Generic class for anonymous user.
 
     Besides the inherited methods and attributes it defines an id
-    attribute which is set to Guest.
+    attribute which is set to `Guest`.
     """
 
     def __init__(self):

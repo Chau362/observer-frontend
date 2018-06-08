@@ -11,7 +11,7 @@ The “myflask” module
 .. autofunction:: src.myflask.get_users
 
 .. autoclass:: src.myflask.FlaskApp
-:members:
+   :members:
 
 The “config” module
 -------------------

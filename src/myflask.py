@@ -121,8 +121,10 @@ class FlaskApp(Flask):
     @classmethod
     def save_config(cls, username, data):
         """Write and safe new config file.
+
         :param str username: specifying the user
         :param dict data: dictionary containing all registrations to save
+        :return: None
         """
 
         file = username + ".json"
@@ -139,7 +141,9 @@ class FlaskApp(Flask):
     @classmethod
     def delete_config(cls, username):
         """Delete a config file for specified user.
+
         :param str username: specifying the user
+        :return: None
         """
 
         file = username + ".json"

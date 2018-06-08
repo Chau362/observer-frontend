@@ -33,8 +33,13 @@
             {% set btn_class = "btn-warning register" %}
             {% set glyph_class = "glyphicon-minus" %}
             {% endif %}
-            <button type="button" class="btn {{ btn_class }}"><span class="glyphicon {{ glyph_class }}"
-                                                                    aria-hidden="true"></span></button>
+            {% if active %}
+            <button type="button" class="btn {{ btn_class }} donttouch" disabled><span class="glyphicon {{ glyph_class }}"
+                                                                              aria-hidden="true"></span></button>
+            {% else %}
+            <button type="button" class="btn {{ btn_class }} donttouch"><span class="glyphicon {{ glyph_class }}"
+                                                                              aria-hidden="true"></span></button>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}

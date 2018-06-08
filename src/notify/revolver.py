@@ -25,10 +25,10 @@ def show_messages():
     """
 
     while True:
-        active_users = requests.get('http://observer/active-users/')
-        for user, project_list in json.loads(active_users.text).items():
+        active_users = requests.get('http://observer/active-users/').json()
+        for user, project_list in active_users.items():
             print(user)
-            project_list = list(map(lambda project:
+            project_list = set(map(lambda project:
                                     Project(project['project_url'],
                                             project['event'], project),
                                     project_list))
