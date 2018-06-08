@@ -4,7 +4,7 @@ The iteranoid API reference
 The view functions
 ------------------
 .. automodule:: src
-:members:
+   :members:
 
 The “myflask” module
 --------------------
@@ -16,17 +16,17 @@ The “myflask” module
 The “config” module
 -------------------
 .. automodule:: src.config
-:members:
+   :members:
 
 The “models” module
 -------------------
 .. automodule:: src.models
-:members:
+   :members:
 
 The “forms” module
 ------------------
 .. automodule:: src.forms
-:members:
+   :members:
 
 The “notify” API reference
 ==========================
@@ -34,16 +34,16 @@ The “notify” API reference
 The “notify” module
 -------------------
 .. automodule:: src.notify
-:members:
-      :private-members:
+   :members:
+   :private-members:
 
 The “eventhandler” module
 -------------------------
 .. automodule:: src.notify.eventhandler
-:members:
+   :members:
 
 The “blinker” module
 --------------------
 .. automodule:: src.notify.led_blinker
-:members:
+   :members:
 
