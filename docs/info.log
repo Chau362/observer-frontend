@@ -1,0 +1,4 @@
+[2018-06-08 10:20:58 +0200] [51084] [INFO] - src.notify: Started notifier thread.
+[2018-06-08 10:20:58 +0200] [51084] [INFO] - src.notify: Started server process listening on port 9090
+[2018-06-08 10:21:05 +0200] [51084] [INFO] - src.notify: Started notifier thread.
+[2018-06-08 10:21:06 +0200] [51084] [INFO] - src.notify: Started server process listening on port 9090

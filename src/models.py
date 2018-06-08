@@ -7,11 +7,60 @@ from flask_login import UserMixin, AnonymousUserMixin
 logger = logging.getLogger('src.models')
 
 
+class Project:
+
+    def __init__(self, project_url, event, credentials):
+        """Generic class for registered projects.
+
+        :param project_url:
+        :param event:
+        :param credentials:
+        """
+
+        self.project_url = project_url
+        self.event = event
+        self.credentials = credentials
+
+    def __eq__(self, other):
+        """Check the equality of two registrations.
+
+        :param other: object to compare to
+        :return: true if all attributes are the same
+        """
+
+        if isinstance(other, Project):
+
+            if not self.project_url == other.project_url:
+                return False
+            if not self.event == other.event:
+                return False
+
+            return True
+
+        return False
+
+    def __ne__(self, other):
+        """Check the inequality of two registrations.
+
+        :param other: object to compare to
+        :return: true if any attribute is not the same
+        """
+        equal = self.__eq__(other)
+        return not equal
+
+    def __hash__(self):
+        return hash((self.project_url, self.event))
+
+    def __repr__(self):
+        return repr((self.project_url, self.event))
+
+
 class Registration:
     """Generic class for a registration.
     """
 
-    def __init__(self, registration_id, service, project_name, project_url, event, active=False):
+    def __init__(self, registration_id, service, project_name,
+                 project_url, event, active=False):
         """
         :type service: string
         :type project_name: string
@@ -67,14 +116,13 @@ class Registration:
         equal = self.__eq__(other)
         return not equal
 
-    @property
     def __hash__(self):
         return hash((self.service, self.project_name,
                      self.project_url, self.event))
 
     def __repr__(self):
         return repr((self.id, self.service, self.project_name,
-                     self.project_url, self.event))
+                     self.project_url, self.event, self.active))
 
 
 class RegistrationSerializer:
@@ -89,12 +137,7 @@ class RegistrationSerializer:
 
     @staticmethod
     def deserialize_registration(registration):
-        attributes = registration.__dict__
-        try:
-            attributes['_active'] = True if attributes['_active'] == 'True' else False
-        except AttributeError:
-            logger.error('Checked Registration object has not attribute `active`.')
-        return attributes
+        return registration.__dict__
 
 
 class User(UserMixin):

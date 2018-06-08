@@ -1,13 +1,18 @@
+"""This module defines a customized HTTPRequestHandler to receive events.
+"""
+
 import json
 from logging import getLogger
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from multiprocessing import Process
-from src.lights.eventhandler import handle_event
+from http.server import BaseHTTPRequestHandler
+from src.models import Project
+from src.notify.settings import events
 
-logger = getLogger('src.lights')
+logger = getLogger('src.notify.handler')
 
 
 class EventHandler(BaseHTTPRequestHandler):
+    """Customized BaseHTTPRequestHandler.
+    """
 
     def _set_headers(self):
         """Set header according to response.
@@ -24,13 +29,14 @@ class EventHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         """Respond to a GET request.
 
-        This request type shall not be allowed.
+        This request type is currently not supported.
         """
         pass
 
     def do_POST(self):
-        """Respond to a POST request.
+        """Respond to a POST request and add the event to a set.
         """
+
         # get the posted data
         self._set_headers()
 
@@ -44,16 +50,5 @@ class EventHandler(BaseHTTPRequestHandler):
         except:
             return
 
-        print('Received event.')
-        handle_event(event)
-        # event_process = Process(target=handle_event, kwargs={'event': event})
-        # event_process.start()
-
-
-if __name__ == '__main__':
-    port = 9090
-    server_address = ('', port)
-    httpd = HTTPServer(server_address, EventHandler)
-
-    print('Started server process listening on port ' + str(port))
-    httpd.serve_forever()
+        project = Project(event['projectUrl'], event['eventType'], event)
+        events.add(project)

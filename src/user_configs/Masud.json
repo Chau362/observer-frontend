@@ -1,7 +1,7 @@
 {
   "registrations": [
     {
-      "_active": true,
+      "_active": false,
       "event": "GIT_COMMIT",
       "id": "2",
       "project_name": "scab-oberserver",

@@ -8,6 +8,6 @@ Welcome to iteranoid's documentation!
 
 .. toctree::
 :caption: Table of Contents
-       :name: mastertoc
+      :name: mastertoc
 
-       code
+      code

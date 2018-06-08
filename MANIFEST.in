@@ -1,4 +1,4 @@
-include README.rst
+include README.md
 graft observer_frontend/static
 graft observer_frontend/templates
 graft observer_frontend/user_configs

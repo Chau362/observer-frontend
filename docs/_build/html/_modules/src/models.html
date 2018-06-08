@@ -46,6 +46,77 @@
                         class="s1">&#39;src.models&#39;</span><span class="p">)</span>
 
 
+<span class="k">class</span> <span class="nc">Project</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+                        class="p">,</span> <span class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span
+                        class="p">,</span> <span class="n">credentials</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generic class for registered projects.</span>
+
+<span class="sd">        :param project_url:</span>
+<span class="sd">        :param event:</span>
+<span class="sd">        :param credentials:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_url</span> <span class="o">=</span> <span
+                        class="n">project_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span
+                        class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span
+                        class="n">credentials</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span
+                        class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the equality of two registrations.</span>
+
+<span class="sd">        :param other: object to compare to</span>
+<span class="sd">        :return: true if all attributes are the same</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span
+                        class="p">,</span> <span class="n">Project</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+                        class="o">.</span><span class="n">project_url</span> <span class="o">==</span> <span class="n">other</span><span
+                        class="o">.</span><span class="n">project_url</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span
+                        class="o">.</span><span class="n">event</span> <span class="o">==</span> <span
+                        class="n">other</span><span class="o">.</span><span class="n">event</span><span
+                        class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span
+                        class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the inequality of two registrations.</span>
+
+<span class="sd">        :param other: object to compare to</span>
+<span class="sd">        :return: true if any attribute is not the same</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">equal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span
+                        class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span
+                        class="p">)</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">equal</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span
+                        class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span
+                        class="bp">self</span><span class="o">.</span><span class="n">project_url</span><span class="p">,</span> <span
+                        class="bp">self</span><span class="o">.</span><span class="n">event</span><span
+                        class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span
+                        class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">((</span><span
+                        class="bp">self</span><span class="o">.</span><span class="n">project_url</span><span class="p">,</span> <span
+                        class="bp">self</span><span class="o">.</span><span class="n">event</span><span
+                        class="p">))</span>
+
+
 <div class="viewcode-block" id="Registration"><a class="viewcode-back" href="../../code.html#src.models.Registration">[docs]</a><span
         class="k">class</span> <span class="nc">Registration</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Generic class for a registration.</span>
@@ -53,10 +124,9 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
             class="p">,</span> <span class="n">registration_id</span><span class="p">,</span> <span
-            class="n">service</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span
-            class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span
-            class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">False</span><span
-            class="p">):</span>
+            class="n">service</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span>
+                 <span class="n">project_url</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span
+            class="n">active</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :type service: string</span>
 <span class="sd">        :type project_name: string</span>
@@ -136,7 +206,6 @@
             class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">equal</span>
 
-    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span
             class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span
@@ -154,6 +223,7 @@
             class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
                      <span class="bp">self</span><span class="o">.</span><span class="n">project_url</span><span
             class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span
+            class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span
             class="p">))</span></div>
 
 
@@ -177,19 +247,7 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">deserialize_registration</span><span class="p">(</span><span class="n">registration</span><span
                         class="p">):</span>
-        <span class="n">attributes</span> <span class="o">=</span> <span class="n">registration</span><span
-                        class="o">.</span><span class="vm">__dict__</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
-                        class="p">]</span> <span class="o">=</span> <span class="kc">True</span> <span
-                        class="k">if</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
-                        class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span> <span
-                        class="k">else</span> <span class="kc">False</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span
-                        class="p">(</span><span class="s1">&#39;Checked Registration object has not attribute `active`.&#39;</span><span
-                        class="p">)</span>
-        <span class="k">return</span> <span class="n">attributes</span>
+        <span class="k">return</span> <span class="n">registration</span><span class="o">.</span><span class="vm">__dict__</span>
 
 
 <div class="viewcode-block" id="User"><a class="viewcode-back" href="../../code.html#src.models.User">[docs]</a><span

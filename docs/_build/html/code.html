@@ -255,7 +255,7 @@
                             </dt>
                             <dd><p>Catch POSTed data and process it.</p>
                                 <p>The function checks what kind of information was sent and
-                                    forwards it to the lights class to process it.</p>
+                                    forwards it to the notify class to process it.</p>
                             </dd>
                         </dl>
 
@@ -319,36 +319,10 @@
                                                                                 href="#src.myflask.get_users"
                                                                                 title="Permalink to this definition">¶</a>
                             </dt>
-                            <dd><p>Get users and their passwords.</p>
-                                <table class="docutils field-list" frame="void" rules="none">
-                                    <col class="field-name"/>
-                                    <col class="field-body"/>
-                                    <tbody valign="top">
-                                    <tr class="field-odd field">
-                                        <th class="field-name">Parameters:</th>
-                                        <td class="field-body">
-                                            <ul class="first simple">
-                                                <li><strong>cwd</strong> (<a class="reference external"
-                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                             title="(in Python v3.6)"><em>str</em></a>)
-                                                    – current working directory
-                                                </li>
-                                                <li><strong>file_name</strong> (<a class="reference external"
-                                                                                   href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                   title="(in Python v3.6)"><em>str</em></a>)
-                                                    – name of the file containing the credentials
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr class="field-even field">
-                                        <th class="field-name">Returns:</th>
-                                        <td class="field-body"><p class="first last">dictionary of users and
-                                            passwords</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <dd><p>Get users and their passwords.
+                                :param str cwd: current working directory
+                                :param str file_name: name of the file containing the credentials
+                                :return: dictionary of users and passwords</p>
                             </dd>
                         </dl>
 
@@ -362,7 +336,10 @@
                                                                                 href="#src.myflask.FlaskApp"
                                                                                 title="Permalink to this definition">¶</a>
                             </dt>
-                            <dd><p>This class provides a customized Flask application for the client frontend.</p>
+                            <dd><p>This class provides a customized Flask application for the client frontend.
+                                :ivar str cwd:
+                                :ivar dict users:
+                                :ivar list active_users:</p>
                                 <dl class="classmethod">
                                     <dt id="src.myflask.FlaskApp.add_user_and_password">
                                         <em class="property">classmethod </em><code class="descname">add_user_and_password</code><span
@@ -373,30 +350,9 @@
                                                                                         href="#src.myflask.FlaskApp.add_user_and_password"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Adds credentials for a new user to the users file.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body">
-                                                    <ul class="first last simple">
-                                                        <li><strong>username</strong> (<a class="reference external"
-                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                          title="(in Python v3.6)"><em>str</em></a>)
-                                                            – name the user has chosen for his account
-                                                        </li>
-                                                        <li><strong>password</strong> (<a class="reference external"
-                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                          title="(in Python v3.6)"><em>str</em></a>)
-                                                            – with which the user can access his account
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Adds credentials for a new user to the users file.
+                                        :param str username: name the user has chosen for his account
+                                        :param str password: with which the user can access his account</p>
                                     </dd>
                                 </dl>
 
@@ -410,21 +366,8 @@
                                                                                         href="#src.myflask.FlaskApp.delete_config"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Delete a config file for specified user.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body"><strong>username</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.6)"><em>str</em></a>) – specifying the user
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Delete a config file for specified user.
+                                        :param str username: specifying the user</p>
                                     </dd>
                                 </dl>
 
@@ -438,22 +381,8 @@
                                                                                         href="#src.myflask.FlaskApp.delete_user"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Removes credentials from users file.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body"><strong>username</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.6)"><em>str</em></a>) – indicates which
-                                                    account credentials to remove
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Removes credentials from users file.
+                                        :param str username: indicates which account credentials to remove</p>
                                     </dd>
                                 </dl>
 
@@ -467,25 +396,9 @@
                                                                                         href="#src.myflask.FlaskApp.load_config"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Loads the config file and returns the list of registrations.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body"><strong>username</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.6)"><em>str</em></a>) –
-                                                </td>
-                                            </tr>
-                                            <tr class="field-even field">
-                                                <th class="field-name">Returns:</th>
-                                                <td class="field-body"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Loads the config file and returns the list of registrations.
+                                        :param str username:
+                                        :return:</p>
                                     </dd>
                                 </dl>
 
@@ -500,35 +413,10 @@
                                                                                         href="#src.myflask.FlaskApp.rename_user"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Changes user credentials as indicated.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body">
-                                                    <ul class="first last simple">
-                                                        <li><strong>current_name</strong> (<a class="reference external"
-                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                              title="(in Python v3.6)"><em>str</em></a>)
-                                                            –
-                                                        </li>
-                                                        <li><strong>new_name</strong> (<a class="reference external"
-                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                          title="(in Python v3.6)"><em>str</em></a>)
-                                                            –
-                                                        </li>
-                                                        <li><strong>new_password</strong> (<a class="reference external"
-                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                              title="(in Python v3.6)"><em>str</em></a>)
-                                                            –
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Changes user credentials as indicated.
+                                        :param str current_name:
+                                        :param str new_name:
+                                        :param str new_password:</p>
                                     </dd>
                                 </dl>
 
@@ -542,30 +430,9 @@
                                                                                         href="#src.myflask.FlaskApp.save_config"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Write and safe new config file.</p>
-                                        <table class="docutils field-list" frame="void" rules="none">
-                                            <col class="field-name"/>
-                                            <col class="field-body"/>
-                                            <tbody valign="top">
-                                            <tr class="field-odd field">
-                                                <th class="field-name">Parameters:</th>
-                                                <td class="field-body">
-                                                    <ul class="first last simple">
-                                                        <li><strong>username</strong> (<a class="reference external"
-                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                          title="(in Python v3.6)"><em>str</em></a>)
-                                                            – specifying the user
-                                                        </li>
-                                                        <li><strong>data</strong> (<a class="reference external"
-                                                                                      href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                                                      title="(in Python v3.6)"><em>dict</em></a>)
-                                                            – dictionary containing all registrations to save
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <dd><p>Write and safe new config file.
+                                        :param str username: specifying the user
+                                        :param dict data: dictionary containing all registrations to save</p>
                                     </dd>
                                 </dl>
 
@@ -802,89 +669,145 @@
 
                     </div>
                 </div>
-                <div class="section" id="the-lights-api-reference">
-                    <h1>The “lights” API reference<a class="headerlink" href="#the-lights-api-reference"
+                <div class="section" id="the-notify-api-reference">
+                    <h1>The “notify” API reference<a class="headerlink" href="#the-notify-api-reference"
                                                      title="Permalink to this headline">¶</a></h1>
-                    <div class="section" id="module-src.lights">
-                        <span id="the-lights-module"></span>
-                        <h2>The “lights” module<a class="headerlink" href="#module-src.lights"
+                    <div class="section" id="module-src.notify">
+                        <span id="the-notify-module"></span>
+                        <h2>The “notify” module<a class="headerlink" href="#module-src.notify"
                                                   title="Permalink to this headline">¶</a></h2>
+                        <p>This module starts the process which handles events from the conductor.</p>
+                        <p>It starts a thread which will iterate through all received events and
+                            handles them. Furthermore it imports the customized HTTPRequestHandler
+                            for events and runs a simple server.</p>
+                    </div>
+                    <div class="section" id="module-src.notify.eventhandler">
+                        <span id="the-eventhandler-module"></span>
+                        <h2>The “eventhandler” module<a class="headerlink" href="#module-src.notify.eventhandler"
+                                                        title="Permalink to this headline">¶</a></h2>
+                        <p>This module defines classes to handle events.</p>
+                        <p>For every webservice which can be observed there is one class which provides
+                            custom functions to notify the user about events.</p>
                         <dl class="class">
-                            <dt id="src.lights.EventHandler">
-                                <em class="property">class </em><code class="descclassname">src.lights.</code><code
-                                    class="descname">EventHandler</code><span class="sig-paren">(</span><em>request</em>,
-                                <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a
-                                    class="reference internal" href="_modules/src/lights.html#EventHandler"><span
+                            <dt id="src.notify.eventhandler.EventHandler">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.notify.eventhandler.</code><code class="descname">EventHandler</code><a
+                                    class="reference internal"
+                                    href="_modules/src/notify/eventhandler.html#EventHandler"><span
                                     class="viewcode-link">[source]</span></a><a class="headerlink"
-                                                                                href="#src.lights.EventHandler"
+                                                                                href="#src.notify.eventhandler.EventHandler"
                                                                                 title="Permalink to this definition">¶</a>
                             </dt>
-                            <dd>
-                                <dl class="method">
-                                    <dt id="src.lights.EventHandler._set_headers">
-                                        <code class="descname">_set_headers</code><span class="sig-paren">(</span><span
-                                            class="sig-paren">)</span><a class="reference internal"
-                                                                         href="_modules/src/lights.html#EventHandler._set_headers"><span
+                            <dd><p>Base class providing a minimal set of functions to handle events.</p>
+                                <dl class="staticmethod">
+                                    <dt id="src.notify.eventhandler.EventHandler.do_something">
+                                        <em class="property">static </em><code class="descname">do_something</code><span
+                                            class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                            class="reference internal"
+                                            href="_modules/src/notify/eventhandler.html#EventHandler.do_something"><span
                                             class="viewcode-link">[source]</span></a><a class="headerlink"
-                                                                                        href="#src.lights.EventHandler._set_headers"
+                                                                                        href="#src.notify.eventhandler.EventHandler.do_something"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Set header according to response.</p>
+                                    <dd><p>Writes a logging message that event was received.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Returns:</th>
+                                                <td class="field-body">None</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </dd>
                                 </dl>
 
-                                <dl class="method">
-                                    <dt id="src.lights.EventHandler.do_GET">
-                                        <code class="descname">do_GET</code><span class="sig-paren">(</span><span
+                                <dl class="staticmethod">
+                                    <dt id="src.notify.eventhandler.EventHandler.play_music">
+                                        <em class="property">static </em><code class="descname">play_music</code><span
+                                            class="sig-paren">(</span><em>**kwargs</em><span
                                             class="sig-paren">)</span><a class="reference internal"
-                                                                         href="_modules/src/lights.html#EventHandler.do_GET"><span
+                                                                         href="_modules/src/notify/eventhandler.html#EventHandler.play_music"><span
                                             class="viewcode-link">[source]</span></a><a class="headerlink"
-                                                                                        href="#src.lights.EventHandler.do_GET"
+                                                                                        href="#src.notify.eventhandler.EventHandler.play_music"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Respond to a GET request.</p>
-                                        <p>This request type shall not be allowed.</p>
+                                    <dd><p>Plays an alert.</p>
                                     </dd>
                                 </dl>
 
-                                <dl class="method">
-                                    <dt id="src.lights.EventHandler.do_HEAD">
-                                        <code class="descname">do_HEAD</code><span class="sig-paren">(</span><span
-                                            class="sig-paren">)</span><a class="reference internal"
-                                                                         href="_modules/src/lights.html#EventHandler.do_HEAD"><span
+                                <dl class="staticmethod">
+                                    <dt id="src.notify.eventhandler.EventHandler.show_on_unicorn">
+                                        <em class="property">static </em><code
+                                            class="descname">show_on_unicorn</code><span class="sig-paren">(</span><em>projectname</em>,
+                                        <em>event</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                         href="_modules/src/notify/eventhandler.html#EventHandler.show_on_unicorn"><span
                                             class="viewcode-link">[source]</span></a><a class="headerlink"
-                                                                                        href="#src.lights.EventHandler.do_HEAD"
+                                                                                        href="#src.notify.eventhandler.EventHandler.show_on_unicorn"
                                                                                         title="Permalink to this definition">¶</a>
                                     </dt>
-                                    <dd><p>Respond to a HEAD request.</p>
-                                    </dd>
-                                </dl>
-
-                                <dl class="method">
-                                    <dt id="src.lights.EventHandler.do_POST">
-                                        <code class="descname">do_POST</code><span class="sig-paren">(</span><span
-                                            class="sig-paren">)</span><a class="reference internal"
-                                                                         href="_modules/src/lights.html#EventHandler.do_POST"><span
-                                            class="viewcode-link">[source]</span></a><a class="headerlink"
-                                                                                        href="#src.lights.EventHandler.do_POST"
-                                                                                        title="Permalink to this definition">¶</a>
-                                    </dt>
-                                    <dd><p>Respond to a POST request.</p>
+                                    <dd><p>Shows given parameters on a unicorn hat for RaspberryPi.</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parameters:</th>
+                                                <td class="field-body">
+                                                    <ul class="first simple">
+                                                        <li><strong>projectname</strong> – which user has chosen for
+                                                            this project
+                                                        </li>
+                                                        <li><strong>event</strong> – that happened</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Returns:</th>
+                                                <td class="field-body"><p class="first last">None</p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </dd>
                                 </dl>
 
                             </dd>
                         </dl>
 
+                        <dl class="class">
+                            <dt id="src.notify.eventhandler.GitEventHandler">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.notify.eventhandler.</code><code class="descname">GitEventHandler</code><a
+                                    class="reference internal"
+                                    href="_modules/src/notify/eventhandler.html#GitEventHandler"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.notify.eventhandler.GitEventHandler"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class to handle events on Github.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="class">
+                            <dt id="src.notify.eventhandler.SVNEventHandler">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.notify.eventhandler.</code><code class="descname">SVNEventHandler</code><a
+                                    class="reference internal"
+                                    href="_modules/src/notify/eventhandler.html#SVNEventHandler"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#src.notify.eventhandler.SVNEventHandler"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Class to handle events on SVN.</p>
+                            </dd>
+                        </dl>
+
                     </div>
-                    <div class="section" id="module-src.lights.eventhandler">
-                        <span id="the-eventhandler-module"></span>
-                        <h2>The “eventhandler” module<a class="headerlink" href="#module-src.lights.eventhandler"
-                                                        title="Permalink to this headline">¶</a></h2>
-                    </div>
-                    <div class="section" id="module-src.lights.led_blinker">
+                    <div class="section" id="module-src.notify.led_blinker">
                         <span id="the-blinker-module"></span>
-                        <h2>The “blinker” module<a class="headerlink" href="#module-src.lights.led_blinker"
+                        <h2>The “blinker” module<a class="headerlink" href="#module-src.notify.led_blinker"
                                                    title="Permalink to this headline">¶</a></h2>
                     </div>
                 </div>
@@ -906,12 +829,12 @@
                         <li><a class="reference internal" href="#module-src.forms">The “forms” module</a></li>
                     </ul>
                 </li>
-                <li><a class="reference internal" href="#the-lights-api-reference">The “lights” API reference</a>
+                <li><a class="reference internal" href="#the-notify-api-reference">The “notify” API reference</a>
                     <ul>
-                        <li><a class="reference internal" href="#module-src.lights">The “lights” module</a></li>
-                        <li><a class="reference internal" href="#module-src.lights.eventhandler">The “eventhandler”
+                        <li><a class="reference internal" href="#module-src.notify">The “notify” module</a></li>
+                        <li><a class="reference internal" href="#module-src.notify.eventhandler">The “eventhandler”
                             module</a></li>
-                        <li><a class="reference internal" href="#module-src.lights.led_blinker">The “blinker” module</a>
+                        <li><a class="reference internal" href="#module-src.notify.led_blinker">The “blinker” module</a>
                         </li>
                     </ul>
                 </li>

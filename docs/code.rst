@@ -28,22 +28,22 @@ The “forms” module
 .. automodule:: src.forms
 :members:
 
-The “lights” API reference
+The “notify” API reference
 ==========================
 
-The “lights” module
+The “notify” module
 -------------------
-.. automodule:: src.lights
+.. automodule:: src.notify
 :members:
-       :private-members:
+      :private-members:
 
 The “eventhandler” module
 -------------------------
-.. automodule:: src.lights.eventhandler
+.. automodule:: src.notify.eventhandler
 :members:
 
 The “blinker” module
 --------------------
-.. automodule:: src.lights.led_blinker
+.. automodule:: src.notify.led_blinker
 :members:
 

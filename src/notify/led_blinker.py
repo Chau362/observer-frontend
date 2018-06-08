@@ -2,7 +2,7 @@
 # import time
 # import logging
 #
-# logger = logging.getLogger('src.lights')
+# logger = logging.getLogger('src.notify')
 #
 #
 # def Blink(num_times,speed):

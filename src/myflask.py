@@ -29,7 +29,7 @@ class FlaskApp(Flask):
 
     cwd = os.path.dirname(os.path.abspath(__file__))
     users = get_users(cwd, 'users')
-    active_users = []
+    active_users = {}
 
     def __init__(self, *args, **kwargs):
         super(FlaskApp, self).__init__(*args, **kwargs)

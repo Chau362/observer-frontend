@@ -10,6 +10,7 @@
 
 import os
 import socket
+import json
 import requests
 # import signal
 # from multiprocessing import Process
@@ -17,9 +18,10 @@ from flask import redirect, render_template, request, \
     url_for, Response, session
 from flask_login import LoginManager, current_user, login_required, \
     login_user, logout_user
-from .myflask import FlaskApp
-from .models import User, Anonymous, Registration, RegistrationSerializer
-from .loggers import setup_flask_logging, setup_gunicorn_logging
+from src.myflask import FlaskApp
+from src.models import User, Anonymous, Registration, RegistrationSerializer, \
+    Project
+from src.loggers import setup_flask_logging, setup_gunicorn_logging
 
 __author__ = "Masud Afschar"
 __status__ = "Development"
@@ -312,7 +314,13 @@ def activate_user_setup():
        receiving events for the project he has registered for.
     """
 
-    app.active_users.append(current_user.get_id())
+    projects_list = app.load_config(current_user.get_id())
+    active_projects_set = set()
+    for project in projects_list:
+        if project['_active']:
+            active_project = Project(project['project_url'], project['event'], project)
+            active_projects_set.add(active_project)
+    app.active_users[current_user.get_id()] = active_projects_set
     logger.info('Activated messages for user '
                 + current_user.get_id() + '.')
     return Response('200')
@@ -327,7 +335,7 @@ def deactivate_user_setup():
        receiving events for the project he has registered for.
     """
 
-    app.active_users.remove(current_user.get_id())
+    app.active_users.pop(current_user.get_id(), None)
     logger.info('Deactivated messages for user '
                 + current_user.get_id() + '.')
     return Response('200')
@@ -449,7 +457,7 @@ def render_event():
     """Catch POSTed data and process it.
 
        The function checks what kind of information was sent and
-       forwards it to the lights class to process it.
+       forwards it to the notify class to process it.
     """
     event = request.json
     if event is None:
@@ -468,3 +476,12 @@ def render_event():
     # app.active_processes.append(event_process.pid)
 
     return Response('Received POSTed event.')
+
+
+@app.route('/active-users/', methods=['GET'])
+def return_active_users():
+    return Response(json.dumps(app.active_users))
+
+
+if __name__ == '__main__':
+    app.run()

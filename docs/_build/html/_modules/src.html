@@ -46,6 +46,7 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="c1"># import signal</span>
 <span class="c1"># from multiprocessing import Process</span>
@@ -58,12 +59,14 @@
                         class="p">,</span> <span class="n">current_user</span><span class="p">,</span> <span class="n">login_required</span><span
                         class="p">,</span> \
     <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span>
-<span class="kn">from</span> <span class="nn">.myflask</span> <span class="k">import</span> <span
+<span class="kn">from</span> <span class="nn">src.myflask</span> <span class="k">import</span> <span
                         class="n">FlaskApp</span>
-<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span
+<span class="kn">from</span> <span class="nn">src.models</span> <span class="k">import</span> <span
                         class="n">User</span><span class="p">,</span> <span class="n">Anonymous</span><span
-                        class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationSerializer</span>
-<span class="kn">from</span> <span class="nn">.loggers</span> <span class="k">import</span> <span class="n">setup_flask_logging</span><span
+                        class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationSerializer</span><span
+                        class="p">,</span> \
+    <span class="n">Project</span>
+<span class="kn">from</span> <span class="nn">src.loggers</span> <span class="k">import</span> <span class="n">setup_flask_logging</span><span
                         class="p">,</span> <span class="n">setup_gunicorn_logging</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Masud Afschar&quot;</span>
@@ -570,9 +573,25 @@
 <span class="sd">       receiving events for the project he has registered for.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="o">.</span><span
-            class="n">append</span><span class="p">(</span><span class="n">current_user</span><span
-            class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+    <span class="n">projects_list</span> <span class="o">=</span> <span class="n">app</span><span
+            class="o">.</span><span class="n">load_config</span><span class="p">(</span><span
+            class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+    <span class="n">active_projects_set</span> <span class="o">=</span> <span class="nb">set</span><span
+            class="p">()</span>
+    <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span
+            class="n">projects_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">project</span><span class="p">[</span><span class="s1">&#39;_active&#39;</span><span
+            class="p">]:</span>
+            <span class="n">active_project</span> <span class="o">=</span> <span class="n">Project</span><span
+            class="p">(</span><span class="n">project</span><span class="p">[</span><span class="s1">&#39;project_url&#39;</span><span
+            class="p">],</span> <span class="n">project</span><span class="p">[</span><span
+            class="s1">&#39;event&#39;</span><span class="p">],</span> <span class="n">project</span><span
+            class="p">)</span>
+            <span class="n">active_projects_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span
+            class="n">active_project</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="p">[</span><span
+            class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">()]</span> <span
+            class="o">=</span> <span class="n">active_projects_set</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
             class="s1">&#39;Activated messages for user &#39;</span>
                 <span class="o">+</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span
@@ -595,8 +614,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="o">.</span><span
-            class="n">remove</span><span class="p">(</span><span class="n">current_user</span><span
-            class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+            class="n">pop</span><span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span
             class="s1">&#39;Deactivated messages for user &#39;</span>
                 <span class="o">+</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span
@@ -832,7 +851,7 @@
     <span class="sd">&quot;&quot;&quot;Catch POSTed data and process it.</span>
 
 <span class="sd">       The function checks what kind of information was sent and</span>
-<span class="sd">       forwards it to the lights class to process it.</span>
+<span class="sd">       forwards it to the notify class to process it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">event</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span
             class="n">json</span>
@@ -858,6 +877,22 @@
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received POSTed event.&#39;</span><span
             class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span
+                        class="s1">&#39;/active-users/&#39;</span><span class="p">,</span> <span
+                        class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span
+                        class="p">])</span>
+<span class="k">def</span> <span class="nf">return_active_users</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span
+                        class="n">json</span><span class="o">.</span><span class="n">dumps</span><span
+                        class="p">(</span><span class="n">app</span><span class="o">.</span><span
+                        class="n">active_users</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span
+                        class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre>
                 </div>
 
