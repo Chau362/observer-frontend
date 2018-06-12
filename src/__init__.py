@@ -21,7 +21,7 @@ from flask_login import LoginManager, current_user, login_required, \
 from src.myflask import FlaskApp
 from src.models import User, Anonymous, Registration, RegistrationSerializer, \
     Project
-from src.loggers import setup_flask_logging, setup_gunicorn_logging
+from src.loggers import setup_logging, setup_gunicorn_logging
 
 __author__ = "Masud Afschar"
 __status__ = "Development"
@@ -37,7 +37,7 @@ if "SERVER_SOFTWARE" in os.environ:
         logger = setup_gunicorn_logging(app)
 else:
     LOG_LEVEL = "INFO"
-    logger = setup_flask_logging(LOG_LEVEL)
+    logger = setup_logging(LOG_LEVEL)
 
 # configure login manager
 login_manager = LoginManager()

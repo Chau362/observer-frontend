@@ -16,22 +16,6 @@ LOG_FILE = "info.log"
 LOG_LEVEL = "INFO"
 
 
-def setup_gunicorn_logging(app):
-    """This is meant to be called if the Flask app is run by Gunicorn.
-
-    The logger will set the handlers of the Flask app logger
-    to the Gunicorn logger. The Flask app will have the same
-    log level as the Gunicorn logger.
-    :param app: the actual Flask app to be logged
-    :return: the logger object
-    """
-
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
-    return app.logger
-
-
 def setup_logging(log_level=LOG_LEVEL, log_file=LOG_FILE):
     """This is meant to be called if the Flask app is run by its own.
 
@@ -41,7 +25,7 @@ def setup_logging(log_level=LOG_LEVEL, log_file=LOG_FILE):
     :param log_file: file location to write log messages
     :return: logger object
     """
-    logger = logging.getLogger('src')
+    logger = logging.getLogger('notifier')
     logger.setLevel(log_level)
 
     logger_file_handler = logging.FileHandler(log_file)

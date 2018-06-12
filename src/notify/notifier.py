@@ -5,15 +5,13 @@ handles them. Furthermore it imports the customized HTTPRequestHandler
 for events and runs a simple server.
 """
 
-from logging import getLogger
 from http.server import HTTPServer
 from threading import Thread
+from src.notify.loggers import setup_logging
 from src.notify.handler import EventHandler
-from src.notify.eventhandler import handle_event
 from src.notify.revolver import show_messages
-from src.notify.settings import events
 
-logger = getLogger('src.notify')
+logger = setup_logging()
 
 if __name__ == '__main__':
     notifier = Thread(target=show_messages)

@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler
 from src.models import Project
 from src.notify.settings import events
 
-logger = getLogger('src.notify.handler')
+logger = getLogger('notifier.handler')
 
 
 class EventHandler(BaseHTTPRequestHandler):
@@ -52,3 +52,7 @@ class EventHandler(BaseHTTPRequestHandler):
 
         project = Project(event['projectUrl'], event['eventType'], event)
         events.add(project)
+
+        self.wfile.write(b"<html><head><title>client-messenger</title></head>")
+        self.wfile.write(b"<body><p>Received your event and added it to set.</p>")
+        self.wfile.write(b"</body></html>")

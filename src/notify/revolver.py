@@ -2,7 +2,6 @@
 """
 
 import os
-import json
 import requests
 from time import sleep
 from logging import getLogger
@@ -10,7 +9,7 @@ from src.notify.eventhandler import handle_event
 from src.notify.settings import events
 from src.models import Project
 
-logger = getLogger('src.notify.revolver')
+logger = getLogger('notifier.revolver')
 cwd = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -25,9 +24,12 @@ def show_messages():
     """
 
     while True:
-        active_users = requests.get('http://observer/active-users/').json()
+        try:
+            active_users = requests.get('http://observer/active-users/').json()
+        except:
+            continue
         for user, project_list in active_users.items():
-            print(user)
+            logger.info(user)
             project_list = set(map(lambda project:
                                     Project(project['project_url'],
                                             project['event'], project),
