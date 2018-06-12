@@ -14,14 +14,17 @@ from src.notify.revolver import show_messages
 logger = setup_logging()
 
 if __name__ == '__main__':
-    notifier = Thread(target=show_messages)
 
+    # start thread which shows all events in a loop
+    notifier = Thread(target=show_messages)
     notifier.start()
     logger.info('Started notifier thread.')
 
+    # setup server for receiving events
     port = 9090
     server_address = ('', port)
     httpd = HTTPServer(server_address, EventHandler)
 
+    # run the server
     logger.info('Started server process listening on port ' + str(port))
     httpd.serve_forever()

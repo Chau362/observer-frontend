@@ -1,8 +1,4 @@
-"""This module provides functions to setup logging for the Flask app.
-
-   Depending on how the application is run the configuration of the
-   logging will be set differently. For more information read the
-   docs of the specific function.
+"""This module provides the configurations to setup logging for the notifier.
 """
 
 import logging
@@ -17,10 +13,11 @@ LOG_LEVEL = "INFO"
 
 
 def setup_logging(log_level=LOG_LEVEL, log_file=LOG_FILE):
-    """This is meant to be called if the Flask app is run by its own.
+    """Defines all configurations for logging of the notifier.
 
-    It will set up a console log and a produce a log file in the current
+    It sets up a console log and a produce a log file in the current
     working directory.
+
     :param log_level: granularity of log messages
     :param log_file: file location to write log messages
     :return: logger object

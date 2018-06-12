@@ -3,9 +3,9 @@
 
 """ This module runs the frontend app of iteratec's Observerhive.
 
-    The app implements a simple webservice where the user can either register
-    projects at a Conductor Service, check his or her registrations or turn
-    on and off receiving event messages for the registered projects.
+The app implements a simple webservice where the user can either register
+projects at a Conductor Service, check his or her registrations or turn
+on and off receiving event messages for the registered projects.
 """
 
 import os
@@ -49,6 +49,14 @@ login_manager.anonymous_user = Anonymous
 
 
 def split_registrations(list_of_registrations):
+    """Groups registrations at the same service together.
+
+    This function generates a nested list of registrations. Registrations
+    in the same sublist are registered at the same conductor service.
+
+    :param list list_of_registrations: list of dict objects
+    :return: nested list of registrations
+    """
     list_of_registrations.sort(key=lambda registration: registration.service)
 
     sub_list = []
@@ -71,8 +79,8 @@ def split_registrations(list_of_registrations):
 def user_loader(username):
     """Callback function for reloading a user from the session.
 
-        The function takes the username and returns a user object
-        or None if the user does not exist.
+    The function takes the username and returns a user object
+    or None if the user does not exist.
     """
 
     users = app.users
@@ -89,8 +97,8 @@ def user_loader(username):
 def request_loader(request):
     """Callback function for reloading a user from a Flask request.
 
-        The function takes the Flask request and returns a user object
-        or None if the user does not exist.
+    The function takes the Flask request and returns a user object
+    or None if the user does not exist.
     """
 
     if 'user_id' in session:
@@ -117,9 +125,9 @@ def home():
 def login():
     """Render the login page and check login credentials.
 
-       The function renders the login form and checks if username
-       does exist and the provided password is correct when the user
-       submits his or her data.
+    The function renders the login form and checks if username
+    does exist and the provided password is correct when the user
+    submits his or her data.
     """
 
     from .forms import LoginForm
@@ -142,8 +150,8 @@ def login():
 def logout():
     """Log the current user out.
 
-       Calls the logout_user() function of flask_login and
-       redirects to the homepage of this app.
+    Calls the `logout_user()` function of flask_login and
+    redirects to the homepage of this app.
     """
 
     # remove the username from the session if it is there
@@ -157,8 +165,8 @@ def logout():
 def register():
     """Render the form to register a new user.
 
-       The function renders the registration form and stores its values
-       if the current user submitted the form.
+    The function renders the registration form and stores its values
+    if the current user submitted the form.
     """
 
     from .forms import RegisterForm
@@ -188,7 +196,7 @@ def register():
 def check_username():
     """Check if POSTed username does already exist.
 
-    :return: true if username already in use
+    :return: true if username is already in use
     """
 
     users = app.users
@@ -205,8 +213,8 @@ def check_username():
 def show_registrations():
     """Retrieve all registered projects of the current user and show them.
 
-       The function retrieves the current users stored configurations and
-       passes them to the corresponding template.
+    The function retrieves the current users stored configurations and
+    passes them to the corresponding template.
     """
 
     username = current_user.get_id()
@@ -222,9 +230,9 @@ def show_registrations():
 def register_project():
     """Register a project at Conductor service if not done already.
 
-       The function checks all projects in the users config file and if
-       a project does not have an id already it will try register it
-       at the specified Conductor Service.
+    The function checks all projects in the users config file and if
+    a project does not have an id already it will try register it
+    at the specified Conductor Service.
     """
 
     registration_id = request.json["id"]
@@ -266,9 +274,9 @@ def register_project():
 def deregister_project():
     """Deregister a project at Conductor service if not done already.
 
-       The function checks all projects in the users config file and if
-       a project does not have an id already it will try register it
-       at the specified Conductor Service.
+    The function checks all projects in the users config file and if
+    a project does not have an id already it will try register it
+    at the specified Conductor Service.
     """
 
     registration_id = request.json["id"]
@@ -310,8 +318,8 @@ def deregister_project():
 def activate_user_setup():
     """Set the active flag to True.
 
-       The active flag indicates if a user is currently interested in
-       receiving events for the project he has registered for.
+    The active flag indicates if a user is currently interested in
+    receiving events for the project he has registered for.
     """
 
     projects_list = app.load_config(current_user.get_id())
@@ -330,8 +338,8 @@ def activate_user_setup():
 def deactivate_user_setup():
     """Set the active flag to False.
 
-       The active flag indicates if a user is currently interested in
-       receiving events for the project he has registered for.
+    The active flag indicates if a user is currently interested in
+    receiving events for the project he has registered for.
     """
 
     app.active_users.pop(current_user.get_id(), None)
@@ -345,9 +353,9 @@ def deactivate_user_setup():
 def edit_registrations():
     """Retrieve all registered projects of the current user and show them.
 
-       The function retrieves the current users stored configurations and
-       passes them to the corresponding template so that the user can
-       manipulate them if wished.
+    The function retrieves the current users stored configurations and
+    passes them to the corresponding template so that the user can
+    manipulate them if wished.
     """
 
     username = current_user.get_id()
@@ -407,6 +415,7 @@ def delete_account():
 
     :return: HTTP response 302 and redirect to home endpoint.
     """
+
     username = current_user.get_id()
     app.delete_user(username)
     logger.info('Deleted account of user ' + username + '.')
@@ -420,9 +429,9 @@ def delete_account():
 def change_password():
     """Render the form to change password of current user.
 
-       The function retrieves the form to change one's password and
-       renders it. If the current user submitted the form, the function
-       hashes the password and stores it in the users file of the app.
+    The function retrieves the form to change one's password and
+    renders it. If the current user submitted the form, the function
+    hashes the password and stores it in the users file of the app.
     """
 
     from .forms import ChangeCredentialsForm
@@ -451,36 +460,15 @@ def change_password():
                                username=username)
 
 
-@app.route('/event/', methods=['POST'])
-def render_event():
-    """Catch POSTed data and process it.
-
-       The function checks what kind of information was sent and
-       forwards it to the notify class to process it.
-    """
-    event = request.json
-    if event is None:
-        return Response('Received empty POST.')
-    logger.info('Received a ' + event['eventType'] + ' to show.')
-
-    # for pid in app.active_processes:
-    # os.kill(pid, signal.SIGKILL)
-    # app.active_processes.remove(pid)
-
-    # event_process = Process(target=handle_event,
-    #                         kwargs={'type': event['eventType'],
-    #                                 'active_users': app.active_users})
-    # event_process.start()
-
-    # app.active_processes.append(event_process.pid)
-
-    return Response('Received POSTed event.')
-
-
 @app.route('/active-users/', methods=['GET'])
 def return_active_users():
+    """Function to get all users which are currently active.
+
+    :return: set of usernames
+    """
     return json.dumps(app.active_users)
 
 
+# run this module separately for debugging
 if __name__ == '__main__':
     app.run()

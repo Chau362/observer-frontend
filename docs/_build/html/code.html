@@ -64,7 +64,7 @@ hashes the password and stores it in the users file of the app.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if username already in use</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if username is already in use</td>
 </tr>
 </tbody>
 </table>
@@ -129,7 +129,7 @@ submits his or her data.</p>
 <dt id="src.logout">
 <code class="descclassname">src.</code><code class="descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#logout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.logout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log the current user out.</p>
-<p>Calls the logout_user() function of flask_login and
+<p>Calls the <cite>logout_user()</cite> function of flask_login and
 redirects to the homepage of this app.</p>
 </dd></dl>
 
@@ -151,14 +151,6 @@ at the specified Conductor Service.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="src.render_event">
-<code class="descclassname">src.</code><code class="descname">render_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#render_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.render_event" title="Permalink to this definition">¶</a></dt>
-<dd><p>Catch POSTed data and process it.</p>
-<p>The function checks what kind of information was sent and
-forwards it to the notify class to process it.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="src.request_loader">
 <code class="descclassname">src.</code><code class="descname">request_loader</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#request_loader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.request_loader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback function for reloading a user from a Flask request.</p>
@@ -167,11 +159,43 @@ or None if the user does not exist.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="src.return_active_users">
+<code class="descclassname">src.</code><code class="descname">return_active_users</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#return_active_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.return_active_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get all users which are currently active.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">set of usernames</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="src.show_registrations">
 <code class="descclassname">src.</code><code class="descname">show_registrations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#show_registrations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.show_registrations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve all registered projects of the current user and show them.</p>
 <p>The function retrieves the current users stored configurations and
 passes them to the corresponding template.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.split_registrations">
+<code class="descclassname">src.</code><code class="descname">split_registrations</code><span class="sig-paren">(</span><em>list_of_registrations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#split_registrations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.split_registrations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Groups registrations at the same service together.</p>
+<p>This function generates a nested list of registrations. Registrations
+in the same sublist are registered at the same conductor service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_of_registrations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – list of dict objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">nested list of registrations</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -188,25 +212,57 @@ or None if the user does not exist.</p>
 <dl class="function">
 <dt id="src.myflask.get_users">
 <code class="descclassname">src.myflask.</code><code class="descname">get_users</code><span class="sig-paren">(</span><em>cwd</em>, <em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#get_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.get_users" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get users and their passwords.
-:param str cwd: current working directory
-:param str file_name: name of the file containing the credentials
-:return: dictionary of users and passwords</p>
+<dd><p>Get users and their passwords.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – current working directory</li>
+<li><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of the file containing the credentials</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary of users and passwords</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="src.myflask.FlaskApp">
 <em class="property">class </em><code class="descclassname">src.myflask.</code><code class="descname">FlaskApp</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#FlaskApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.FlaskApp" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class provides a customized Flask application for the client frontend.
-:ivar str cwd:
-:ivar dict users:
-:ivar list active_users:</p>
+<dd><p>This class provides a customized Flask application for the client frontend.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – current working directory</li>
+<li><strong>users</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – all users currently registered</li>
+<li><strong>active_users</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.6)"><em>set</em></a>) – users which want to be notified</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="classmethod">
 <dt id="src.myflask.FlaskApp.add_user_and_password">
 <em class="property">classmethod </em><code class="descname">add_user_and_password</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#FlaskApp.add_user_and_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.FlaskApp.add_user_and_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds credentials for a new user to the users file.
-:param str username: name the user has chosen for his account
-:param str password: with which the user can access his account</p>
+<dd><p>Adds credentials for a new user to the users file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name the user has chosen for his account</li>
+<li><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – with which the user can access his account</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
@@ -228,25 +284,50 @@ or None if the user does not exist.</p>
 <dl class="classmethod">
 <dt id="src.myflask.FlaskApp.delete_user">
 <em class="property">classmethod </em><code class="descname">delete_user</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#FlaskApp.delete_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.FlaskApp.delete_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes credentials from users file.
-:param str username: indicates which account credentials to remove</p>
+<dd><p>Removes credentials from users file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – indicates which account credentials to remove</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="src.myflask.FlaskApp.load_config">
 <em class="property">classmethod </em><code class="descname">load_config</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#FlaskApp.load_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.FlaskApp.load_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the config file and returns the list of registrations.
-:param str username:
-:return:</p>
+<dd><p>Loads the config file and returns the list of registrations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – indicating for which user</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of dictionaries representing registrations</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="src.myflask.FlaskApp.rename_user">
 <em class="property">classmethod </em><code class="descname">rename_user</code><span class="sig-paren">(</span><em>current_name</em>, <em>new_name</em>, <em>new_password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/myflask.html#FlaskApp.rename_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.myflask.FlaskApp.rename_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes user credentials as indicated.
-:param str current_name:
-:param str new_name:
-:param str new_password:</p>
+<dd><p>Changes user credentials as indicated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – current name used by the user</li>
+<li><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – new name to save</li>
+<li><strong>new_password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – new password to save</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
@@ -325,12 +406,78 @@ attribute which is set to <cite>Guest</cite>.</p>
 <dt id="src.models.Project">
 <em class="property">class </em><code class="descclassname">src.models.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>project_url</em>, <em>event</em>, <em>credentials</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.Project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic class for registered projects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>project_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – url of the project at the webservice</li>
+<li><strong>event</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – type of event to be followed</li>
+<li><strong>credentials</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – other information about the project</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="src.models.Registration">
 <em class="property">class </em><code class="descclassname">src.models.</code><code class="descname">Registration</code><span class="sig-paren">(</span><em>registration_id</em>, <em>service</em>, <em>project_name</em>, <em>project_url</em>, <em>event</em>, <em>active=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#Registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.Registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic class for a registration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>registration_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – allocated by the conductor server</li>
+<li><strong>service</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – address of the conductor service</li>
+<li><strong>project_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name chosen by the user for this project</li>
+<li><strong>project_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – url of the project</li>
+<li><strong>event</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – type of event to be followed</li>
+<li><strong>active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – indicator if user wants to be notified about this</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="src.models.RegistrationSerializer">
+<em class="property">class </em><code class="descclassname">src.models.</code><code class="descname">RegistrationSerializer</code><a class="reference internal" href="_modules/src/models.html#RegistrationSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.RegistrationSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="src.models.RegistrationSerializer.deserialize_registration">
+<em class="property">static </em><code class="descname">deserialize_registration</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#RegistrationSerializer.deserialize_registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.RegistrationSerializer.deserialize_registration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns a Registration object into a python <cite>dict</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> – special object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary containing parameters of the registration</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.models.RegistrationSerializer.serialize_registration">
+<em class="property">static </em><code class="descname">serialize_registration</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#RegistrationSerializer.serialize_registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.RegistrationSerializer.serialize_registration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns a python <cite>dict</cite> into a Registration object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – containing parameters of the registration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Registration object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -355,8 +502,18 @@ entry fields for new password, the second one being used for verification.</p>
 <dl class="method">
 <dt id="src.forms.ChangeCredentialsForm.validate">
 <code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/forms.html#ChangeCredentialsForm.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.forms.ChangeCredentialsForm.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates the form by calling <cite>validate</cite> on each field, passing any
-extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field validator.</p>
+<dd><p>Custom validator to change credentials.</p>
+<p>Checks if user provided the correct password currently in use and
+changes it if user has entered a new password which has been
+verified by entering it a second time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if all checks have been passed.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -370,8 +527,17 @@ credentials: username and password.</p>
 <dl class="method">
 <dt id="src.forms.LoginForm.validate">
 <code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/forms.html#LoginForm.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.forms.LoginForm.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates the form by calling <cite>validate</cite> on each field, passing any
-extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field validator.</p>
+<dd><p>Custom validator for the login form.</p>
+<p>Checks if username is known to the app and compares the
+entered password to the  stored one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if all checks have been passed</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -385,24 +551,288 @@ two entry fields for a password, the second one being used for verification.</p>
 <dl class="method">
 <dt id="src.forms.RegisterForm.validate">
 <code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/forms.html#RegisterForm.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.forms.RegisterForm.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates the form by calling <cite>validate</cite> on each field, passing any
-extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field validator.</p>
+<dd><p>Custom validator for new user registrations.</p>
+<p>Checks if password is at least 4 characters long and verifies the
+correct entry by comparing it to the second input of password.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if all checks have been passed.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="src.forms.get_users">
+<code class="descclassname">src.forms.</code><code class="descname">get_users</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/forms.html#get_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.forms.get_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all users and their passwords.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary with all users and passwords</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.loggers">
+<span id="the-loggers-module"></span><h2>The “loggers” module<a class="headerlink" href="#module-src.loggers" title="Permalink to this headline">¶</a></h2>
+<p>This module provides functions to setup logging for the Flask app.</p>
+<p>Depending on how the application is run the configuration of the
+logging will be set differently. For more information read the
+docs of the specific function.</p>
+<dl class="function">
+<dt id="src.loggers.setup_gunicorn_logging">
+<code class="descclassname">src.loggers.</code><code class="descname">setup_gunicorn_logging</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/loggers.html#setup_gunicorn_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.loggers.setup_gunicorn_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is meant to be called if the Flask app is run by Gunicorn.</p>
+<p>The logger will set the handlers of the Flask app logger
+to the Gunicorn logger. The Flask app will have the same
+log level as the Gunicorn logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app</strong> – the actual Flask app to be logged</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the logger object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.loggers.setup_logging">
+<code class="descclassname">src.loggers.</code><code class="descname">setup_logging</code><span class="sig-paren">(</span><em>log_level='INFO'</em>, <em>log_file='info.log'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/loggers.html#setup_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.loggers.setup_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is meant to be called if the Flask app is run by its own.</p>
+<p>It will set up a console log and a produce a log file in the current
+working directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>log_level</strong> – granularity of log messages</li>
+<li><strong>log_file</strong> – file location to write log messages</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">logger object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 </div>
 <div class="section" id="the-notify-api-reference">
 <h1>The “notify” API reference<a class="headerlink" href="#the-notify-api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="the-notify-module">
-<h2>The “notify” module<a class="headerlink" href="#the-notify-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-src.notify.settings">
+<span id="the-settings-module"></span><h2>The “settings” module<a class="headerlink" href="#module-src.notify.settings" title="Permalink to this headline">¶</a></h2>
+<p>This module defines cross module variables which are used to handle events.</p>
+<dl class="data">
+<dt id="src.notify.settings.events">
+<code class="descclassname">src.notify.settings.</code><code class="descname">events</code><em class="property"> = set()</em><a class="headerlink" href="#src.notify.settings.events" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#src.notify.settings.events" title="src.notify.settings.events"><strong>events</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.6)"><em>set</em></a>) – set of events which have been received</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="the-eventhandler-module">
-<h2>The “eventhandler” module<a class="headerlink" href="#the-eventhandler-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-src.notify.notifier">
+<span id="the-notify-module"></span><h2>The “notify” module<a class="headerlink" href="#module-src.notify.notifier" title="Permalink to this headline">¶</a></h2>
+<p>This module starts the process which handles events from the conductor.</p>
+<p>It starts a thread which will iterate through all received events and
+handles them. Furthermore it imports the customized HTTPRequestHandler
+for events and runs a simple server.</p>
 </div>
-<div class="section" id="the-blinker-module">
-<h2>The “blinker” module<a class="headerlink" href="#the-blinker-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-src.notify.revolver">
+<span id="the-revolver-module"></span><h2>The “revolver” module<a class="headerlink" href="#module-src.notify.revolver" title="Permalink to this headline">¶</a></h2>
+<p>This module provides the actual function to show events.</p>
+<dl class="function">
+<dt id="src.notify.revolver.show_messages">
+<code class="descclassname">src.notify.revolver.</code><code class="descname">show_messages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/revolver.html#show_messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.revolver.show_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs an infinite loop which shows all events.</p>
+<p>The function gets the dictionary of active users from the customized
+Flask app and iterates through it. For each user the intersection of
+followed projects and events to show is made and only these events
+will be shown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.notify.handler">
+<span id="the-handler-module"></span><h2>The “handler” module<a class="headerlink" href="#module-src.notify.handler" title="Permalink to this headline">¶</a></h2>
+<p>This module defines a customized HTTPRequestHandler to receive events.</p>
+<dl class="class">
+<dt id="src.notify.handler.EventHandler">
+<em class="property">class </em><code class="descclassname">src.notify.handler.</code><code class="descname">EventHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Customized BaseHTTPRequestHandler.</p>
+<dl class="method">
+<dt id="src.notify.handler.EventHandler.do_GET">
+<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_GET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to a GET request.</p>
+<p>This request type is currently not supported.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.notify.handler.EventHandler.do_HEAD">
+<code class="descname">do_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_HEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_HEAD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to a HEAD request.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.notify.handler.EventHandler.do_POST">
+<code class="descname">do_POST</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_POST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to a POST request and add the event to a set.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.notify.eventhandler">
+<span id="the-eventhandler-module"></span><h2>The “eventhandler” module<a class="headerlink" href="#module-src.notify.eventhandler" title="Permalink to this headline">¶</a></h2>
+<p>This module defines classes to handle events.</p>
+<p>For every webservice which can be observed there is one class which provides
+custom functions to notify the user about events.</p>
+<dl class="class">
+<dt id="src.notify.eventhandler.EventHandler">
+<em class="property">class </em><code class="descclassname">src.notify.eventhandler.</code><code class="descname">EventHandler</code><a class="reference internal" href="_modules/src/notify/eventhandler.html#EventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.EventHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class providing a minimal set of functions to handle events.</p>
+<dl class="staticmethod">
+<dt id="src.notify.eventhandler.EventHandler.do_something">
+<em class="property">static </em><code class="descname">do_something</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/eventhandler.html#EventHandler.do_something"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.EventHandler.do_something" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a logging message that event was received.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.notify.eventhandler.EventHandler.play_music">
+<em class="property">static </em><code class="descname">play_music</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/eventhandler.html#EventHandler.play_music"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.EventHandler.play_music" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays an alert.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="src.notify.eventhandler.GitEventHandler">
+<em class="property">class </em><code class="descclassname">src.notify.eventhandler.</code><code class="descname">GitEventHandler</code><a class="reference internal" href="_modules/src/notify/eventhandler.html#GitEventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.GitEventHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to handle events on Github.</p>
+<dl class="method">
+<dt id="src.notify.eventhandler.GitEventHandler.show_icon">
+<code class="descname">show_icon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/eventhandler.html#GitEventHandler.show_icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.GitEventHandler.show_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows Github icon on unicorn hat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="src.notify.eventhandler.SVNEventHandler">
+<em class="property">class </em><code class="descclassname">src.notify.eventhandler.</code><code class="descname">SVNEventHandler</code><a class="reference internal" href="_modules/src/notify/eventhandler.html#SVNEventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.SVNEventHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to handle events on SVN.</p>
+<dl class="method">
+<dt id="src.notify.eventhandler.SVNEventHandler.show_icon">
+<code class="descname">show_icon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/eventhandler.html#SVNEventHandler.show_icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.SVNEventHandler.show_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows SVN icon on unicorn hat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="src.notify.eventhandler.handle_event">
+<code class="descclassname">src.notify.eventhandler.</code><code class="descname">handle_event</code><span class="sig-paren">(</span><em>event</em>, <em>show=False</em>, <em>project_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/eventhandler.html#handle_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.eventhandler.handle_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle event as specified by eventhandler object.</p>
+<p>The function instantiates an object according to the webservice the
+event is related to and renders the event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event</strong> – with all information about what happened</li>
+<li><strong>show</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – indicator if unicornhat should be used</li>
+<li><strong>project_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name the user has chosen for this project</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.notify.led_blinker">
+<span id="the-blinker-module"></span><h2>The “blinker” module<a class="headerlink" href="#module-src.notify.led_blinker" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>The “loggers” module<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-src.notify.loggers"></span><p>This module provides the configurations to setup logging for the notifier.</p>
+<dl class="function">
+<dt id="src.notify.loggers.setup_logging">
+<code class="descclassname">src.notify.loggers.</code><code class="descname">setup_logging</code><span class="sig-paren">(</span><em>log_level='INFO'</em>, <em>log_file='info.log'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/loggers.html#setup_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.loggers.setup_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines all configurations for logging of the notifier.</p>
+<p>It sets up a console log and a produce a log file in the current
+working directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>log_level</strong> – granularity of log messages</li>
+<li><strong>log_file</strong> – file location to write log messages</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">logger object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -420,12 +850,17 @@ extra <cite>Form.validate_&lt;fieldname&gt;</cite> validators to the field valid
 <li><a class="reference internal" href="#module-src.config">The “config” module</a></li>
 <li><a class="reference internal" href="#module-src.models">The “models” module</a></li>
 <li><a class="reference internal" href="#module-src.forms">The “forms” module</a></li>
+<li><a class="reference internal" href="#module-src.loggers">The “loggers” module</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#the-notify-api-reference">The “notify” API reference</a><ul>
-<li><a class="reference internal" href="#the-notify-module">The “notify” module</a></li>
-<li><a class="reference internal" href="#the-eventhandler-module">The “eventhandler” module</a></li>
-<li><a class="reference internal" href="#the-blinker-module">The “blinker” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.settings">The “settings” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.notifier">The “notify” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.revolver">The “revolver” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.handler">The “handler” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.eventhandler">The “eventhandler” module</a></li>
+<li><a class="reference internal" href="#module-src.notify.led_blinker">The “blinker” module</a></li>
+<li><a class="reference internal" href="#id1">The “loggers” module</a></li>
 </ul>
 </li>
 </ul>

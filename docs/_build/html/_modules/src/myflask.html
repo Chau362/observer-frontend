@@ -43,6 +43,7 @@
 
 <div class="viewcode-block" id="get_users"><a class="viewcode-back" href="../../code.html#src.myflask.get_users">[docs]</a><span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get users and their passwords.</span>
+
 <span class="sd">    :param str cwd: current working directory</span>
 <span class="sd">    :param str file_name: name of the file containing the credentials</span>
 <span class="sd">    :return: dictionary of users and passwords</span>
@@ -55,9 +56,10 @@
 
 <div class="viewcode-block" id="FlaskApp"><a class="viewcode-back" href="../../code.html#src.myflask.FlaskApp">[docs]</a><span class="k">class</span> <span class="nc">FlaskApp</span><span class="p">(</span><span class="n">Flask</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class provides a customized Flask application for the client frontend.</span>
-<span class="sd">    :ivar str cwd:</span>
-<span class="sd">    :ivar dict users:</span>
-<span class="sd">    :ivar list active_users:</span>
+
+<span class="sd">    :ivar str cwd: current working directory</span>
+<span class="sd">    :ivar dict users: all users currently registered</span>
+<span class="sd">    :ivar set active_users: users which want to be notified</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
@@ -70,6 +72,7 @@
 <div class="viewcode-block" id="FlaskApp.add_user_and_password"><a class="viewcode-back" href="../../code.html#src.myflask.FlaskApp.add_user_and_password">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">add_user_and_password</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds credentials for a new user to the users file.</span>
+
 <span class="sd">        :param str username: name the user has chosen for his account</span>
 <span class="sd">        :param str password: with which the user can access his account</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -87,6 +90,7 @@
 <div class="viewcode-block" id="FlaskApp.delete_user"><a class="viewcode-back" href="../../code.html#src.myflask.FlaskApp.delete_user">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Removes credentials from users file.</span>
+
 <span class="sd">        :param str username: indicates which account credentials to remove</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -107,9 +111,10 @@
 <div class="viewcode-block" id="FlaskApp.rename_user"><a class="viewcode-back" href="../../code.html#src.myflask.FlaskApp.rename_user">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">rename_user</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">current_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">,</span> <span class="n">new_password</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Changes user credentials as indicated.</span>
-<span class="sd">        :param str current_name:</span>
-<span class="sd">        :param str new_name:</span>
-<span class="sd">        :param str new_password:</span>
+
+<span class="sd">        :param str current_name: current name used by the user</span>
+<span class="sd">        :param str new_name: new name to save</span>
+<span class="sd">        :param str new_password: new password to save</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">users</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">users</span>
         <span class="n">users</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">current_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -136,8 +141,9 @@
 <div class="viewcode-block" id="FlaskApp.load_config"><a class="viewcode-back" href="../../code.html#src.myflask.FlaskApp.load_config">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Loads the config file and returns the list of registrations.</span>
-<span class="sd">        :param str username:</span>
-<span class="sd">        :return:</span>
+
+<span class="sd">        :param str username: indicating for which user</span>
+<span class="sd">        :return: list of dictionaries representing registrations</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">file</span> <span class="o">=</span> <span class="n">username</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>

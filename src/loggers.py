@@ -22,7 +22,9 @@ def setup_gunicorn_logging(app):
     The logger will set the handlers of the Flask app logger
     to the Gunicorn logger. The Flask app will have the same
     log level as the Gunicorn logger.
+
     :param app: the actual Flask app to be logged
+
     :return: the logger object
     """
 
@@ -37,8 +39,10 @@ def setup_logging(log_level=LOG_LEVEL, log_file=LOG_FILE):
 
     It will set up a console log and a produce a log file in the current
     working directory.
+
     :param log_level: granularity of log messages
     :param log_file: file location to write log messages
+
     :return: logger object
     """
     logger = logging.getLogger('src')

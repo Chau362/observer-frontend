@@ -36,9 +36,9 @@
 
 <span class="sd">&quot;&quot;&quot; This module runs the frontend app of iteratec&#39;s Observerhive.</span>
 
-<span class="sd">    The app implements a simple webservice where the user can either register</span>
-<span class="sd">    projects at a Conductor Service, check his or her registrations or turn</span>
-<span class="sd">    on and off receiving event messages for the registered projects.</span>
+<span class="sd">The app implements a simple webservice where the user can either register</span>
+<span class="sd">projects at a Conductor Service, check his or her registrations or turn</span>
+<span class="sd">on and off receiving event messages for the registered projects.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -54,7 +54,7 @@
 <span class="kn">from</span> <span class="nn">src.myflask</span> <span class="k">import</span> <span class="n">FlaskApp</span>
 <span class="kn">from</span> <span class="nn">src.models</span> <span class="k">import</span> <span class="n">User</span><span class="p">,</span> <span class="n">Anonymous</span><span class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationSerializer</span><span class="p">,</span> \
     <span class="n">Project</span>
-<span class="kn">from</span> <span class="nn">src.loggers</span> <span class="k">import</span> <span class="n">setup_flask_logging</span><span class="p">,</span> <span class="n">setup_gunicorn_logging</span>
+<span class="kn">from</span> <span class="nn">src.loggers</span> <span class="k">import</span> <span class="n">setup_logging</span><span class="p">,</span> <span class="n">setup_gunicorn_logging</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Masud Afschar&quot;</span>
 <span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
@@ -70,7 +70,7 @@
         <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_gunicorn_logging</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span>
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_flask_logging</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
 
 <span class="c1"># configure login manager</span>
 <span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>
@@ -81,7 +81,15 @@
 <span class="n">login_manager</span><span class="o">.</span><span class="n">anonymous_user</span> <span class="o">=</span> <span class="n">Anonymous</span>
 
 
-<span class="k">def</span> <span class="nf">split_registrations</span><span class="p">(</span><span class="n">list_of_registrations</span><span class="p">):</span>
+<div class="viewcode-block" id="split_registrations"><a class="viewcode-back" href="../code.html#src.split_registrations">[docs]</a><span class="k">def</span> <span class="nf">split_registrations</span><span class="p">(</span><span class="n">list_of_registrations</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Groups registrations at the same service together.</span>
+
+<span class="sd">    This function generates a nested list of registrations. Registrations</span>
+<span class="sd">    in the same sublist are registered at the same conductor service.</span>
+
+<span class="sd">    :param list list_of_registrations: list of dict objects</span>
+<span class="sd">    :return: nested list of registrations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">list_of_registrations</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">registration</span><span class="p">:</span> <span class="n">registration</span><span class="o">.</span><span class="n">service</span><span class="p">)</span>
 
     <span class="n">sub_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -97,15 +105,15 @@
         <span class="n">previous</span> <span class="o">=</span> <span class="n">registration</span>
 
     <span class="n">main_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">main_list</span>
+    <span class="k">return</span> <span class="n">main_list</span></div>
 
 
 <div class="viewcode-block" id="user_loader"><a class="viewcode-back" href="../code.html#src.user_loader">[docs]</a><span class="nd">@login_manager</span><span class="o">.</span><span class="n">user_loader</span>
 <span class="k">def</span> <span class="nf">user_loader</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Callback function for reloading a user from the session.</span>
 
-<span class="sd">        The function takes the username and returns a user object</span>
-<span class="sd">        or None if the user does not exist.</span>
+<span class="sd">    The function takes the username and returns a user object</span>
+<span class="sd">    or None if the user does not exist.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">users</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">users</span>
@@ -122,8 +130,8 @@
 <span class="k">def</span> <span class="nf">request_loader</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Callback function for reloading a user from a Flask request.</span>
 
-<span class="sd">        The function takes the Flask request and returns a user object</span>
-<span class="sd">        or None if the user does not exist.</span>
+<span class="sd">    The function takes the Flask request and returns a user object</span>
+<span class="sd">    or None if the user does not exist.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
@@ -150,9 +158,9 @@
 <span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Render the login page and check login credentials.</span>
 
-<span class="sd">       The function renders the login form and checks if username</span>
-<span class="sd">       does exist and the provided password is correct when the user</span>
-<span class="sd">       submits his or her data.</span>
+<span class="sd">    The function renders the login form and checks if username</span>
+<span class="sd">    does exist and the provided password is correct when the user</span>
+<span class="sd">    submits his or her data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">LoginForm</span>
@@ -175,8 +183,8 @@
 <span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Log the current user out.</span>
 
-<span class="sd">       Calls the logout_user() function of flask_login and</span>
-<span class="sd">       redirects to the homepage of this app.</span>
+<span class="sd">    Calls the `logout_user()` function of flask_login and</span>
+<span class="sd">    redirects to the homepage of this app.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># remove the username from the session if it is there</span>
@@ -190,8 +198,8 @@
 <span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Render the form to register a new user.</span>
 
-<span class="sd">       The function renders the registration form and stores its values</span>
-<span class="sd">       if the current user submitted the form.</span>
+<span class="sd">    The function renders the registration form and stores its values</span>
+<span class="sd">    if the current user submitted the form.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">RegisterForm</span>
@@ -221,7 +229,7 @@
 <span class="k">def</span> <span class="nf">check_username</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Check if POSTed username does already exist.</span>
 
-<span class="sd">    :return: true if username already in use</span>
+<span class="sd">    :return: true if username is already in use</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">users</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">users</span>
@@ -238,8 +246,8 @@
 <span class="k">def</span> <span class="nf">show_registrations</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Retrieve all registered projects of the current user and show them.</span>
 
-<span class="sd">       The function retrieves the current users stored configurations and</span>
-<span class="sd">       passes them to the corresponding template.</span>
+<span class="sd">    The function retrieves the current users stored configurations and</span>
+<span class="sd">    passes them to the corresponding template.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
@@ -255,9 +263,9 @@
 <span class="k">def</span> <span class="nf">register_project</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Register a project at Conductor service if not done already.</span>
 
-<span class="sd">       The function checks all projects in the users config file and if</span>
-<span class="sd">       a project does not have an id already it will try register it</span>
-<span class="sd">       at the specified Conductor Service.</span>
+<span class="sd">    The function checks all projects in the users config file and if</span>
+<span class="sd">    a project does not have an id already it will try register it</span>
+<span class="sd">    at the specified Conductor Service.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">registration_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
@@ -299,9 +307,9 @@
 <span class="k">def</span> <span class="nf">deregister_project</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Deregister a project at Conductor service if not done already.</span>
 
-<span class="sd">       The function checks all projects in the users config file and if</span>
-<span class="sd">       a project does not have an id already it will try register it</span>
-<span class="sd">       at the specified Conductor Service.</span>
+<span class="sd">    The function checks all projects in the users config file and if</span>
+<span class="sd">    a project does not have an id already it will try register it</span>
+<span class="sd">    at the specified Conductor Service.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">registration_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
@@ -343,8 +351,8 @@
 <span class="k">def</span> <span class="nf">activate_user_setup</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Set the active flag to True.</span>
 
-<span class="sd">       The active flag indicates if a user is currently interested in</span>
-<span class="sd">       receiving events for the project he has registered for.</span>
+<span class="sd">    The active flag indicates if a user is currently interested in</span>
+<span class="sd">    receiving events for the project he has registered for.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">projects_list</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
@@ -363,8 +371,8 @@
 <span class="k">def</span> <span class="nf">deactivate_user_setup</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Set the active flag to False.</span>
 
-<span class="sd">       The active flag indicates if a user is currently interested in</span>
-<span class="sd">       receiving events for the project he has registered for.</span>
+<span class="sd">    The active flag indicates if a user is currently interested in</span>
+<span class="sd">    receiving events for the project he has registered for.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
@@ -378,9 +386,9 @@
 <span class="k">def</span> <span class="nf">edit_registrations</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Retrieve all registered projects of the current user and show them.</span>
 
-<span class="sd">       The function retrieves the current users stored configurations and</span>
-<span class="sd">       passes them to the corresponding template so that the user can</span>
-<span class="sd">       manipulate them if wished.</span>
+<span class="sd">    The function retrieves the current users stored configurations and</span>
+<span class="sd">    passes them to the corresponding template so that the user can</span>
+<span class="sd">    manipulate them if wished.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
@@ -440,6 +448,7 @@
 
 <span class="sd">    :return: HTTP response 302 and redirect to home endpoint.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="n">app</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deleted account of user &#39;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
@@ -453,9 +462,9 @@
 <span class="k">def</span> <span class="nf">change_password</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Render the form to change password of current user.</span>
 
-<span class="sd">       The function retrieves the form to change one&#39;s password and</span>
-<span class="sd">       renders it. If the current user submitted the form, the function</span>
-<span class="sd">       hashes the password and stores it in the users file of the app.</span>
+<span class="sd">    The function retrieves the form to change one&#39;s password and</span>
+<span class="sd">    renders it. If the current user submitted the form, the function</span>
+<span class="sd">    hashes the password and stores it in the users file of the app.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">ChangeCredentialsForm</span>
@@ -484,37 +493,16 @@
                                <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="render_event"><a class="viewcode-back" href="../code.html#src.render_event">[docs]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/event/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">render_event</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Catch POSTed data and process it.</span>
-
-<span class="sd">       The function checks what kind of information was sent and</span>
-<span class="sd">       forwards it to the notify class to process it.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">event</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
-    <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received empty POST.&#39;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received a &#39;</span> <span class="o">+</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;eventType&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; to show.&#39;</span><span class="p">)</span>
-
-    <span class="c1"># for pid in app.active_processes:</span>
-    <span class="c1"># os.kill(pid, signal.SIGKILL)</span>
-    <span class="c1"># app.active_processes.remove(pid)</span>
-
-    <span class="c1"># event_process = Process(target=handle_event,</span>
-    <span class="c1">#                         kwargs={&#39;type&#39;: event[&#39;eventType&#39;],</span>
-    <span class="c1">#                                 &#39;active_users&#39;: app.active_users})</span>
-    <span class="c1"># event_process.start()</span>
-
-    <span class="c1"># app.active_processes.append(event_process.pid)</span>
-
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s1">&#39;Received POSTed event.&#39;</span><span class="p">)</span></div>
-
-
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/active-users/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="return_active_users"><a class="viewcode-back" href="../code.html#src.return_active_users">[docs]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/active-users/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">return_active_users</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Function to get all users which are currently active.</span>
+
+<span class="sd">    :return: set of usernames</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">active_users</span><span class="p">)</span></div>
 
 
+<span class="c1"># run this module separately for debugging</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>

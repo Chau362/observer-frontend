@@ -9,6 +9,10 @@ logger = logging.getLogger('src.models')
 
 class Project:
     """Generic class for registered projects.
+
+    :ivar str project_url: url of the project at the webservice
+    :ivar str event: type of event to be followed
+    :ivar dict credentials: other information about the project
     """
 
     def __init__(self, project_url, event, credentials):
@@ -61,6 +65,13 @@ class Project:
 
 class Registration:
     """Generic class for a registration.
+
+    :ivar int registration_id: allocated by the conductor server
+    :ivar str service: address of the conductor service
+    :ivar str project_name: name chosen by the user for this project
+    :ivar str project_url: url of the project
+    :ivar str event: type of event to be followed
+    :ivar bool active: indicator if user wants to be notified about this
     """
 
     def __init__(self, registration_id, service, project_name,
@@ -130,9 +141,18 @@ class Registration:
 
 
 class RegistrationSerializer:
+    """
+
+    """
 
     @staticmethod
     def serialize_registration(registration):
+        """Turns a python `dict` into a Registration object.
+
+        :param dict registration: containing parameters of the registration
+        :return: Registration object
+        """
+
         return Registration(registration['id'], registration['service'],
                             registration['project_name'],
                             registration['project_url'],
@@ -141,6 +161,12 @@ class RegistrationSerializer:
 
     @staticmethod
     def deserialize_registration(registration):
+        """Turns a Registration object into a python `dict`.
+
+        :param registration: special object
+        :return: dictionary containing parameters of the registration
+        """
+
         return registration.__dict__
 
 
@@ -175,10 +201,3 @@ class Anonymous(AnonymousUserMixin):
     def __init__(self):
         self.id = 'Guest'
         self.registrations = []
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'is_authenticated': self.is_authenticated,
-            'is_active': self.is_active,
-        }

@@ -102,6 +102,10 @@ class GitEventHandler(EventHandler):
                       (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]]
 
     def show_icon(self):
+        """Shows Github icon on unicorn hat.
+
+        :return: None
+        """
 
         try:
             import unicornhat, signal
@@ -138,6 +142,10 @@ class SVNEventHandler(EventHandler):
                       (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]]
 
     def show_icon(self):
+        """Shows SVN icon on unicorn hat.
+
+        :return: None
+        """
 
         try:
             import unicornhat, signal
@@ -188,6 +196,16 @@ class SVNEventHandler(EventHandler):
 
 
 def handle_event(event, show=False, project_name=None):
+    """Handle event as specified by eventhandler object.
+
+    The function instantiates an object according to the webservice the
+    event is related to and renders the event.
+
+    :param event: with all information about what happened
+    :param bool show: indicator if unicornhat should be used
+    :param str project_name: name the user has chosen for this project
+    :return: None
+    """
     handler = GitEventHandler() if event.event == 'GIT_COMMIT' else SVNEventHandler()
     if show:
         handler.show_icon()

@@ -10,6 +10,7 @@ logger = logging.getLogger('src')
 
 def get_users(cwd, file_name):
     """Get users and their passwords.
+
     :param str cwd: current working directory
     :param str file_name: name of the file containing the credentials
     :return: dictionary of users and passwords
@@ -22,9 +23,10 @@ def get_users(cwd, file_name):
 
 class FlaskApp(Flask):
     """This class provides a customized Flask application for the client frontend.
-    :ivar str cwd:
-    :ivar dict users:
-    :ivar list active_users:
+
+    :ivar str cwd: current working directory
+    :ivar dict users: all users currently registered
+    :ivar set active_users: users which want to be notified
     """
 
     cwd = os.path.dirname(os.path.abspath(__file__))
@@ -37,6 +39,7 @@ class FlaskApp(Flask):
     @classmethod
     def add_user_and_password(cls, username, password):
         """Adds credentials for a new user to the users file.
+
         :param str username: name the user has chosen for his account
         :param str password: with which the user can access his account
         """
@@ -54,6 +57,7 @@ class FlaskApp(Flask):
     @classmethod
     def delete_user(cls, username):
         """Removes credentials from users file.
+
         :param str username: indicates which account credentials to remove
         """
 
@@ -74,9 +78,10 @@ class FlaskApp(Flask):
     @classmethod
     def rename_user(cls, current_name, new_name, new_password):
         """Changes user credentials as indicated.
-        :param str current_name:
-        :param str new_name:
-        :param str new_password:
+
+        :param str current_name: current name used by the user
+        :param str new_name: new name to save
+        :param str new_password: new password to save
         """
         users = cls.users
         users.pop(current_name, None)
@@ -103,8 +108,9 @@ class FlaskApp(Flask):
     @classmethod
     def load_config(cls, username):
         """Loads the config file and returns the list of registrations.
-        :param str username:
-        :return:
+
+        :param str username: indicating for which user
+        :return: list of dictionaries representing registrations
         """
 
         file = username + ".json"

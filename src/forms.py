@@ -14,6 +14,11 @@ logger = logging.getLogger('src')
 
 
 def get_users():
+    """Retrieve all users and their passwords.
+
+    :return: dictionary with all users and passwords
+    """
+
     cwd = os.path.dirname(os.path.abspath(__file__))
     with open(cwd + '/users.json') as registered_users:
         users = json.load(registered_users)
@@ -38,6 +43,14 @@ class LoginForm(FlaskForm):
         FlaskForm.__init__(self, *args, **kwargs)
 
     def validate(self):
+        """Custom validator for the login form.
+
+        Checks if username is known to the app and compares the
+        entered password to the  stored one.
+
+        :return: True if all checks have been passed
+        """
+
         rv = FlaskForm.validate(self)
         if not rv:
             return False
@@ -94,6 +107,15 @@ class ChangeCredentialsForm(FlaskForm):
         FlaskForm.__init__(self, *args, **kwargs)
 
     def validate(self):
+        """Custom validator to change credentials.
+
+        Checks if user provided the correct password currently in use and
+        changes it if user has entered a new password which has been
+        verified by entering it a second time.
+
+        :return: True if all checks have been passed.
+        """
+
         rv = FlaskForm.validate(self)
         if not rv:
             return False
@@ -141,6 +163,14 @@ class RegisterForm(FlaskForm):
         FlaskForm.__init__(self, *args, **kwargs)
 
     def validate(self):
+        """Custom validator for new user registrations.
+
+        Checks if password is at least 4 characters long and verifies the
+        correct entry by comparing it to the second input of password.
+
+        :return: True if all checks have been passed.
+        """
+
         rv = FlaskForm.validate(self)
         if not rv:
             return False

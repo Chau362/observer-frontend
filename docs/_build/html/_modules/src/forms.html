@@ -46,11 +46,16 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
+<div class="viewcode-block" id="get_users"><a class="viewcode-back" href="../../code.html#src.forms.get_users">[docs]</a><span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve all users and their passwords.</span>
+
+<span class="sd">    :return: dictionary with all users and passwords</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/users.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">registered_users</span><span class="p">:</span>
         <span class="n">users</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">registered_users</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">users</span>
+    <span class="k">return</span> <span class="n">users</span></div>
 
 
 <div class="viewcode-block" id="LoginForm"><a class="viewcode-back" href="../../code.html#src.forms.LoginForm">[docs]</a><span class="k">class</span> <span class="nc">LoginForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
@@ -71,6 +76,14 @@
         <span class="n">FlaskForm</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LoginForm.validate"><a class="viewcode-back" href="../../code.html#src.forms.LoginForm.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom validator for the login form.</span>
+
+<span class="sd">        Checks if username is known to the app and compares the</span>
+<span class="sd">        entered password to the  stored one.</span>
+
+<span class="sd">        :return: True if all checks have been passed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">rv</span> <span class="o">=</span> <span class="n">FlaskForm</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">rv</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -127,6 +140,15 @@
         <span class="n">FlaskForm</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ChangeCredentialsForm.validate"><a class="viewcode-back" href="../../code.html#src.forms.ChangeCredentialsForm.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom validator to change credentials.</span>
+
+<span class="sd">        Checks if user provided the correct password currently in use and</span>
+<span class="sd">        changes it if user has entered a new password which has been</span>
+<span class="sd">        verified by entering it a second time.</span>
+
+<span class="sd">        :return: True if all checks have been passed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">rv</span> <span class="o">=</span> <span class="n">FlaskForm</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">rv</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -174,6 +196,14 @@
         <span class="n">FlaskForm</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RegisterForm.validate"><a class="viewcode-back" href="../../code.html#src.forms.RegisterForm.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom validator for new user registrations.</span>
+
+<span class="sd">        Checks if password is at least 4 characters long and verifies the</span>
+<span class="sd">        correct entry by comparing it to the second input of password.</span>
+
+<span class="sd">        :return: True if all checks have been passed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">rv</span> <span class="o">=</span> <span class="n">FlaskForm</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">rv</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>

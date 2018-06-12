@@ -20,6 +20,7 @@ def show_messages():
     Flask app and iterates through it. For each user the intersection of
     followed projects and events to show is made and only these events
     will be shown.
+
     :return: None
     """
 

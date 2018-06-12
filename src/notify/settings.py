@@ -2,3 +2,4 @@
 """
 
 events = set()
+""":ivar set events: set of events which have been received"""
