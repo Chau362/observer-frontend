@@ -1,3 +1,5 @@
+"""This module tests the application running the client frontend.
+"""
 
 import os
 import unittest
@@ -200,6 +202,7 @@ class ObserverFrontendTestCase(unittest.TestCase):
             response = self.app.get('/profile/edit/')
             self.assertEqual(response.status_code, 200)
 
+    @unittest.skip
     def test_receive_event(self):
         """Checks the `event` endpoint.
 

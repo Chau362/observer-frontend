@@ -26,7 +26,7 @@ class FlaskApp(Flask):
 
     :ivar str cwd: current working directory
     :ivar dict users: all users currently registered
-    :ivar set active_users: users which want to be notified
+    :ivar dict active_users: users which want to be notified
     """
 
     cwd = os.path.dirname(os.path.abspath(__file__))
@@ -129,7 +129,7 @@ class FlaskApp(Flask):
         """Write and safe new config file.
 
         :param str username: specifying the user
-        :param dict data: dictionary containing all registrations to save
+        :param list data: list containing all registrations to save
         :return: None
         """
 

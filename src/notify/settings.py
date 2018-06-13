@@ -3,3 +3,6 @@
 
 events = set()
 """:ivar set events: set of events which have been received"""
+
+active_users = {}
+""":ivar set active_users: set users who want to be notified"""

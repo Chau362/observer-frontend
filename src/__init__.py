@@ -12,8 +12,6 @@ import os
 import socket
 import json
 import requests
-# import signal
-# from multiprocessing import Process
 from flask import redirect, render_template, request, \
     url_for, Response, session
 from flask_login import LoginManager, current_user, login_required, \
@@ -328,6 +326,12 @@ def activate_user_setup():
         if project['_active']:
             active_projects_list.append(project)
     app.active_users[current_user.get_id()] = active_projects_list
+    try:
+        requests.post("http://localhost:9090",
+                      json={"active_users": app.active_users})
+    except:
+        logger.info('Unable to send updated list of active users.')
+        return Response('500')
     logger.info('Activated messages for user '
                 + current_user.get_id() + '.')
     return Response('200')
@@ -343,6 +347,12 @@ def deactivate_user_setup():
     """
 
     app.active_users.pop(current_user.get_id(), None)
+    try:
+        requests.post("http://localhost:9090",
+                      json={"active_users": app.active_users})
+    except:
+        logger.info('Unable to send updated list of active users.')
+        return Response('500')
     logger.info('Deactivated messages for user '
                 + current_user.get_id() + '.')
     return Response('200')
