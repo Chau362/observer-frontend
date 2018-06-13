@@ -241,7 +241,7 @@ or None if the user does not exist.</p>
 <tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – current working directory</li>
 <li><strong>users</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – all users currently registered</li>
-<li><strong>active_users</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.6)"><em>set</em></a>) – users which want to be notified</li>
+<li><a class="reference internal" href="#src.notify.settings.active_users" title="src.notify.settings.active_users"><strong>active_users</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – users which want to be notified</li>
 </ul>
 </td>
 </tr>
@@ -340,7 +340,7 @@ or None if the user does not exist.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – specifying the user</li>
-<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – dictionary containing all registrations to save</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – list containing all registrations to save</li>
 </ul>
 </td>
 </tr>
@@ -636,6 +636,19 @@ working directory.</p>
 <div class="section" id="module-src.notify.settings">
 <span id="the-settings-module"></span><h2>The “settings” module<a class="headerlink" href="#module-src.notify.settings" title="Permalink to this headline">¶</a></h2>
 <p>This module defines cross module variables which are used to handle events.</p>
+<dl class="data">
+<dt id="src.notify.settings.active_users">
+<code class="descclassname">src.notify.settings.</code><code class="descname">active_users</code><em class="property"> = {}</em><a class="headerlink" href="#src.notify.settings.active_users" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#src.notify.settings.active_users" title="src.notify.settings.active_users"><strong>active_users</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – dict of users who want to be notified</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="data">
 <dt id="src.notify.settings.events">
 <code class="descclassname">src.notify.settings.</code><code class="descname">events</code><em class="property"> = set()</em><a class="headerlink" href="#src.notify.settings.events" title="Permalink to this definition">¶</a></dt>

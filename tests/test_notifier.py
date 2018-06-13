@@ -1,11 +1,19 @@
 """This module tests the notifier application.
 """
 
+import os
+import socket
+import unittest
+import requests
+from time import sleep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
-import socket
-import requests
-import unittest
+from src.models import Project
+from src.notify.handler import EventHandler
+from src.notify.settings import revolving
+from src.notify.revolver import show_messages
+from src.notify.eventhandler import handle_event
+from src.notify.loggers import setup_logging
 
 
 class MockConductorServer(BaseHTTPRequestHandler):
@@ -48,7 +56,11 @@ class NotifierTestCase(unittest.TestCase):
         # Configure mock server.
         cls.mock_server_port = get_free_port()
         cls.mock_server = HTTPServer(('localhost', cls.mock_server_port),
-                                     MockServerRequestHandler)
+                                     MockConductorServer)
+
+        # Configure Eventhandler
+        cls.handler_port = get_free_port()
+        cls.handler = HTTPServer(('localhost', cls.handler_port), EventHandler)
 
         # Start running mock server in a separate thread.
         # Daemon threads automatically shut down when the main process exits.
@@ -56,9 +68,17 @@ class NotifierTestCase(unittest.TestCase):
         cls.mock_server_thread.setDaemon(True)
         cls.mock_server_thread.start()
 
+        # Start running handler in a separate thread.
+        cls.handler_thread = Thread(target=cls.handler.serve_forever)
+        cls.handler_thread.setDaemon(True)
+        cls.handler_thread.start()
+
     @classmethod
     def tearDownClass(cls):
-        pass
+        try:
+            os.remove('info.log')
+        except PermissionError:
+            pass
 
     def setUp(self):
         pass
@@ -66,11 +86,13 @@ class NotifierTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
+    @unittest.skip
     def test_running_test_server(self):
         url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
         response = requests.head(url)
         self.assertEqual(response.status_code, 200)
 
+    @unittest.skip
     def test_register(self):
         url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
         requester = request_maker.MyHTTPRequester('mock')
@@ -78,17 +100,53 @@ class NotifierTestCase(unittest.TestCase):
                                       'http://scam.com', url)
         self.assertEqual(response, '')
 
+    @unittest.skip
     def test_unregister(self):
         url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
         requester = request_maker.MyHTTPRequester('mock')
         response = requester.unregister(url, '0')
         self.assertEqual(response, None)
 
+    @unittest.skip
     def test_check_registrations(self):
         url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
         requester = request_maker.MyHTTPRequester('mock')
         response = requester.check_registrations([], url)
         self.assertEqual(response, None)
+
+    def test_request_handler(self):
+        url = 'http://localhost:{port}'.format(port=self.handler_port)
+        response = requests.head(url)
+        self.assertEqual(response.status_code, 200)
+        response = requests.get(url)
+        self.assertEqual(response.status_code, 200)
+        response = requests.post(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_revolver(self):
+        self.assertTrue(revolving)
+
+    def test_handler_function(self):
+        event = Project('http://mock', 'GIT_COMMIT', None)
+        result = handle_event(event)
+        self.assertTrue(result)
+        result = handle_event(event, show=True)
+        self.assertTrue(result)
+        event = Project('http://mock', 'SVN_COMMIT', None)
+        result = handle_event(event)
+        self.assertTrue(result)
+
+    def test_logging(self):
+        logger = setup_logging()
+        logger.info('Succeeded in writing log information.')
+
+    def test_revolver(self):
+        self.assertFalse(revolving)
+        revolver_thread = Thread(target=show_messages)
+        revolver_thread.setDaemon(True)
+        revolver_thread.start()
+        sleep(3)
+        self.assertTrue(revolving)
 
 
 if __name__ == '__main__':

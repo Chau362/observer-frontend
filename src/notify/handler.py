@@ -31,7 +31,7 @@ class EventHandler(BaseHTTPRequestHandler):
 
         This request type is currently not supported.
         """
-        pass
+        self._set_headers()
 
     def do_POST(self):
         """Respond to a POST request and add the event to a set.

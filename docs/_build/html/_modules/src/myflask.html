@@ -59,7 +59,7 @@
 
 <span class="sd">    :ivar str cwd: current working directory</span>
 <span class="sd">    :ivar dict users: all users currently registered</span>
-<span class="sd">    :ivar set active_users: users which want to be notified</span>
+<span class="sd">    :ivar dict active_users: users which want to be notified</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
@@ -162,7 +162,7 @@
         <span class="sd">&quot;&quot;&quot;Write and safe new config file.</span>
 
 <span class="sd">        :param str username: specifying the user</span>
-<span class="sd">        :param dict data: dictionary containing all registrations to save</span>
+<span class="sd">        :param list data: list containing all registrations to save</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 

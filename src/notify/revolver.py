@@ -2,11 +2,11 @@
 """
 
 import os
-# import requests
 from time import sleep
 from logging import getLogger
 from src.notify.eventhandler import handle_event
-from src.notify.settings import events, active_users
+from src.notify.settings import events, active_users, revolving, \
+    toggle_revolving
 from src.models import Project
 
 logger = getLogger('notifier.revolver')
@@ -25,10 +25,10 @@ def show_messages():
     """
 
     while True:
-        # try:
-        #     active_users = requests.get('http://observer/active-users/').json()
-        # except:
-        #     continue
+
+        if not revolving:
+            toggle_revolving()
+
         for user, project_list in active_users.items():
             logger.info(user)
             project_list = set(map(lambda project:

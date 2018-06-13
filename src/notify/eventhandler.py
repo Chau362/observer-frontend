@@ -206,8 +206,11 @@ def handle_event(event, show=False, project_name=None):
     :param str project_name: name the user has chosen for this project
     :return: None
     """
+
     handler = GitEventHandler() if event.event == 'GIT_COMMIT' else SVNEventHandler()
     if show:
         handler.show_icon()
     else:
         handler.do_something()
+
+    return True

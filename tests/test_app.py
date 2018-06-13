@@ -12,8 +12,6 @@ class ObserverFrontendTestCase(unittest.TestCase):
     """
 
     test_user = "foobar"
-    # fd = None
-    # path_to_user_configs = None
     users = None
 
     @classmethod
