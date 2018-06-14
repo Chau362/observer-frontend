@@ -8,7 +8,7 @@ for events and runs a simple server.
 from http.server import HTTPServer
 from threading import Thread
 from src.notify.loggers import setup_logging
-from src.notify.handler import EventHandler
+from src.notify.handler import RequestHandler
 from src.notify.revolver import show_messages
 
 logger = setup_logging()
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     # setup server for receiving events
     port = 9090
     server_address = ('', port)
-    httpd = HTTPServer(server_address, EventHandler)
+    httpd = HTTPServer(server_address, RequestHandler)
 
     # run the server
     logger.info('Started server process listening on port ' + str(port))

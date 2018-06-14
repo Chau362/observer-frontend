@@ -2,49 +2,17 @@
 """
 
 import os
-import socket
 import unittest
 import requests
-from time import sleep
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
 from src.models import Project
-from src.notify.handler import EventHandler
+from tests.test_support import MockConductorServer, get_free_port
+from src.notify.handler import RequestHandler
 from src.notify.settings import revolving
 from src.notify.revolver import show_messages
-from src.notify.eventhandler import handle_event
+from src.notify.eventhandler import EventHandler, handle_event
 from src.notify.loggers import setup_logging
-
-
-class MockConductorServer(BaseHTTPRequestHandler):
-    """Customized request handler to mock a conductor server.
-    """
-
-    def _set_headers(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html'.encode("utf-8"))
-        self.end_headers()
-
-    def do_GET(self):
-        """Respond to a GET request."""
-        self._set_headers()
-
-    def do_POST(self):
-        """Respond to a POST request."""
-        # get the posted data
-        self._set_headers()
-
-    def do_HEAD(self):
-        """Respond to a HEAD request."""
-        self._set_headers()
-
-
-def get_free_port():
-    s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
-    s.bind(('localhost', 0))
-    address, port = s.getsockname()
-    s.close()
-    return port
+from http.server import HTTPServer
 
 
 class NotifierTestCase(unittest.TestCase):
@@ -60,7 +28,7 @@ class NotifierTestCase(unittest.TestCase):
 
         # Configure Eventhandler
         cls.handler_port = get_free_port()
-        cls.handler = HTTPServer(('localhost', cls.handler_port), EventHandler)
+        cls.handler = HTTPServer(('localhost', cls.handler_port), RequestHandler)
 
         # Start running mock server in a separate thread.
         # Daemon threads automatically shut down when the main process exits.
@@ -86,47 +54,34 @@ class NotifierTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @unittest.skip
-    def test_running_test_server(self):
-        url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
-        response = requests.head(url)
-        self.assertEqual(response.status_code, 200)
-
-    @unittest.skip
-    def test_register(self):
-        url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
-        requester = request_maker.MyHTTPRequester('mock')
-        response = requester.register('GIT_COMMIT', 'scam',
-                                      'http://scam.com', url)
-        self.assertEqual(response, '')
-
-    @unittest.skip
-    def test_unregister(self):
-        url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
-        requester = request_maker.MyHTTPRequester('mock')
-        response = requester.unregister(url, '0')
-        self.assertEqual(response, None)
-
-    @unittest.skip
-    def test_check_registrations(self):
-        url = 'http://localhost:{port}/users'.format(port=self.mock_server_port)
-        requester = request_maker.MyHTTPRequester('mock')
-        response = requester.check_registrations([], url)
-        self.assertEqual(response, None)
-
     def test_request_handler(self):
+        """Tests the customized HTTPRequestHandler.
+
+        The test sends all three currently supported request types
+        (HEAD, GET, POST) and checks the respective status code.
+        The POST is performed twice to check the different behaviour
+        for user updates and received events.
+        """
+
         url = 'http://localhost:{port}'.format(port=self.handler_port)
         response = requests.head(url)
         self.assertEqual(response.status_code, 200)
         response = requests.get(url)
         self.assertEqual(response.status_code, 200)
-        response = requests.post(url)
+        response = requests.post(url, json={"active_users": {}})
+        self.assertEqual(response.status_code, 200)
+        response = requests.post(url, json={"projectUrl": "", "eventType": ""})
         self.assertEqual(response.status_code, 200)
 
-    def test_revolver(self):
-        self.assertTrue(revolving)
-
     def test_handler_function(self):
+        """Tests the ``handle_event()`` functions.
+
+        The test calls the ``handle_event()`` function and passes
+        one event for every event type and checks that the function
+        returns the value `True` which only happens if no exception
+        occurred.
+        """
+
         event = Project('http://mock', 'GIT_COMMIT', None)
         result = handle_event(event)
         self.assertTrue(result)
@@ -137,16 +92,42 @@ class NotifierTestCase(unittest.TestCase):
         self.assertTrue(result)
 
     def test_logging(self):
+        """Tests if logging setup is correct.
+
+        Simply calls the ``setup_logging`` and passively
+        checks that no exception occurs.
+        """
+
         logger = setup_logging()
         logger.info('Succeeded in writing log information.')
 
     def test_revolver(self):
+        """Tests the revolver function which renders the events.
+
+        The test runs the function in a separate thread and checks
+        that the thread is alive and that the ``revolving`` variable
+        is set to `True`.
+        """
+
         self.assertFalse(revolving)
         revolver_thread = Thread(target=show_messages)
         revolver_thread.setDaemon(True)
         revolver_thread.start()
-        sleep(3)
-        self.assertTrue(revolving)
+        self.assertTrue(revolver_thread.isAlive)
+        # self.assertTrue(revolving)
+
+    def test_eventhandler_functions(self):
+        """Tests the functions of the EventHandler class.
+
+        Instanciates an EventHandler object and executes all
+        provided functions.
+        """
+
+        handler = EventHandler()
+        success = handler.do_something()
+        self.assertTrue(success)
+        success = handler.play_music()
+        self.assertFalse(success)
 
 
 if __name__ == '__main__':

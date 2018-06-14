@@ -23,18 +23,24 @@ class EventHandler:
         path = os.path.dirname(os.path.abspath(__file__))
         file = "morse.wav"
 
-        wave_obj = audio.WaveObject.from_wave_file(path + "/" + file)
-        play_obj = wave_obj.play()
-        play_obj.wait_done()
+        try:
+            wave_obj = audio.WaveObject.from_wave_file(path + "/" + file)
+            play_obj = wave_obj.play()
+            play_obj.wait_done()
+            return True
+        except FileNotFoundError:
+            logger.error("File " + file + " not found.")
+            return False
 
     @staticmethod
     def do_something():
         """Writes a logging message that event was received.
 
-        :return: None
+        :return: True if statements executed properly
         """
 
         logger.info("I handled an event.")
+        return True
 
     # @staticmethod
     # def show_on_unicorn(project_name, event):

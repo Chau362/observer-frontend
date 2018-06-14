@@ -10,7 +10,7 @@ from src.notify.settings import events, active_users
 logger = getLogger('notifier.handler')
 
 
-class EventHandler(BaseHTTPRequestHandler):
+class RequestHandler(BaseHTTPRequestHandler):
     """Customized BaseHTTPRequestHandler.
     """
 
@@ -18,7 +18,7 @@ class EventHandler(BaseHTTPRequestHandler):
         """Set header according to response.
         """
         self.send_response(200)
-        self.send_header('Content-type', 'text/html'.encode("utf-8"))
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
 
     def do_HEAD(self):
