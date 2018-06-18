@@ -1,7 +1,8 @@
 # iteranoid: you are probably paranoid!
 
 This module is the client side server process of the iteranoid project. It allows you to follow projects
-in webservices such as Gitlab, Jenkins and Sonarqube.
+in webservices such as Gitlab, Jenkins and Sonarqube. If you want a fully working observerhive you will 
+also need to install a 
 
 ## Getting Started
 
@@ -63,11 +64,6 @@ Add additional notes about how to deploy this on a live system
 ## Built With
 
 * [Flask](http://flask.pocoo.org/) - The web framework used
-
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
