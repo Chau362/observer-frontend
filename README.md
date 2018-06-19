@@ -1,7 +1,8 @@
-# iteranoid: you are probably paranoid!
+# observer-hive: client frontend
 
-This module is the client side server process of the iteranoid project. It allows you to follow projects
-in webservices such as Gitlab, Jenkins and Sonarqube.
+This module is the client side server process of the observer-hive. It allows you to process events received
+from webservices such as Gitlab, Jenkins and Sonarqube. If you are interested in the full project you should
+take a look at its counterpart: the [conductor server](https://iteragit.iteratec.de/observer-hive/scab-oberserver-hive).
 
 ## Getting Started
 
@@ -14,10 +15,6 @@ This application is meant to run on a RaspberryPi. What should be installed:
 * [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) - the operating system on the RaspberryPi
 * [Python 3.x](https://www.python.org) - usually comes with Raspbian
 
-```
-Give examples
-```
-
 ### Installing
 
 #### Debian package
@@ -28,7 +25,7 @@ If you have downloaded the Debian package simply run
 sudo dpkg -i client-frontend.deb
 ```
 
-If this fails due to missing dependencies run:
+If this fails due to missing dependencies run
 
 ```
 sudo apt-get -f install
@@ -38,36 +35,19 @@ You should now be good and ready.
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+`pytest` has been setup as the test runner of this package. You can run the tests with the following command:
 
 ```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+python3 setup.py test
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+...
 
 ## Built With
 
-* [Flask](http://flask.pocoo.org/) - The web framework used
-
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+* [Flask](http://flask.pocoo.org/) - lightweight WSGI web application framework
 
 ## Versioning
 
@@ -75,7 +55,8 @@ We use [Gitlab](https://gitlab.com/) for versioning. For the versions available,
 
 ## Authors
 
-* **Masud Afschar** - *Initial work* - [Afsharov](https://github.com/Afsharov)
+* **Gerd Neugebauer** - *Idea* - [gne](https://iteragit.iteratec.de/gne)
+* **Masud Afschar** - *Initial work* - [mafschar](https://iteragit.iteratec.de/mafschar)
 
 See also the list of [contributors](https://iteragit.iteratec.de/observer-hive/client-frontend/graphs/master) who participated in this project.
 
@@ -85,6 +66,4 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Many thanks to **Chau** - [cpham](https://iteragit.iteratec.de/cpham) - for his constant help.
