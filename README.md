@@ -68,8 +68,8 @@ We use [Gitlab](https://gitlab.com/) for versioning. For the versions available,
 
 ## Authors
 
-* **Gerd Neugebauer** - *Idea* - [gne](https://iteragit.iteratec.de/gne)
-* **Masud Afschar** - *Initial work* - [mafschar](https://iteragit.iteratec.de/mafschar)
+* **Gerd Neugebauer** - [gne](https://iteragit.iteratec.de/gne) - *Idea*
+* **Masud Afschar** - [mafschar](https://iteragit.iteratec.de/mafschar) - *Initial work*
 
 See also the list of [contributors](https://iteragit.iteratec.de/observer-hive/client-frontend/graphs/master) who participated in this project.
 
