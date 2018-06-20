@@ -153,6 +153,8 @@ class FlaskApp(Flask):
         """
 
         file = username + ".json"
-
-        os.remove(cls.cwd + "/user_configs/" + file)
+        try:
+            os.remove(cls.cwd + "/user_configs/" + file)
+        except FileNotFoundError:
+            logger.info('Found no configurations for ' + username + '.')
         logger.info('Deleted configurations for ' + username + '.')

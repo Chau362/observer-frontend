@@ -6,7 +6,7 @@ import unittest
 import requests
 from threading import Thread
 from src.models import Project
-from tests.test_support import MockConductorServer, get_free_port
+from tests.tests_support import MockConductorServer, get_free_port
 from src.notify.handler import RequestHandler
 from src.notify.settings import revolving
 from src.notify.revolver import show_messages

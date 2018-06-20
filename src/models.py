@@ -141,8 +141,11 @@ class Registration:
 
 
 class RegistrationSerializer:
-    """
+    """This provides supporting functions for the Class `Registration`
 
+    The `serialize_registration()` converts a dictionary with all information
+    of a single registration into a `Registration` object. The
+    `deserialize_registration()` does the opposite.
     """
 
     @staticmethod
