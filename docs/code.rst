@@ -1,5 +1,5 @@
-The iteranoid API reference
-===========================
+The API reference
+=================
 
 The view functions
 ------------------

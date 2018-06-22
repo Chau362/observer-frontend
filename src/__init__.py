@@ -399,8 +399,11 @@ def edit_registrations():
                         "eventType": entries[4],
                         "project": entries[2],
                         "callback": callback_address}
-                response = requests.post(entries[1], json=data)
-                entries[0] = response.text
+                try:
+                    response = requests.post(entries[1], json=data)
+                    entries[0] = response.text
+                except:
+                    entries[0] = "None"
 
             new_registration = Registration(registration_id=entries[0],
                                             service=entries[1],
@@ -408,7 +411,7 @@ def edit_registrations():
                                             project_url=entries[3],
                                             event=entries[4],
                                             active=entries[5])
-            print(entries[5])
+
             new_registrations.append(new_registration)
 
         new_registrations = list(map(RegistrationSerializer.deserialize_registration,

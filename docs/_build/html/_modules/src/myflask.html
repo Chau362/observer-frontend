@@ -186,8 +186,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">file</span> <span class="o">=</span> <span class="n">username</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
-
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s2">&quot;/user_configs/&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s2">&quot;/user_configs/&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Found no configurations for &#39;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deleted configurations for &#39;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span></div></div>
 </pre></div>
 

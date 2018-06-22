@@ -14,12 +14,28 @@ This application is meant to run on a RaspberryPi. What should be installed:
 
 * [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) - the operating system on the RaspberryPi
 * [Python 3.x](https://www.python.org) - usually comes with Raspbian
+* [pip]() - package management system which comes with the newer versions of Python
 
 ### Installing
 
+### With pip
+
+We recommend creating a virtual environment with `virtualenv` to run the app. If have never used a 
+virtual environment or seek a little insight on why to use it have a look at this short 
+[tutorial](http://www.pythonforbeginners.com/basics/how-to-use-python-virtualenv/).
+Once you have the package on your computer you simply install the package by using `pip` :
+
+```
+pip3 install .
+```
+
+Of course, depending on your system and version of `Python` you might have to substitute the command 
+`pip3` for `pip`.
+
 #### Debian package
 
-If you have downloaded the Debian package simply run
+With the `Debian` package you can not only install the package but easily deploy the project. 
+If you have downloaded the package simply run
 
 ```
 sudo dpkg -i client-frontend.deb
@@ -43,7 +59,8 @@ python3 setup.py test
 
 ## Deployment
 
-...
+We have written an extensive manual on the scab-observer-hive project where you can find instructions
+on how to [deploy the client server on your RaspberryPi](). 
 
 ## Documentation
 
@@ -56,7 +73,8 @@ make clean
 make html
 ```
 
-For more information on `Sphinx` see [its official documentation](http://www.sphinx-doc.org/en/master/).
+For more information on `Sphinx` and how to expand the docs see 
+[its official documentation](http://www.sphinx-doc.org/en/master/).
 
 ## Built With
 

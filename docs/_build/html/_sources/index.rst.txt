@@ -11,3 +11,4 @@ Welcome to iteranoid's documentation!
    :name: mastertoc
 
    code
+   tests

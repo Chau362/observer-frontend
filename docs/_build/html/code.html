@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>The iteranoid API reference &#8212; iteranoid 0.1 documentation</title>
+    <title>The API reference &#8212; iteranoid 0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -16,6 +16,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tests" href="tests.html" />
     <link rel="prev" title="Welcome to iteranoid’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -31,8 +32,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-iteranoid-api-reference">
-<h1>The iteranoid API reference<a class="headerlink" href="#the-iteranoid-api-reference" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="the-api-reference">
+<h1>The API reference<a class="headerlink" href="#the-api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-src">
 <span id="the-view-functions"></span><h2>The view functions<a class="headerlink" href="#module-src" title="Permalink to this headline">¶</a></h2>
 <p>This module runs the frontend app of iteratec’s Observerhive.</p>
@@ -446,7 +447,11 @@ attribute which is set to <cite>Guest</cite>.</p>
 <dl class="class">
 <dt id="src.models.RegistrationSerializer">
 <em class="property">class </em><code class="descclassname">src.models.</code><code class="descname">RegistrationSerializer</code><a class="reference internal" href="_modules/src/models.html#RegistrationSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.RegistrationSerializer" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="staticmethod">
+<dd><p>This provides supporting functions for the Class <cite>Registration</cite></p>
+<p>The <cite>serialize_registration()</cite> converts a dictionary with all information
+of a single registration into a <cite>Registration</cite> object. The
+<cite>deserialize_registration()</cite> does the opposite.</p>
+<dl class="staticmethod">
 <dt id="src.models.RegistrationSerializer.deserialize_registration">
 <em class="property">static </em><code class="descname">deserialize_registration</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#RegistrationSerializer.deserialize_registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.models.RegistrationSerializer.deserialize_registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turns a Registration object into a python <cite>dict</cite>.</p>
@@ -662,6 +667,19 @@ working directory.</p>
 </table>
 </dd></dl>
 
+<dl class="data">
+<dt id="src.notify.settings.revolving">
+<code class="descclassname">src.notify.settings.</code><code class="descname">revolving</code><em class="property"> = False</em><a class="headerlink" href="#src.notify.settings.revolving" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><a class="reference internal" href="#src.notify.settings.revolving" title="src.notify.settings.revolving"><strong>revolving</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – indicator if events are shown</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-src.notify.notifier">
 <span id="the-notify-module"></span><h2>The “notify” module<a class="headerlink" href="#module-src.notify.notifier" title="Permalink to this headline">¶</a></h2>
@@ -696,25 +714,25 @@ will be shown.</p>
 <span id="the-handler-module"></span><h2>The “handler” module<a class="headerlink" href="#module-src.notify.handler" title="Permalink to this headline">¶</a></h2>
 <p>This module defines a customized HTTPRequestHandler to receive events.</p>
 <dl class="class">
-<dt id="src.notify.handler.EventHandler">
-<em class="property">class </em><code class="descclassname">src.notify.handler.</code><code class="descname">EventHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler" title="Permalink to this definition">¶</a></dt>
+<dt id="src.notify.handler.RequestHandler">
+<em class="property">class </em><code class="descclassname">src.notify.handler.</code><code class="descname">RequestHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#RequestHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.RequestHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Customized BaseHTTPRequestHandler.</p>
 <dl class="method">
-<dt id="src.notify.handler.EventHandler.do_GET">
-<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_GET" title="Permalink to this definition">¶</a></dt>
+<dt id="src.notify.handler.RequestHandler.do_GET">
+<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#RequestHandler.do_GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.RequestHandler.do_GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Respond to a GET request.</p>
 <p>This request type is currently not supported.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="src.notify.handler.EventHandler.do_HEAD">
-<code class="descname">do_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_HEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_HEAD" title="Permalink to this definition">¶</a></dt>
+<dt id="src.notify.handler.RequestHandler.do_HEAD">
+<code class="descname">do_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#RequestHandler.do_HEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.RequestHandler.do_HEAD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Respond to a HEAD request.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="src.notify.handler.EventHandler.do_POST">
-<code class="descname">do_POST</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#EventHandler.do_POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.EventHandler.do_POST" title="Permalink to this definition">¶</a></dt>
+<dt id="src.notify.handler.RequestHandler.do_POST">
+<code class="descname">do_POST</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/notify/handler.html#RequestHandler.do_POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.notify.handler.RequestHandler.do_POST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Respond to a POST request and add the event to a set.</p>
 </dd></dl>
 
@@ -738,7 +756,7 @@ custom functions to notify the user about events.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if statements executed properly</td>
 </tr>
 </tbody>
 </table>
@@ -857,7 +875,7 @@ working directory.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">The iteranoid API reference</a><ul>
+<li><a class="reference internal" href="#">The API reference</a><ul>
 <li><a class="reference internal" href="#module-src">The view functions</a></li>
 <li><a class="reference internal" href="#the-myflask-module">The “myflask” module</a></li>
 <li><a class="reference internal" href="#module-src.config">The “config” module</a></li>
@@ -882,6 +900,7 @@ working directory.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Welcome to iteranoid’s documentation!</a></li>
+      <li>Next: <a href="tests.html" title="next chapter">Tests</a></li>
   </ul></li>
 </ul>
 </div>

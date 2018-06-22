@@ -18,9 +18,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
         <hr>
         <div class="form-group">
             <label for="username">Username</label>
-            {{ form.username(**{'type':'text','aria-required':'true'
-            ,'required':'required','class':'form-control','id':'username','aria-described':'usernameHelp','placeholder':'Enter
-            preferred Username','onblur':'checkUsername(this, this.value)'}) }}
+            {{ form.username(**{'type':'text','aria-required':'true' ,'required':'required','class':'form-control','id':'username','aria-described':'usernameHelp','placeholder':'Enter preferred Username','onblur':'checkUsername(this, this.value)'}) }}
             {% if form.username.errors %}
             {% for error in form.username.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -35,8 +33,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
         </div>
         <div class="form-group">
             <label for="password1">Password</label>
-            {{ form.password1(**{'type':'password','aria-required':'true'
-            ,'required':'required','class':'form-control','id':'password1','placeholder':'Choose Password'}) }}
+            {{ form.password1(**{'type':'password','aria-required':'true' ,'required':'required','class':'form-control','id':'password1','placeholder':'Choose a password'}) }}
             {% if form.password1.errors %}
             {% for error in form.password1.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -49,8 +46,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
         </div>
         <div class="form-group">
             <label for="password2">Repeat Password</label>
-            {{ form.password2(**{'type':'password','aria-required':'true'
-            ,'required':'required','class':'form-control','id':'password2','placeholder':'Choose Password'}) }}
+            {{ form.password2(**{'type':'password','aria-required':'true' ,'required':'required','class':'form-control','id':'password2','placeholder':'Repeat chosen password'}) }}
             {% if form.password2.errors %}
             {% for error in form.password2.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
