@@ -16,10 +16,12 @@ def get_users(cwd, file_name):
     :return: dictionary of users and passwords
     """
 
-    with open(cwd + '/' + file_name + '.json') as registered_users:
-        users = json.load(registered_users)
-    return users
-
+    try:
+        with open(cwd + '/' + file_name + '.json') as registered_users:
+            users = json.load(registered_users)
+        return users
+    except FileNotFoundError:
+        return None
 
 class FlaskApp(Flask):
     """This class provides a customized Flask application for the client frontend.

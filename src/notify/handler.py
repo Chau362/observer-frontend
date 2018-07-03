@@ -5,7 +5,8 @@ import json
 from logging import getLogger
 from http.server import BaseHTTPRequestHandler
 from src.models import Project
-from src.notify.settings import events, active_users
+from eventhandler import EventHandler
+from settings import events, active_users
 
 logger = getLogger('notifier.handler')
 
@@ -51,7 +52,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             return
 
         if "active_users" in data:
-            for user in active_users:
+            for user in list(active_users):
                 if user not in data["active_users"]:
                     active_users.pop(user, None)
             active_users.update(data["active_users"])
@@ -62,6 +63,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         else:
             project = Project(data['projectUrl'], data['eventType'], data)
             events.add(project)
+            EventHandler().play_music()
 
             self.wfile.write(b"<html><head><title>client-messenger</title></head>")
             self.wfile.write(b"<body><p>Received your event and added it to set.</p>")

@@ -17,11 +17,11 @@ class EventHandler:
 
     @staticmethod
     def play_music(**kwargs):
-        """Plays an alert.
+        """Plays an alert sound.
         """
 
         path = os.path.dirname(os.path.abspath(__file__))
-        file = "morse.wav"
+        file = "signal.wav"
 
         try:
             wave_obj = audio.WaveObject.from_wave_file(path + "/" + file)
@@ -41,6 +41,12 @@ class EventHandler:
 
         logger.info("I handled an event.")
         return True
+
+    def show_on_unicorn_hat(self):
+        pass
+
+    def show_icon(self):
+        pass
 
     # @staticmethod
     # def show_on_unicorn(project_name, event):
@@ -82,141 +88,3 @@ class EventHandler:
     #                 unicorn.set_pixel(width - w - 1, h, 255, 0, 0)
     #     unicorn.show()
 
-
-class GitEventHandler(EventHandler):
-    """Class to handle events on Github.
-    """
-
-    def __init__(self):
-        # super.__init__()
-        self.event_type = "GIT_COMMIT"
-        self.icon = [[(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(255, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(255, 0, 0), (255, 0, 0), (0, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]]
-
-    def show_icon(self):
-        """Shows Github icon on unicorn hat.
-
-        :return: None
-        """
-
-        try:
-            import unicornhat, signal
-        except ImportError:
-            return
-
-        unicornhat.set_pixels(self.icon)
-        unicornhat.show()
-        signal.pause()
-
-
-class SVNEventHandler(EventHandler):
-    """Class to handle events on SVN.
-    """
-
-    def __init__(self):
-        # super.__init__()
-        self.event_type = "SVN_COMMIT"
-        self.icon = [[(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0),
-                      (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(255, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(255, 0, 0), (255, 0, 0), (0, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],
-                     [(0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0),
-                      (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]]
-
-    def show_icon(self):
-        """Shows SVN icon on unicorn hat.
-
-        :return: None
-        """
-
-        try:
-            import unicornhat, signal
-        except ImportError:
-            return
-
-        unicornhat.set_pixels(self.icon)
-        unicornhat.show()
-        signal.pause()
-
-
-# class UnicornHandler(EventHandler):
-#     try:
-#         from pyfiglet import figlet_format
-#     except ImportError:
-#         exit()
-#
-#     import unicornhat as unicorn
-#
-#     def __init__(self, event_type):
-#         super().__init__(event_type)
-#
-#     def show_event_as_text(self):
-#         unicorn.set_layout(unicorn.AUTO)
-#         unicorn.rotation(0)
-#         unicorn.brightness(0.5)
-#         width, height = unicorn.get_shape()
-#
-#         TXT = self.event_type
-#
-#         figletText = figlet_format(TXT + ' ', "banner", width=1000)  # banner font generates text with heigth 7
-#         textMatrix = figletText.split("\n")[:width]  # width should be 8 on both HAT and pHAT!
-#         textWidth = len(textMatrix[0])  # the total length of the result from figlet
-#
-#         i = -1
-#         while True:
-#             i = 0 if i >= 100 * textWidth else i + 1  # avoid overflow
-#             for h in range(height):
-#                 for w in range(width):
-#                     hPos = (i + h) % textWidth
-#                     chr = textMatrix[w][hPos]
-#                     if chr == ' ':
-#                         unicorn.set_pixel(width - w - 1, h, 0, 0, 0)
-#                     else:
-#                         unicorn.set_pixel(width - w - 1, h, 255, 0, 0)
-#             unicorn.show()
-#             sleep(0.2)
-
-
-def handle_event(event, show=False, project_name=None):
-    """Handle event as specified by eventhandler object.
-
-    The function instantiates an object according to the webservice the
-    event is related to and renders the event.
-
-    :param event: with all information about what happened
-    :param bool show: indicator if unicornhat should be used
-    :param str project_name: name the user has chosen for this project
-    :return: None
-    """
-
-    handler = GitEventHandler() if event.event == 'GIT_COMMIT' else SVNEventHandler()
-    if show:
-        handler.show_icon()
-    else:
-        handler.do_something()
-
-    return True

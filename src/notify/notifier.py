@@ -7,9 +7,9 @@ for events and runs a simple server.
 
 from http.server import HTTPServer
 from threading import Thread
-from src.notify.loggers import setup_logging
-from src.notify.handler import RequestHandler
-from src.notify.revolver import show_messages
+from loggers import setup_logging
+from handler import RequestHandler
+from revolver import show_messages
 
 logger = setup_logging()
 
