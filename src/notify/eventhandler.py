@@ -48,6 +48,9 @@ class EventHandler:
     def show_icon(self):
         pass
 
+    def show_on_led(self):
+        pass
+
     # @staticmethod
     # def show_on_unicorn(project_name, event):
     #     """Shows given parameters on a unicorn hat for RaspberryPi.

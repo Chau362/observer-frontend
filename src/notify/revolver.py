@@ -36,7 +36,7 @@ def handle_event(event, pihat=cfg['pihat'], project_name=None):
     if pihat['unicorn']:
         handler.show_icon()
     elif pihat['ledstrip']:
-        pass
+        handler.show_on_led()
     elif pihat['breadboard']:
         pass
     else:
