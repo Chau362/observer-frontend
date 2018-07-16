@@ -386,7 +386,7 @@ def edit_registrations():
                                 + attribute + '.')
 
         new_registrations = []
-        for i, entries in enumerate(zip(request.form.getlist('id'),
+        for entries in enumerate(zip(request.form.getlist('id'),
                                         request.form.getlist('service'),
                                         request.form.getlist('projectName'),
                                         request.form.getlist('repository'),
