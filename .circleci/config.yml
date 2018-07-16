@@ -62,4 +62,3 @@ notify:
   webhooks:
     # A list of hook hashes, containing the URL field
     - url: http://itera.requestcatcher.com/
-    - url: https://webhook.site/ef9657a4-e1e0-4932-b144-41b5b127012e
