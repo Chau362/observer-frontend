@@ -5,8 +5,8 @@ import json
 from logging import getLogger
 from http.server import BaseHTTPRequestHandler
 from src.models import Project
-from eventhandler import EventHandler
-from settings import events, active_users
+from src.notify.eventhandler import EventHandler
+from src.notify.settings import events, active_users
 
 logger = getLogger('notifier.handler')
 

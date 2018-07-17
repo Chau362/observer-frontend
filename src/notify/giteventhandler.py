@@ -4,7 +4,7 @@ The `GitEventHandler` class implements all functions for handling events
 received from Gitlab or Github.
 """
 
-from eventhandler import EventHandler
+from src.notify.eventhandler import EventHandler
 from logging import getLogger
 from random import randint
 from time import sleep
@@ -52,7 +52,36 @@ class GitEventHandler(EventHandler):
         unicornhat.show()
         signal.pause()
 
-    def show_on_led(self):
+    def show_with_led_light(self):
+        """Two lights blinking when event is received.
+
+        :return: None
+        """
+
+        try:
+            import RPi.GPIO as GPIO
+        except ImportError:
+            logger.info('Could not import modules to show messages with LED light.')
+            return
+
+
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(7, GPIO.OUT)
+        GPIO.setup(11, GPIO.OUT)
+
+        for i in range(0, 5):
+            GPIO.output(7, True)
+            sleep(0.5)
+            GPIO.output(7, False)
+            sleep(0.5)
+            GPIO.output(11, True)
+            sleep(0.5)
+            GPIO.output(11, False)
+            sleep(0.5)
+
+        GPIO.cleanup()
+
+    def show_on_led_strip(self):
         """Shows events sent from Github on WS2801 LED strip.
 
         :return: None

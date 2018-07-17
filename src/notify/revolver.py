@@ -5,11 +5,11 @@ import os
 import yaml
 from time import sleep
 from logging import getLogger
-from settings import events, active_users, revolving, \
+from src.notify.settings import events, active_users, revolving, \
     toggle_revolving
 from src.models import Project
-from giteventhandler import GitEventHandler
-from svneventhandler import SVNEventHandler
+from src.notify.giteventhandler import GitEventHandler
+from src.notify.svneventhandler import SVNEventHandler
 
 logger = getLogger('notifier.revolver')
 cwd = os.path.dirname(os.path.abspath(__file__))
@@ -36,9 +36,9 @@ def handle_event(event, pihat=cfg['pihat'], project_name=None):
     if pihat['unicorn']:
         handler.show_icon()
     elif pihat['ledstrip']:
-        handler.show_on_led()
+        handler.show_on_led_strip()
     elif pihat['breadboard']:
-        pass
+        handler.show_with_led_light()
     else:
         handler.do_something()
 

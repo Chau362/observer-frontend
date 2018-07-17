@@ -48,7 +48,10 @@ class EventHandler:
     def show_icon(self):
         pass
 
-    def show_on_led(self):
+    def show_with_led_light(self):
+        pass
+
+    def show_on_led_strip(self):
         pass
 
     # @staticmethod
