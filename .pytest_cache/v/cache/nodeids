@@ -1,0 +1,23 @@
+[
+  "tests/test_app.py::ObserverFrontendTestCase::test_access_denied",
+  "tests/test_app.py::ObserverFrontendTestCase::test_activation_deactivation_of_events",
+  "tests/test_app.py::ObserverFrontendTestCase::test_authenticated_profile_view",
+  "tests/test_app.py::ObserverFrontendTestCase::test_edit_registrations",
+  "tests/test_app.py::ObserverFrontendTestCase::test_homepage",
+  "tests/test_app.py::ObserverFrontendTestCase::test_invalid_login",
+  "tests/test_app.py::ObserverFrontendTestCase::test_login_logout",
+  "tests/test_app.py::ObserverFrontendTestCase::test_receive_event",
+  "tests/test_app.py::ObserverFrontendTestCase::test_register_new_user",
+  "tests/test_app.py::ObserverFrontendTestCase::test_register_projects",
+  "tests/test_app.py::ObserverFrontendTestCase::test_successful_password_change",
+  "tests/test_app.py::ObserverFrontendTestCase::test_unauthorized_access",
+  "tests/test_app.py::ObserverFrontendTestCase::test_user_can_login",
+  "tests/test_models.py::ModelsTestCase::test_Project_equals",
+  "tests/test_models.py::ModelsTestCase::test_Registration_equals",
+  "tests/test_myflask.py::FlaskAppTestCase::test_add_new_user",
+  "tests/test_myflask.py::FlaskAppTestCase::test_delete_config",
+  "tests/test_myflask.py::FlaskAppTestCase::test_delete_user",
+  "tests/test_myflask.py::FlaskAppTestCase::test_load_config",
+  "tests/test_myflask.py::FlaskAppTestCase::test_rename_user",
+  "tests/test_myflask.py::FlaskAppTestCase::test_save_config"
+]
