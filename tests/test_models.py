@@ -1,10 +1,12 @@
 """Tests for `models.py`.
 """
 
-import unittest
+import unittest, sys, os
 from src.models import Registration, RegistrationSerializer, \
     Project
 
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/tests')
 
 class ModelsTestCase(unittest.TestCase):
     """Class with test cases for all models in use.

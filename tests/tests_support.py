@@ -6,7 +6,9 @@ import socket
 import itertools
 from requests import post
 from http.server import BaseHTTPRequestHandler
-
+import os, sys
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/tests')
 
 def get_free_port():
     """Looks for a port at which a socket can still bind.

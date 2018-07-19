@@ -14,7 +14,9 @@ from src.notify.eventhandler import EventHandler
 from src.notify.loggers import setup_logging
 from src.notify.revolver import handle_event
 from http.server import HTTPServer
-
+import sys
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/tests')
 
 class NotifierTestCase(unittest.TestCase):
     """This class implements all tests to check the request maker.

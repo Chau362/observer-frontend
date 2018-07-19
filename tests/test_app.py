@@ -1,10 +1,13 @@
 """This module tests the application running the client frontend.
 """
 
-import os
+import os, sys
 import unittest
 from tempfile import NamedTemporaryFile
 from src.__init__ import app
+
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/tests')
 
 
 class ObserverFrontendTestCase(unittest.TestCase):

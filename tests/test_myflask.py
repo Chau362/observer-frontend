@@ -1,11 +1,13 @@
 """Tests for `myflask.py`.
 """
 
-import os
+import os, sys
 import json
 import unittest
 from src.myflask import FlaskApp
 
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/tests')
 
 class FlaskAppTestCase(unittest.TestCase):
     """Class with test cases for functions of the customized Flask app.
